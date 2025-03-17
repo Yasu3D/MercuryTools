@@ -11,12 +11,24 @@
         <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Background="{DynamicResource LightBrush}">
                     
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <Button VerticalAlignment="Center" HorizontalAlignment="Left" Width="22" Height="22" Margin="9,9,0,9" Name="ButtonImport" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0" ToolTip.Tip="Import File">
-                    <PathIcon Data="{DynamicResource IconOpen}" Width="14" Height="14"/>
+                <Button VerticalAlignment="Center" HorizontalAlignment="Left" Width="22" Height="22" Margin="9,9,0,9" Name="ButtonOpen" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="Open File"/>
+                            <TextBlock Text="Ctrl + O" Foreground="{DynamicResource AnnotationBrush}"/>
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <PathIcon Data="{DynamicResource IconFolder}" Width="14" Height="14"/>
                 </Button>
                     
-                <Button VerticalAlignment="Center" HorizontalAlignment="Left" Width="22" Height="22" Margin="5,9,0,9" Name="ButtonExport" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0" ToolTip.Tip="Export File">
-                    <PathIcon Data="{DynamicResource IconSave}" Width="14" Height="14"/>
+                <Button VerticalAlignment="Center" HorizontalAlignment="Left" Width="22" Height="22" Margin="5,9,0,9" Name="ButtonSave" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="Save File"/>
+                            <TextBlock Text="Ctrl + S" Foreground="{DynamicResource AnnotationBrush}"/>
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <PathIcon Data="{DynamicResource IconFloppyDisk}" Width="14" Height="14"/>
                 </Button>
                     
                 <Rectangle Width="1" Height="30" Fill="{DynamicResource MenuBorderBrush}" Margin="8,5,3,5"/>
