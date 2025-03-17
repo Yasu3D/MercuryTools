@@ -3,7 +3,9 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="App.axaml" value="MercuryTools.csproj" />
         <entry key="MainWindow.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/MainView.axaml" value="MercuryTools.csproj" />
       </map>
     </option>
   </component>
