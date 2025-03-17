@@ -2,15 +2,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:tabs="clr-namespace:MercuryTools.Views.Tabs"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MercuryTools.Views.MainView">
-    <Grid ColumnDefinitions="341, *">
+    <!-- Separate Tab Bar from Explorer + Content -->
+    <Grid ColumnDefinitions="41, *">
         
-        <Grid Column="0" ColumnDefinitions="40, 1, 300">
+        <!-- Tab Bar -->
+        <Grid Column="0" ColumnDefinitions="40, 1">
             
-            
+            <!-- Tabs -->
             <StackPanel Grid.Column="0" Background="{DynamicResource LightBrush}">
-                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabIcons" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsChecked="True" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
+                
+                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabIconTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged" IsChecked="True" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Icon Table"/>
@@ -20,7 +24,7 @@
                     <PathIcon Data="{DynamicResource IconHexagonSparkle}" Width="18" Height="18"/>
                 </RadioButton>
                 
-                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabPlates" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
+                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabPlateTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Plate Table"/>
@@ -30,7 +34,7 @@
                     <PathIcon Data="{DynamicResource IconLandscapeSparkle}" Width="18" Height="18"/>
                 </RadioButton>
                 
-                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabGrades" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
+                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabGradeTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Grade Table"/>
@@ -40,7 +44,7 @@
                     <PathIcon Data="{DynamicResource IconSlideTextSparkle}" Width="18" Height="18"/>
                 </RadioButton>
                 
-                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabGradeParts" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
+                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabGradePartsTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Grade Parts Table"/>
@@ -52,7 +56,7 @@
                 
                 <Rectangle Width="30" Height="1" Fill="{DynamicResource MenuBorderBrush}" Margin="5,8,5,3"/>
                 
-                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabInfernoStages" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
+                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabBossStageTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Boss Stage Table"/>
@@ -62,7 +66,7 @@
                     <PathIcon Data="{DynamicResource IconWarning}" Width="18" Height="18"/>
                 </RadioButton>
                 
-                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabInfernoUnlocks" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0"  ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
+                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabInfernoUnlockTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged"  ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Inferno Unlock Table"/>
@@ -72,7 +76,7 @@
                     <PathIcon Data="{DynamicResource IconWarningLockOpen}" Width="18" Height="18"/>
                 </RadioButton>
                 
-                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabMusicUnlocks" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
+                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabMusicUnlockTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Music Unlock Table"/>
@@ -82,7 +86,7 @@
                     <PathIcon Data="{DynamicResource IconLockOpen}" Width="18" Height="18"/>
                 </RadioButton>
                 
-                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabItemUnlocks" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
+                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabItemUnlockTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Item Unlock Table"/>
@@ -92,7 +96,7 @@
                     <PathIcon Data="{DynamicResource IconTableLock}" Width="18" Height="18"/>
                 </RadioButton>
                 
-                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabConditions" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
+                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabConditionTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Condition Table"/>
@@ -104,7 +108,7 @@
                 
                 <Rectangle Width="30" Height="1" Fill="{DynamicResource MenuBorderBrush}" Margin="5,8,5,3"/>
 
-                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabGates" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
+                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabGateTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Gate Table"/>
@@ -114,7 +118,7 @@
                     <PathIcon Data="{DynamicResource IconCommunication}" Width="18" Height="18"/>
                 </RadioButton>
                 
-                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabGateSteps" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
+                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabGateStepTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Gate Step Table"/>
@@ -126,76 +130,27 @@
                 
                 <Rectangle Width="30" Height="1" Fill="{DynamicResource MenuBorderBrush}" Margin="5,8,5,3"/>
 
-                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabMessages" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
+                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabMessageTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Message Table"/>
                             <TextBlock Text="xyzMessage.uasset" Foreground="{DynamicResource AnnotationBrush}"/>
                         </StackPanel>
                     </ToolTip.Tip>
-                    <PathIcon Data="{DynamicResource IconComment}" Width="18" Height="18"/>
+                    <PathIcon Data="{DynamicResource IconTextUnderlineDouble}" Width="18" Height="18"/>
                 </RadioButton>
                 
             </StackPanel>
 
+            <!-- Vertical Separator -->
             <Rectangle Grid.Column="1" Fill="{DynamicResource MenuBorderBrushDark}"/>
-
-            <Grid Grid.Column="2" RowDefinitions="40, 1, *">
-                
-                <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Background="{DynamicResource LightBrush}">
-                    
-                    <StackPanel Grid.Column="0" Orientation="Horizontal">
-                        <Button VerticalAlignment="Center" HorizontalAlignment="Left" Width="22" Height="22" Margin="5,9,0,9" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0" ToolTip.Tip="Import File">
-                            <PathIcon Data="{DynamicResource IconOpen}" Width="14" Height="14"/>
-                        </Button>
-                    
-                        <Button VerticalAlignment="Center" HorizontalAlignment="Left" Width="22" Height="22" Margin="5,9,0,9" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0" ToolTip.Tip="Export File">
-                            <PathIcon Data="{DynamicResource IconSave}" Width="14" Height="14"/>
-                        </Button>
-                    
-                        <Rectangle Width="1" Height="30" Fill="{DynamicResource MenuBorderBrush}" Margin="8,5,3,5"/>
-                        
-                        <ToggleButton VerticalAlignment="Center" HorizontalAlignment="Left" Width="22" Height="22" Margin="5,9,0,9" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0" ToolTip.Tip="Search">
-                            <PathIcon Data="{DynamicResource IconSearch}" Width="14" Height="14"/>
-                        </ToggleButton>
-                    </StackPanel>
-                    
-                    <StackPanel Grid.Column="2" Orientation="Horizontal">
-                        <Button VerticalAlignment="Center" HorizontalAlignment="Right" Width="22" Height="22" Margin="0,9,5,9" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0" ToolTip.Tip="Delete Element">
-                            <PathIcon Data="{DynamicResource IconDelete}" Width="14" Height="14"/>
-                        </Button>
-                    
-                        <Button VerticalAlignment="Center" HorizontalAlignment="Right" Width="22" Height="22" Margin="0,9,5,9" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0" ToolTip.Tip="Add Element">
-                            <PathIcon Data="{DynamicResource IconAdd}" Width="14" Height="14"/>
-                        </Button>
-                    </StackPanel>
-                    
-                </Grid>
-                
-                <Rectangle Grid.Row="1" Fill="{DynamicResource MenuBorderBrushDark}"/>
-                
-                <Grid Grid.Row="2" RowDefinitions="40,*" Background="{DynamicResource LightBrush}">
-                    
-                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*" RowDefinitions="Auto, 1" IsVisible="False">
-                        <PathIcon Grid.Column="0" Grid.Row="0" Data="{DynamicResource IconSearch}" Width="14" Height="14" Margin="13"/>
-                        
-                        <TextBox Grid.Column="1" Grid.Row="0" Classes="Transparent" VerticalContentAlignment="Center" VerticalAlignment="Stretch" Watermark="Search"/>
-                        
-                        <Rectangle Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Height="1" Fill="{DynamicResource MenuBorderBrush}"/>
-                    </Grid>
-                    
-                    <ScrollViewer Grid.Row="1">
-                        
-                    </ScrollViewer>
-                </Grid>
-                
-                
-            </Grid>
-            
             
         </Grid>
         
+        <!-- Separator -->
         <TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Text="MercuryTools by yasu3d" Foreground="{DynamicResource MenuBorderBrush}"/>
+        
+        <!-- Content -->
         <UserControl Grid.Column="1" Name="ViewContainer"/>
         
     </Grid>

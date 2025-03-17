@@ -25,4 +25,52 @@
         <HintPath>lib\UAssetAPI.dll</HintPath>
       </Reference>
     </ItemGroup>
+
+
+    <ItemGroup>
+      <Compile Update="Views\Tabs\PlateTableView.axaml.cs">
+        <DependentUpon>PlateTableView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Tabs\GradeTableView.axaml.cs">
+        <DependentUpon>GradeTableView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Tabs\GradePartsTableView.axaml.cs">
+        <DependentUpon>GradePartsTableView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Tabs\BossStageTableView.axaml.cs">
+        <DependentUpon>BossStageTableView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Tabs\InfernoUnlockTableView.axaml.cs">
+        <DependentUpon>InfernoUnlockTableView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Tabs\MusicUnlockTableView.axaml.cs">
+        <DependentUpon>MusicUnlockTableView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Tabs\ItemUnlockTableView.axaml.cs">
+        <DependentUpon>ItemUnlockTableView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Tabs\ConditionTableView.axaml.cs">
+        <DependentUpon>ConditionTableView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Tabs\GateTableView.axaml.cs">
+        <DependentUpon>GateTableView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Tabs\GateStepTableView.axaml.cs">
+        <DependentUpon>GateStepTableView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Tabs\MessageTableView.axaml.cs">
+        <DependentUpon>MessageTableView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
 </Project>

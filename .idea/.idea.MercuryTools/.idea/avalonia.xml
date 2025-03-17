@@ -5,7 +5,21 @@
       <map>
         <entry key="App.axaml" value="MercuryTools.csproj" />
         <entry key="MainWindow.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/ExplorerView.axaml" value="MercuryTools.csproj" />
         <entry key="Views/MainView.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/BossStageTableView.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/ConditionTableView.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/GateStepTableView.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/GateTableView.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/GradePartsTableView.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/GradeTableView.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/IconTable.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/IconTableView.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/InfernoUnlockTableView.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/ItemUnlockTableView.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/MessageTableView.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/MusicUnlockTableView.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/PlateTableView.axaml" value="MercuryTools.csproj" />
       </map>
     </option>
   </component>
