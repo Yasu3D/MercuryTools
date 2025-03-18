@@ -5,7 +5,7 @@
         xmlns:view="clr-namespace:MercuryTools.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         Width="1200" Height="800"
-        MinWidth="520" MinHeight="440"
+        MinWidth="600" MinHeight="440"
         ExtendClientAreaToDecorationsHint="True"
         Focusable="True"
         Background="{DynamicResource DarkBrush}"

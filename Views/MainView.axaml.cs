@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using FluentAvalonia.UI.Controls;
@@ -29,6 +30,9 @@ public partial class MainView : UserControl
         messageTableView = new(this);
 
         ViewContainer.Content = iconTableView;
+        
+        KeyDownEvent.AddClassHandler<TopLevel>(OnKeyDown, RoutingStrategies.Tunnel, handledEventsToo: true);
+        KeyUpEvent.AddClassHandler<TopLevel>(OnKeyUp, RoutingStrategies.Tunnel, handledEventsToo: true);
     }
 
     private readonly IconTableView iconTableView;
@@ -74,7 +78,52 @@ public partial class MainView : UserControl
         throw new("Oops!");
     }
 
-    public void ShowWarningMessage(string title, string? text = null)
+    private void OnKeyDown(object sender, KeyEventArgs args)
+    {
+        if (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is TextBox) return;
+        if (args.Key is Key.LeftAlt or Key.RightAlt or Key.LeftShift or Key.RightShift or Key.LeftCtrl or Key.RightCtrl)
+        {
+            args.Handled = true;
+            return;
+        }
+        
+        // Very very janky.
+        if (ViewContainer.Content is not Tab tab) return;
+        
+        if (args.Key is Key.O && args.KeyModifiers.HasFlag(KeyModifiers.Control))
+        {
+            tab.ButtonOpen_OnClick(this, null!);
+        }
+        
+        if (args.Key is Key.S && args.KeyModifiers.HasFlag(KeyModifiers.Control))
+        {
+            tab.ButtonSave_OnClick(this, null!);
+        }
+        
+        if (args.Key is Key.Z && args.KeyModifiers.HasFlag(KeyModifiers.Control))
+        {
+            tab.ButtonUndo_OnClick(this, null!);
+        }
+        
+        if (args.Key is Key.Y && args.KeyModifiers.HasFlag(KeyModifiers.Control))
+        {
+            tab.ButtonRedo_OnClick(this, null!);
+        }
+        
+        if (args.Key is Key.Up && args.KeyModifiers.HasFlag(KeyModifiers.Alt))
+        {
+            tab.ButtonMoveElementUp_OnClick(this, null!);
+        }
+        
+        if (args.Key is Key.Down && args.KeyModifiers.HasFlag(KeyModifiers.Alt))
+        {
+            tab.ButtonMoveElementDown_OnClick(this, null!);
+        }
+    }
+    
+    private static void OnKeyUp(object sender, KeyEventArgs e) => e.Handled = true;
+
+    public static void ShowWarningMessage(string title, string? text = null)
     {
         ContentDialog dialog = new()
         {
@@ -103,6 +152,4 @@ public partial class MainView : UserControl
 
         return result.Count != 1 ? null : result[0];
     }
-
-    
 }

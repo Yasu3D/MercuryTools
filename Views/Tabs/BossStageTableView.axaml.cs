@@ -39,7 +39,7 @@ public partial class BossStageTableView : UserControl
         catch (Exception e)
         {
             Console.WriteLine(e);
-            mainView.ShowWarningMessage("An Error has occurred.", e.Message);
+            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
         }
     }
     
