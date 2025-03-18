@@ -7,12 +7,21 @@
              x:Class="MercuryTools.Views.Tabs.BossStageTableView">
     
     <!-- Separate Explorer from Content -->
-    <Grid ColumnDefinitions="300, *">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" MinWidth="300"/>
+            <ColumnDefinition Width="4"/>
+            <ColumnDefinition Width="*" MinWidth="100"/>
+        </Grid.ColumnDefinitions>
         
         <!-- Explorer -->
         <views:ExplorerView Grid.Column="0" Name="Explorer"/>
         
+        <!-- Splitter -->
+        <GridSplitter Grid.Column="1" Background="Transparent" ResizeDirection="Columns"/>
+        
         <!-- Content -->
-        <TextBlock Grid.Column="1" Text="BossStageTableView"/>
+        <TextBlock Grid.Column="2" Text="Content"/>
+        
     </Grid>
 </UserControl>

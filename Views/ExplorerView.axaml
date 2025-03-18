@@ -43,6 +43,10 @@
                     <PathIcon Data="{DynamicResource IconDelete}" Width="14" Height="14"/>
                 </Button>
                 
+                <Button VerticalAlignment="Center" HorizontalAlignment="Right" Width="22" Height="22" Margin="0,9,5,9" Name="ButtonDuplicateElement" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0" ToolTip.Tip="Duplicate Element">
+                    <PathIcon Data="{DynamicResource IconDuplicate}" Width="14" Height="14"/>
+                </Button>
+                
                 <Button VerticalAlignment="Center" HorizontalAlignment="Right" Width="22" Height="22" Margin="0,9,9,9" Name="ButtonAddElement" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0" ToolTip.Tip="Add Element">
                     <PathIcon Data="{DynamicResource IconAdd}" Width="14" Height="14"/>
                 </Button>
@@ -66,7 +70,7 @@
             </Grid>
             
             <!-- Element List -->
-            <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                 <TreeView Name="TreeViewElementList" Margin="5"/>
             </ScrollViewer>
             
