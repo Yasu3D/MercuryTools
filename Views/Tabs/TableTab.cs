@@ -29,9 +29,19 @@ public abstract class TableTab : UserControl
     
     protected bool ignoreDataChange;
     
+    protected abstract bool ContentContainsQuery(StructPropertyData data);
+    
     protected abstract void UpdateContent(bool ignoreChange);
 
-    protected abstract bool ContentContainsQuery(StructPropertyData data);
+    protected void UpdateTreeView(bool ignoreChange)
+    {
+        if (ignoreChange) ignoreDataChange = true;
+        
+        explorerView?.UpdateTreeView(table);
+        SearchContent();
+        
+        if (ignoreChange) ignoreDataChange = false;
+    }
 
     protected void SearchContent()
     {
@@ -58,16 +68,6 @@ public abstract class TableTab : UserControl
         }
     }
     
-    protected void RebuildTreeView(bool ignoreChange)
-    {
-        if (ignoreChange) ignoreDataChange = true;
-        
-        explorerView?.UpdateTreeView(table);
-        SearchContent();
-        
-        if (ignoreChange) ignoreDataChange = false;
-    }
-    
     public void Save()
     {
         asset?.Write(asset.FilePath);
@@ -78,16 +78,19 @@ public abstract class TableTab : UserControl
     {
         if (mainView == null) return;
         if (explorerView == null) return;
-        
-        IStorageFile? file = await mainView.OpenUAssetFile();
-        if (file == null) return;
+        if (undoRedoManager == null) return;
 
         try
         {
+            IStorageFile? file = await mainView.OpenUAssetFile();
+            if (file == null) return;
+            
+            undoRedoManager.Clear();
+            
             asset = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
             assetBackup = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
 
-            RebuildTreeView(true);
+            UpdateTreeView(true);
         }
         catch (Exception e)
         {
@@ -105,7 +108,7 @@ public abstract class TableTab : UserControl
         ignoreDataChange = true;
         IOperation operation = undoRedoManager.Undo();
 
-        RebuildTreeView(false);
+        UpdateTreeView(false);
         UpdateContent(false);
         
         // Try to highlight modified element.
@@ -126,7 +129,7 @@ public abstract class TableTab : UserControl
         ignoreDataChange = true;
         IOperation operation = undoRedoManager.Redo();
         
-        RebuildTreeView(false);
+        UpdateTreeView(false);
         UpdateContent(false);
         
         // Try to highlight modified element.
@@ -162,7 +165,7 @@ public abstract class TableTab : UserControl
             SwapStructProperty operation = new(table, dataA, dataB, indexA, indexB);
             undoRedoManager.InvokeAndPush(operation);
 
-            RebuildTreeView(true);
+            UpdateTreeView(true);
         }
         catch (Exception e)
         {
@@ -184,7 +187,7 @@ public abstract class TableTab : UserControl
             AddStructProperty operation = new(table, NewData, table.Count);
             undoRedoManager.InvokeAndPush(operation);
             
-            RebuildTreeView(true);
+            UpdateTreeView(true);
         }
         catch (Exception e)
         {
@@ -211,7 +214,7 @@ public abstract class TableTab : UserControl
             AddStructProperty operation = new(table, duplicateData, index);
             undoRedoManager.InvokeAndPush(operation);
             
-            RebuildTreeView(true);
+            UpdateTreeView(true);
         }
         catch (Exception e)
         {
@@ -239,7 +242,7 @@ public abstract class TableTab : UserControl
             RemoveStructProperty operation = new(table, data, index);
             undoRedoManager.InvokeAndPush(operation);
 
-            RebuildTreeView(true);
+            UpdateTreeView(true);
         }
         catch (Exception e)
         {

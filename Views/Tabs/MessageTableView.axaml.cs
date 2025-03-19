@@ -148,7 +148,7 @@ public partial class MessageTableView : TableTab
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.InvokeAndPush(operation);
                     
-                    RebuildTreeView(true);
+                    UpdateTreeView(true);
                     break;
                 }
                 

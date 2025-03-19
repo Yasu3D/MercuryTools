@@ -63,7 +63,7 @@ public partial class ExplorerView : UserControl
             }
             
             // Delete redundant TreeViewItems.
-            for (int i = tableData.Count; i < TreeViewElementList.Items.Count; i++)
+            for (int i = TreeViewElementList.Items.Count - 1; i >= tableData.Count ; i--)
             {
                 TreeViewElementList.Items.RemoveAt(i);
             }
