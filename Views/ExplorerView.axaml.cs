@@ -24,33 +24,48 @@ public partial class ExplorerView : UserControl
 
     public TreeViewItem? SelectedItem => (TreeViewItem?)TreeViewElementList?.SelectedItem;
     
-    public void RebuildTreeView(List<StructPropertyData>? tableData)
+    public void UpdateTreeView(List<StructPropertyData>? tableData)
     {
         if (tableData == null) return;
         if (TreeViewElementList == null) return;
 
         try
         {
-            // Save selected Data
+            // Save selected data.
             object? selectedData = null;
             if (TreeViewElementList.SelectedItem is TreeViewItem selectedItem)
             {
                 selectedData = selectedItem.Tag;
             }
 
-            // Clear TreeView
-            TreeViewElementList.Items.Clear();
-
-            // Loop over Table contents and create a new TreeViewItem for each one.
-            foreach (StructPropertyData data in tableData)
+            // Update TreeViewItems.
+            for (int i = 0; i < tableData.Count; i++)
             {
-                TreeViewItem item = new()
+                if (i < TreeViewElementList.Items.Count)
                 {
-                    Header = data.Name,
-                    Tag = data,
-                };
+                    // Modify existing TreeViewItem.
+                    if (TreeViewElementList.Items[i] is not TreeViewItem item) continue;
+                    
+                    item.Header = tableData[i].Name;
+                    item.Tag = tableData[i];
+                }
+                else
+                {
+                    // Create new TreeViewItem.
+                    TreeViewItem item = new()
+                    {
+                        Header = tableData[i].Name,
+                        Tag = tableData[i],
+                    };
 
-                TreeViewElementList.Items.Add(item);
+                    TreeViewElementList.Items.Add(item);
+                }
+            }
+            
+            // Delete redundant TreeViewItems.
+            for (int i = tableData.Count; i < TreeViewElementList.Items.Count; i++)
+            {
+                TreeViewElementList.Items.RemoveAt(i);
             }
             
             // Reassign selection based on selected data.

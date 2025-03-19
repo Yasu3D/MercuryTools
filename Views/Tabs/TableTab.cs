@@ -29,7 +29,7 @@ public abstract class TableTab : UserControl
     
     protected bool ignoreDataChange;
     
-    protected abstract void ReloadContent(bool ignoreChange);
+    protected abstract void UpdateContent(bool ignoreChange);
 
     protected abstract bool ContentContainsQuery(StructPropertyData data);
 
@@ -62,7 +62,7 @@ public abstract class TableTab : UserControl
     {
         if (ignoreChange) ignoreDataChange = true;
         
-        explorerView?.RebuildTreeView(table);
+        explorerView?.UpdateTreeView(table);
         SearchContent();
         
         if (ignoreChange) ignoreDataChange = false;
@@ -106,7 +106,7 @@ public abstract class TableTab : UserControl
         IOperation operation = undoRedoManager.Undo();
 
         RebuildTreeView(false);
-        ReloadContent(false);
+        UpdateContent(false);
         
         // Try to highlight modified element.
         if (operation is ModifyStringPropertyDataValue op)
@@ -127,7 +127,7 @@ public abstract class TableTab : UserControl
         IOperation operation = undoRedoManager.Redo();
         
         RebuildTreeView(false);
-        ReloadContent(false);
+        UpdateContent(false);
         
         // Try to highlight modified element.
         if (operation is ModifyStringPropertyDataValue op)

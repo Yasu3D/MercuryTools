@@ -53,7 +53,7 @@ public partial class MessageTableView : TableTab
         ],
     };
 
-    protected override void ReloadContent(bool ignoreChange)
+    protected override void UpdateContent(bool ignoreChange)
     {
         if (explorerView?.SelectedItem == null)
         {
@@ -237,7 +237,7 @@ public partial class MessageTableView : TableTab
         }
     }
     
-    private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => ReloadContent(true);
+    private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => UpdateContent(true);
 
     private void TextBoxSearch_OnTextChanging(object? sender, TextChangingEventArgs args) => SearchContent();
     private void ToggleSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
