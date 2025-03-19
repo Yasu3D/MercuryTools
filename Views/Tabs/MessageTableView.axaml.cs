@@ -49,7 +49,7 @@ public partial class MessageTableView : TableTab
         ],
     };
 
-    protected override void ReloadContent()
+    protected override void ReloadContent(bool ignoreChange)
     {
         if (explorerView?.SelectedItem == null)
         {
@@ -75,7 +75,7 @@ public partial class MessageTableView : TableTab
             StrPropertyData? simplifiedChineseMessage = (StrPropertyData?)data.Value[5];
             StrPropertyData? koreanMessage = (StrPropertyData?)data.Value[6];
 
-            ignoreDataChange = true;
+            if (ignoreChange) ignoreDataChange = true;
             
             // Set TextBoxes to StructPropertyData contents
             ContentGroup.IsVisible = true;
@@ -96,7 +96,7 @@ public partial class MessageTableView : TableTab
         }
         finally
         {
-            ignoreDataChange = false;
+            if (ignoreChange) ignoreDataChange = false;
         }
     }
     
@@ -132,7 +132,7 @@ public partial class MessageTableView : TableTab
                     FString oldValue = strPropertyData.Value;
                     FString newValue = new(TextBoxJapaneseMessage.Text);
 
-                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.InvokeAndPush(operation);
                     break;
                 }
@@ -143,7 +143,7 @@ public partial class MessageTableView : TableTab
                     FString oldValue = strPropertyData.Value;
                     FString newValue = new(TextBoxEnglishMessageUSA.Text);
 
-                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.InvokeAndPush(operation);
                     break; 
                 }
@@ -154,7 +154,7 @@ public partial class MessageTableView : TableTab
                     FString oldValue = strPropertyData.Value;
                     FString newValue = new(TextBoxEnglishMessageSG.Text);
 
-                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.InvokeAndPush(operation);
                     break; 
                 }
@@ -165,7 +165,7 @@ public partial class MessageTableView : TableTab
                     FString oldValue = strPropertyData.Value;
                     FString newValue = new(TextBoxTraditionalChineseMessageTW.Text);
 
-                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.InvokeAndPush(operation);
                     break; 
                 }
@@ -176,7 +176,7 @@ public partial class MessageTableView : TableTab
                     FString oldValue = strPropertyData.Value;
                     FString newValue = new(TextBoxTraditionalChineseMessageHK.Text);
 
-                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.InvokeAndPush(operation);
                     break; 
                 }
@@ -187,7 +187,7 @@ public partial class MessageTableView : TableTab
                     FString oldValue = strPropertyData.Value;
                     FString newValue = new(TextBoxSimplifiedChineseMessage.Text);
 
-                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.InvokeAndPush(operation);
                     break; 
                 }
@@ -198,13 +198,13 @@ public partial class MessageTableView : TableTab
                     FString oldValue = strPropertyData.Value;
                     FString newValue = new(TextBoxKoreanMessage.Text);
 
-                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.InvokeAndPush(operation);
                     break; 
                 }
             }
 
-            RebuildTreeView();
+            RebuildTreeView(true);
         }
         catch (Exception e)
         {
@@ -213,7 +213,7 @@ public partial class MessageTableView : TableTab
         }
     }
     
-    private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => ReloadContent();
+    private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => ReloadContent(true);
 
     private void ButtonSave_OnClick(object? sender, RoutedEventArgs args) => Save();
     private void ButtonOpen_OnClick(object? sender, RoutedEventArgs args) => Open();

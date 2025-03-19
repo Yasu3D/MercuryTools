@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using MercuryTools.UndoRedo;
@@ -25,13 +26,15 @@ public abstract class TableTab : UserControl
     
     protected bool ignoreDataChange;
     
-    protected abstract void ReloadContent();
+    protected abstract void ReloadContent(bool ignoreChange);
 
-    protected void RebuildTreeView()
+    protected void RebuildTreeView(bool ignoreChange)
     {
-        ignoreDataChange = true;
+        if (ignoreChange) ignoreDataChange = true;
+        
         explorerView?.RebuildTreeView(table);
-        ignoreDataChange = false;
+        
+        if (ignoreChange) ignoreDataChange = false;
     }
     
     public void Save()
@@ -53,7 +56,7 @@ public abstract class TableTab : UserControl
             asset = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
             assetBackup = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
 
-            RebuildTreeView();
+            RebuildTreeView(true);
         }
         catch (Exception e)
         {
@@ -66,26 +69,42 @@ public abstract class TableTab : UserControl
     {
         if (explorerView == null) return;
         if (undoRedoManager == null) return;
+        if (!undoRedoManager.CanUndo) return;
 
         ignoreDataChange = true;
-        undoRedoManager.Undo();
-        ignoreDataChange = false;
+        IOperation operation = undoRedoManager.Undo();
 
-        RebuildTreeView();
-        ReloadContent();
+        RebuildTreeView(false);
+        ReloadContent(false);
+        
+        // Try to highlight modified element.
+        if (operation is ModifyStringPropertyDataValue op)
+        {
+            explorerView.TreeViewElementList.SelectedItem = explorerView.TreeViewElementList.Items.FirstOrDefault(x => x is TreeViewItem item && item.Tag == op.ParentStruct);
+        }
+
+        ignoreDataChange = false;
     }
     
     public void Redo()
     {
         if (explorerView == null) return;
         if (undoRedoManager == null) return;
+        if (!undoRedoManager.CanRedo) return;
 
         ignoreDataChange = true;
-        undoRedoManager.Redo();
-        ignoreDataChange = false;
+        IOperation operation = undoRedoManager.Redo();
         
-        RebuildTreeView();
-        ReloadContent();
+        RebuildTreeView(false);
+        ReloadContent(false);
+        
+        // Try to highlight modified element.
+        if (operation is ModifyStringPropertyDataValue op)
+        {
+            explorerView.TreeViewElementList.SelectedItem = explorerView.TreeViewElementList.Items.FirstOrDefault(x => x is TreeViewItem item && item.Tag == op.ParentStruct);
+        }
+        
+        ignoreDataChange = false;
     }
     
     public void MoveElement(ElementMoveDirection direction)
@@ -112,7 +131,7 @@ public abstract class TableTab : UserControl
             SwapStructProperty operation = new(table, dataA, dataB, indexA, indexB);
             undoRedoManager.InvokeAndPush(operation);
 
-            RebuildTreeView();
+            RebuildTreeView(true);
         }
         catch (Exception e)
         {
@@ -134,7 +153,7 @@ public abstract class TableTab : UserControl
             AddStructProperty operation = new(table, NewData, table.Count);
             undoRedoManager.InvokeAndPush(operation);
             
-            RebuildTreeView();
+            RebuildTreeView(true);
         }
         catch (Exception e)
         {
@@ -161,7 +180,7 @@ public abstract class TableTab : UserControl
             AddStructProperty operation = new(table, duplicateData, index);
             undoRedoManager.InvokeAndPush(operation);
             
-            RebuildTreeView();
+            RebuildTreeView(true);
         }
         catch (Exception e)
         {
@@ -189,9 +208,7 @@ public abstract class TableTab : UserControl
             RemoveStructProperty operation = new(table, data, index);
             undoRedoManager.InvokeAndPush(operation);
 
-            ignoreDataChange = true;
-            RebuildTreeView();
-            ignoreDataChange = false;
+            RebuildTreeView(true);
         }
         catch (Exception e)
         {
