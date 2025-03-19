@@ -137,6 +137,27 @@ public partial class MessageTableView : Tab
 
         try
         {
+            // Create new Data
+            FName name = new(asset, "NO_NAME");
+            FName type = new(asset, "MessageData");
+            StructPropertyData newData = new(name, type)
+            {
+                Value =
+                [
+                    new StrPropertyData(new(asset, "JapaneseMessage")),
+                    new StrPropertyData(new(asset, "EnglishMessageUSA")),
+                    new StrPropertyData(new(asset, "EnglishMessageSG")),
+                    new StrPropertyData(new(asset, "TraditionalChineseMessageTW")),
+                    new StrPropertyData(new(asset, "TraditionalChineseMessageHK")),
+                    new StrPropertyData(new(asset, "SimplifiedChineseMessage")),
+                    new StrPropertyData(new(asset, "KoreanMessage")),
+                ],
+            };
+
+            // Add new Data
+            DataTableExport export = (DataTableExport)asset.Exports[0];
+            export.Table.Data.Add(newData);
+            
             RebuildTreeView();
         }
         catch (Exception e)
