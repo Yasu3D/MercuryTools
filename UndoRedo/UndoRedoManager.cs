@@ -32,6 +32,8 @@ public class UndoRedoManager
     {
         operation.Redo();
         Push(operation);
+        
+        Console.WriteLine(operation);
     }
 
     public void Undo()

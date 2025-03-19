@@ -23,7 +23,7 @@
         <!-- Content -->
         <DockPanel Grid.Column="2" Name="ContentGroup" IsVisible="False">
             
-            <TextBox DockPanel.Dock="Top" Classes="Inset" Name="TextBoxName" MinWidth="100" HorizontalAlignment="Left" FontSize="14" Margin="5,5,5,30" TextChanged="TextBox_OnTextChanged"/>
+            <TextBox DockPanel.Dock="Top" Classes="Inset" Name="TextBoxName" MinWidth="100" HorizontalAlignment="Left" FontSize="14" Margin="5,5,5,30" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
             <ScrollViewer>
                 
@@ -34,49 +34,49 @@
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             
-                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxJapaneseMessage" TextChanged="TextBox_OnTextChanged"/>
+                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxJapaneseMessage" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
                         <TextBlock DockPanel.Dock="Left" Text="EnglishMessageUSA" Margin="0,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             
-                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxEnglishMessageUSA" TextChanged="TextBox_OnTextChanged"/>
+                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxEnglishMessageUSA" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
                         <TextBlock DockPanel.Dock="Left" Text="EnglishMessageSG" Margin="0,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             
-                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxEnglishMessageSG" TextChanged="TextBox_OnTextChanged"/>
+                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxEnglishMessageSG" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
                         <TextBlock DockPanel.Dock="Left" Text="TraditionalChineseMessageTW" Margin="0,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             
-                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxTraditionalChineseMessageTW" TextChanged="TextBox_OnTextChanged"/>
+                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxTraditionalChineseMessageTW" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
                         <TextBlock DockPanel.Dock="Left" Text="TraditionalChineseMessageHK" Margin="0,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             
-                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxTraditionalChineseMessageHK" TextChanged="TextBox_OnTextChanged"/>
+                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxTraditionalChineseMessageHK" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
                         <TextBlock DockPanel.Dock="Left" Text="SimplifiedChineseMessage" Margin="0,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             
-                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxSimplifiedChineseMessage" TextChanged="TextBox_OnTextChanged"/>
+                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxSimplifiedChineseMessage" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
                         <TextBlock DockPanel.Dock="Left" Text="KoreanMessage" Margin="0,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             
-                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxKoreanMessage" TextChanged="TextBox_OnTextChanged"/>
+                    <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxKoreanMessage" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
                     
                 </StackPanel>
                 

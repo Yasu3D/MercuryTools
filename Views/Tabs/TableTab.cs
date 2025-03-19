@@ -23,6 +23,17 @@ public abstract class TableTab : UserControl
     protected List<StructPropertyData> table => ((DataTableExport)asset!.Exports[0]).Table.Data;
     protected abstract StructPropertyData NewData { get; }
     
+    protected bool ignoreDataChange;
+    
+    protected abstract void ReloadContent();
+
+    protected void RebuildTreeView()
+    {
+        ignoreDataChange = true;
+        explorerView?.RebuildTreeView(table);
+        ignoreDataChange = false;
+    }
+    
     public void Save()
     {
         asset?.Write(asset.FilePath);
@@ -41,8 +52,8 @@ public abstract class TableTab : UserControl
         {
             asset = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
             assetBackup = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
-            
-            explorerView.RebuildTreeView(table);
+
+            RebuildTreeView();
         }
         catch (Exception e)
         {
@@ -55,30 +66,38 @@ public abstract class TableTab : UserControl
     {
         if (explorerView == null) return;
         if (undoRedoManager == null) return;
-        
+
+        ignoreDataChange = true;
         undoRedoManager.Undo();
-        explorerView.RebuildTreeView(table);
+        ignoreDataChange = false;
+
+        RebuildTreeView();
+        ReloadContent();
     }
     
     public void Redo()
     {
         if (explorerView == null) return;
         if (undoRedoManager == null) return;
-        
+
+        ignoreDataChange = true;
         undoRedoManager.Redo();
-        explorerView.RebuildTreeView(table);
+        ignoreDataChange = false;
+        
+        RebuildTreeView();
+        ReloadContent();
     }
     
     public void MoveElement(ElementMoveDirection direction)
     {
         if (asset == null) return;
         if (undoRedoManager == null) return;
-        if (explorerView?.TreeViewElementList?.SelectedItem == null) return;
+        if (explorerView?.SelectedItem == null) return;
         
         try
         {
             // Get Selected Item and connected Data
-            TreeViewItem item = (TreeViewItem)explorerView.TreeViewElementList.SelectedItem;
+            TreeViewItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData dataA) return;
             
             // Get Index
@@ -92,8 +111,8 @@ public abstract class TableTab : UserControl
             StructPropertyData dataB = table[indexB];
             SwapStructProperty operation = new(table, dataA, dataB, indexA, indexB);
             undoRedoManager.InvokeAndPush(operation);
-            
-            explorerView.RebuildTreeView(table);
+
+            RebuildTreeView();
         }
         catch (Exception e)
         {
@@ -106,7 +125,7 @@ public abstract class TableTab : UserControl
     {
         if (asset == null) return;
         if (undoRedoManager == null) return;
-        if (explorerView?.TreeViewElementList?.SelectedItem == null) return;
+        if (explorerView?.SelectedItem == null) return;
 
         try
         {
@@ -115,7 +134,7 @@ public abstract class TableTab : UserControl
             AddStructProperty operation = new(table, NewData, table.Count);
             undoRedoManager.InvokeAndPush(operation);
             
-            explorerView.RebuildTreeView(table);
+            RebuildTreeView();
         }
         catch (Exception e)
         {
@@ -127,23 +146,22 @@ public abstract class TableTab : UserControl
     public void DuplicateElement()
     {
         if (asset == null) return;
-        if (explorerView?.TreeViewElementList?.SelectedItem == null) return;
+        if (undoRedoManager == null) return;
+        if (explorerView?.SelectedItem == null) return;
 
         try
         {
-            TreeViewItem item = (TreeViewItem)explorerView.TreeViewElementList.SelectedItem;
+            TreeViewItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
 
+            // Add new Data
             StructPropertyData duplicateData = (StructPropertyData)data.Clone();
+            int index = table.IndexOf(data);
             
-            // Get Index
-            DataTableExport export = (DataTableExport)asset.Exports[0];
-            int index = export.Table.Data.IndexOf(data);
+            AddStructProperty operation = new(table, duplicateData, index);
+            undoRedoManager.InvokeAndPush(operation);
             
-            // Add data to Table
-            export.Table.Data.Insert(index, duplicateData);
-            
-            explorerView.RebuildTreeView(table);
+            RebuildTreeView();
         }
         catch (Exception e)
         {
@@ -156,12 +174,12 @@ public abstract class TableTab : UserControl
     {
         if (asset == null) return;
         if (undoRedoManager == null) return;
-        if (explorerView?.TreeViewElementList?.SelectedItem == null) return;
+        if (explorerView?.SelectedItem == null) return;
 
         try
         {
             // Get Selected Item and connected Data
-            TreeViewItem item = (TreeViewItem)explorerView.TreeViewElementList.SelectedItem;
+            TreeViewItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
             
             // Remove data from Table
@@ -171,7 +189,9 @@ public abstract class TableTab : UserControl
             RemoveStructProperty operation = new(table, data, index);
             undoRedoManager.InvokeAndPush(operation);
 
-            explorerView.RebuildTreeView(table);
+            ignoreDataChange = true;
+            RebuildTreeView();
+            ignoreDataChange = false;
         }
         catch (Exception e)
         {

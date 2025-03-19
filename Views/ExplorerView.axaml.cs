@@ -22,11 +22,8 @@ public partial class ExplorerView : UserControl
         ToggleSearch.IsCheckedChanged += ToggleSearch_OnIsCheckedChanged;
     }
 
-    private void ToggleSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
-    {
-        SearchGroup.IsVisible = ToggleSearch.IsChecked ?? false;
-    }
-
+    public TreeViewItem? SelectedItem => (TreeViewItem?)TreeViewElementList?.SelectedItem;
+    
     public void RebuildTreeView(List<StructPropertyData>? tableData)
     {
         if (tableData == null) return;
@@ -64,5 +61,10 @@ public partial class ExplorerView : UserControl
             Console.WriteLine(e);
             MainView.ShowWarningMessage("An Error has occurred.", e.Message);
         }
+    }
+    
+    private void ToggleSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        SearchGroup.IsVisible = ToggleSearch.IsChecked ?? false;
     }
 }

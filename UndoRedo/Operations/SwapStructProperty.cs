@@ -5,11 +5,11 @@ namespace MercuryTools.UndoRedo.Operations;
 
 public class SwapStructProperty(List<StructPropertyData> table, StructPropertyData dataA, StructPropertyData dataB, int indexA, int indexB) : IOperation
 {
-    private readonly List<StructPropertyData> Table = table;
-    private readonly StructPropertyData DataA = dataA;
-    private readonly StructPropertyData DataB = dataB;
-    private readonly int IndexA = indexA;
-    private readonly int IndexB = indexB;
+    public readonly List<StructPropertyData> Table = table;
+    public readonly StructPropertyData DataA = dataA;
+    public readonly StructPropertyData DataB = dataB;
+    public readonly int IndexA = indexA;
+    public readonly int IndexB = indexB;
     
     public void Undo()
     {

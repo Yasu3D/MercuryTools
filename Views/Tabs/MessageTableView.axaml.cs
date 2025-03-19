@@ -1,8 +1,10 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using MercuryTools.UndoRedo.Operations;
 using UAssetAPI.PropertyTypes.Objects;
 using UAssetAPI.PropertyTypes.Structs;
+using UAssetAPI.UnrealTypes;
 
 namespace MercuryTools.Views.Tabs;
 
@@ -31,8 +33,6 @@ public partial class MessageTableView : TableTab
         explorerView.TreeViewElementList.SelectionChanged += TreeView_OnSelectionChanged;
     }
 
-    private bool ignoreTextChanged;
-
     protected override StructPropertyData NewData => new()
     {
         Name = new(asset, "NO_NAME"),
@@ -49,19 +49,16 @@ public partial class MessageTableView : TableTab
         ],
     };
 
-    private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args)
+    protected override void ReloadContent()
     {
-        if (explorerView == null) return;
-        
-        // Get Selected Item
-        if (explorerView.TreeViewElementList?.SelectedItem is not TreeViewItem item)
+        if (explorerView?.SelectedItem == null)
         {
             ContentGroup.IsVisible = false;
             return;
         }
 
-        // Get connected Data
-        if (item.Tag is not StructPropertyData data)
+        // Get selected item and connected Data
+        if (explorerView.SelectedItem.Tag is not StructPropertyData data)
         {
             ContentGroup.IsVisible = false;
             return;
@@ -77,12 +74,12 @@ public partial class MessageTableView : TableTab
             StrPropertyData? traditionalChineseMessageHK = (StrPropertyData?)data.Value[4];
             StrPropertyData? simplifiedChineseMessage = (StrPropertyData?)data.Value[5];
             StrPropertyData? koreanMessage = (StrPropertyData?)data.Value[6];
+
+            ignoreDataChange = true;
             
+            // Set TextBoxes to StructPropertyData contents
             ContentGroup.IsVisible = true;
             TextBoxName.Text = data.Name.Value.Value;
-            
-            // Set TextBoxes to StringProperty contents
-            ignoreTextChanged = true;
             
             TextBoxJapaneseMessage.Text = japaneseMessage?.Value?.Value ?? "";
             TextBoxEnglishMessageUSA.Text = englishMessageUSA?.Value?.Value ?? "";
@@ -91,8 +88,123 @@ public partial class MessageTableView : TableTab
             TextBoxTraditionalChineseMessageHK.Text = traditionalChineseMessageHK?.Value?.Value ?? "";
             TextBoxSimplifiedChineseMessage.Text = simplifiedChineseMessage?.Value?.Value ?? "";
             TextBoxKoreanMessage.Text = koreanMessage?.Value?.Value ?? "";
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
+        }
+        finally
+        {
+            ignoreDataChange = false;
+        }
+    }
+    
+    private void TextBox_OnTextChanging(object? sender, TextChangingEventArgs args)
+    {
+        if (ignoreDataChange) return;
+        
+        if (asset == null) return;
+        if (undoRedoManager == null) return;
+        if (explorerView?.SelectedItem == null) return;
+        if (sender is not TextBox textBox) return;
+        
+        try
+        {
+            TreeViewItem item = explorerView.SelectedItem;
+            if (item.Tag is not StructPropertyData data) return;
+            
+            switch (textBox.Name)
+            {
+                case "TextBoxName":
+                {
+                    FName oldName = data.Name;
+                    FName newName = new(asset, TextBoxName.Text);
 
-            ignoreTextChanged = false;
+                    ModifyStructPropertyName operation = new(data, oldName, newName);
+                    undoRedoManager.InvokeAndPush(operation);
+                    break;
+                }
+                
+                case "TextBoxJapaneseMessage":
+                {
+                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[0];
+                    FString oldValue = strPropertyData.Value;
+                    FString newValue = new(TextBoxJapaneseMessage.Text);
+
+                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    undoRedoManager.InvokeAndPush(operation);
+                    break;
+                }
+                
+                case "TextBoxEnglishMessageUSA":
+                { 
+                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[1];
+                    FString oldValue = strPropertyData.Value;
+                    FString newValue = new(TextBoxEnglishMessageUSA.Text);
+
+                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    undoRedoManager.InvokeAndPush(operation);
+                    break; 
+                }
+                
+                case "TextBoxEnglishMessageSG":
+                { 
+                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[2];
+                    FString oldValue = strPropertyData.Value;
+                    FString newValue = new(TextBoxEnglishMessageSG.Text);
+
+                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    undoRedoManager.InvokeAndPush(operation);
+                    break; 
+                }
+                
+                case "TextBoxTraditionalChineseMessageTW":
+                { 
+                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[3];
+                    FString oldValue = strPropertyData.Value;
+                    FString newValue = new(TextBoxTraditionalChineseMessageTW.Text);
+
+                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    undoRedoManager.InvokeAndPush(operation);
+                    break; 
+                }
+                
+                case "TextBoxTraditionalChineseMessageHK":
+                { 
+                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[4];
+                    FString oldValue = strPropertyData.Value;
+                    FString newValue = new(TextBoxTraditionalChineseMessageHK.Text);
+
+                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    undoRedoManager.InvokeAndPush(operation);
+                    break; 
+                }
+                
+                case "TextBoxSimplifiedChineseMessage":
+                { 
+                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[5];
+                    FString oldValue = strPropertyData.Value;
+                    FString newValue = new(TextBoxSimplifiedChineseMessage.Text);
+
+                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    undoRedoManager.InvokeAndPush(operation);
+                    break; 
+                }
+                
+                case "TextBoxKoreanMessage":
+                { 
+                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[6];
+                    FString oldValue = strPropertyData.Value;
+                    FString newValue = new(TextBoxKoreanMessage.Text);
+
+                    ModifyStringPropertyDataValue operation = new(strPropertyData, oldValue, newValue);
+                    undoRedoManager.InvokeAndPush(operation);
+                    break; 
+                }
+            }
+
+            RebuildTreeView();
         }
         catch (Exception e)
         {
@@ -101,83 +213,7 @@ public partial class MessageTableView : TableTab
         }
     }
     
-    private void TextBox_OnTextChanged(object? sender, TextChangedEventArgs args)
-    {
-        if (asset == null) return;
-        if (ignoreTextChanged) return;
-        if (explorerView?.TreeViewElementList?.SelectedItem == null) return;
-        if (sender is not TextBox textBox) return;
-        
-        try
-        {
-            TreeViewItem item = (TreeViewItem)explorerView.TreeViewElementList.SelectedItem;
-            if (item.Tag is not StructPropertyData data) return;
-            
-            switch (textBox.Name)
-            {
-                case "TextBoxName":
-                {
-                    data.Name = new(asset, Utils.InputOrDefault(TextBoxName.Text));
-                    item.Header = TextBoxName.Text;
-                    break;
-                }
-                
-                case "TextBoxJapaneseMessage":
-                {
-                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[0];
-                    strPropertyData.Value = Utils.InputOrDefault(TextBoxJapaneseMessage.Text);
-                    break; 
-                }
-                
-                case "TextBoxEnglishMessageUSA":
-                { 
-                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[1];
-                    strPropertyData.Value = Utils.InputOrDefault(TextBoxEnglishMessageUSA.Text);
-                    break; 
-                }
-                
-                case "TextBoxEnglishMessageSG":
-                { 
-                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[2];
-                    strPropertyData.Value = Utils.InputOrDefault(TextBoxEnglishMessageSG.Text);
-                    break; 
-                }
-                
-                case "TextBoxTraditionalChineseMessageTW":
-                { 
-                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[3];
-                    strPropertyData.Value = Utils.InputOrDefault(TextBoxTraditionalChineseMessageTW.Text);
-                    break; 
-                }
-                
-                case "TextBoxTraditionalChineseMessageHK":
-                { 
-                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[4];
-                    strPropertyData.Value = Utils.InputOrDefault(TextBoxTraditionalChineseMessageHK.Text);
-                    break; 
-                }
-                
-                case "TextBoxSimplifiedChineseMessage":
-                { 
-                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[5];
-                    strPropertyData.Value = Utils.InputOrDefault(TextBoxSimplifiedChineseMessage.Text);
-                    break; 
-                }
-                
-                case "TextBoxKoreanMessage":
-                { 
-                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[6];
-                    strPropertyData.Value = Utils.InputOrDefault(TextBoxKoreanMessage.Text);
-                    break; 
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
-        }
-    }
+    private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => ReloadContent();
 
     private void ButtonSave_OnClick(object? sender, RoutedEventArgs args) => Save();
     private void ButtonOpen_OnClick(object? sender, RoutedEventArgs args) => Open();
