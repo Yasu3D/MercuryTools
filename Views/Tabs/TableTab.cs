@@ -28,6 +28,8 @@ public abstract class TableTab : UserControl
     protected bool SearchCaseSensitive => explorerView?.ToggleCaseSensitive.IsChecked ?? false;
     
     protected bool ignoreDataChange;
+
+    protected abstract bool FormatCheck();
     
     protected abstract bool ContentContainsQuery(StructPropertyData data);
     
@@ -91,6 +93,8 @@ public abstract class TableTab : UserControl
             assetBackup = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
 
             UpdateTreeView(true);
+
+            if (!FormatCheck()) throw new FormatException("Provided .uasset file is not a valid Message Table.");
         }
         catch (Exception e)
         {

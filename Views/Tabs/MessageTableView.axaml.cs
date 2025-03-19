@@ -53,6 +53,31 @@ public partial class MessageTableView : TableTab
         ],
     };
 
+    protected override bool FormatCheck()
+    {
+        return table.Count == 0 || table[0].Value[0].Name.ToString() == "JapaneseMessage";
+    }
+    
+    protected override bool ContentContainsQuery(StructPropertyData data)
+    {
+        StringComparison comparison = SearchCaseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+        
+        // Check Name
+        string? name = data.Name.Value?.Value;
+        if (name != null && name.Contains(SearchQuery, comparison)) return true;
+        
+        // Check 7 Locales
+        for (int i = 0; i < 7; i++)
+        {
+            string? value = ((StrPropertyData)data.Value[i]).Value?.Value;
+            
+            if (value == null) continue;
+            if (value.Contains(SearchQuery, comparison)) return true;
+        }
+        
+        return false;
+    }
+    
     protected override void UpdateContent(bool ignoreChange)
     {
         if (explorerView?.SelectedItem == null)
@@ -102,26 +127,6 @@ public partial class MessageTableView : TableTab
         {
             if (ignoreChange) ignoreDataChange = false;
         }
-    }
-
-    protected override bool ContentContainsQuery(StructPropertyData data)
-    {
-        StringComparison comparison = SearchCaseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
-        
-        // Check Name
-        string? name = data.Name.Value?.Value;
-        if (name != null && name.Contains(SearchQuery, comparison)) return true;
-        
-        // Check 7 Locales
-        for (int i = 0; i < 7; i++)
-        {
-            string? value = ((StrPropertyData)data.Value[i]).Value?.Value;
-            
-            if (value == null) continue;
-            if (value.Contains(SearchQuery, comparison)) return true;
-        }
-        
-        return false;
     }
     
     private void TextBox_OnTextChanging(object? sender, TextChangingEventArgs args)
