@@ -23,16 +23,47 @@ public abstract class TableTab : UserControl
     
     protected List<StructPropertyData> table => ((DataTableExport)asset!.Exports[0]).Table.Data;
     protected abstract StructPropertyData NewData { get; }
+
+    protected string SearchQuery => explorerView?.TextBoxSearch.Text ?? "";
+    protected bool SearchCaseSensitive => explorerView?.ToggleCaseSensitive.IsChecked ?? false;
     
     protected bool ignoreDataChange;
     
     protected abstract void ReloadContent(bool ignoreChange);
 
+    protected abstract bool ContentContainsQuery(StructPropertyData data);
+
+    protected void SearchContent()
+    {
+        if (explorerView == null) return;
+        
+        // Set TreeViewItems to default state if not actively searching for anything.
+        if (!explorerView.ToggleSearch.IsChecked ?? string.IsNullOrEmpty(SearchQuery))
+        {
+            foreach (TreeViewItem? item in explorerView.TreeViewElementList.Items)
+            {
+                if (item == null) continue;
+                item.IsVisible = true;
+            }
+
+            return;
+        }
+
+        // Loop through TreeViewItems to check if they match the query.
+        foreach (TreeViewItem? item in explorerView.TreeViewElementList.Items)
+        {
+            if (item?.Tag is not StructPropertyData data) continue;
+            
+            item.IsVisible = ContentContainsQuery(data);
+        }
+    }
+    
     protected void RebuildTreeView(bool ignoreChange)
     {
         if (ignoreChange) ignoreDataChange = true;
         
         explorerView?.RebuildTreeView(table);
+        SearchContent();
         
         if (ignoreChange) ignoreDataChange = false;
     }

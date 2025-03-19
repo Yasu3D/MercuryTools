@@ -16,6 +16,10 @@ public partial class MessageTableView : TableTab
         mainView = main;
         explorerView = Explorer;
         undoRedoManager = new();
+
+        explorerView.TextBoxSearch.TextChanging += TextBoxSearch_OnTextChanging;
+        explorerView.ToggleSearch.IsCheckedChanged += ToggleSearch_OnIsCheckedChanged;
+        explorerView.ToggleCaseSensitive.IsCheckedChanged += ToggleCaseSensitive_OnIsCheckedChanged;
         
         explorerView.ButtonSave.Click += ButtonSave_OnClick;
         explorerView.ButtonOpen.Click += ButtonOpen_OnClick;
@@ -99,6 +103,26 @@ public partial class MessageTableView : TableTab
             if (ignoreChange) ignoreDataChange = false;
         }
     }
+
+    protected override bool ContentContainsQuery(StructPropertyData data)
+    {
+        StringComparison comparison = SearchCaseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+        
+        // Check Name
+        string? name = data.Name.Value?.Value;
+        if (name != null && name.Contains(SearchQuery, comparison)) return true;
+        
+        // Check 7 Locales
+        for (int i = 0; i < 7; i++)
+        {
+            string? value = ((StrPropertyData)data.Value[i]).Value?.Value;
+            
+            if (value == null) continue;
+            if (value.Contains(SearchQuery, comparison)) return true;
+        }
+        
+        return false;
+    }
     
     private void TextBox_OnTextChanging(object? sender, TextChangingEventArgs args)
     {
@@ -123,6 +147,8 @@ public partial class MessageTableView : TableTab
 
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.InvokeAndPush(operation);
+                    
+                    RebuildTreeView(true);
                     break;
                 }
                 
@@ -203,8 +229,6 @@ public partial class MessageTableView : TableTab
                     break; 
                 }
             }
-
-            RebuildTreeView(true);
         }
         catch (Exception e)
         {
@@ -215,6 +239,10 @@ public partial class MessageTableView : TableTab
     
     private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => ReloadContent(true);
 
+    private void TextBoxSearch_OnTextChanging(object? sender, TextChangingEventArgs args) => SearchContent();
+    private void ToggleSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
+    private void ToggleCaseSensitive_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
+    
     private void ButtonSave_OnClick(object? sender, RoutedEventArgs args) => Save();
     private void ButtonOpen_OnClick(object? sender, RoutedEventArgs args) => Open();
     private void ButtonUndo_OnClick(object? sender, RoutedEventArgs args) => Undo();
