@@ -93,47 +93,47 @@ public partial class MainView : UserControl
         
         if (args.Key is Key.O && args.KeyModifiers.HasFlag(KeyModifiers.Control))
         {
-            tab.ButtonOpen_OnClick(this, null!);
+            tab.Open();
         }
         
         if (args.Key is Key.S && args.KeyModifiers.HasFlag(KeyModifiers.Control))
         {
-            tab.ButtonSave_OnClick(this, null!);
+            tab.Save();
         }
         
         if (args.Key is Key.Z && args.KeyModifiers.HasFlag(KeyModifiers.Control))
         {
-            tab.ButtonUndo_OnClick(this, null!);
+            tab.Undo();
         }
         
         if (args.Key is Key.Y && args.KeyModifiers.HasFlag(KeyModifiers.Control))
         {
-            tab.ButtonRedo_OnClick(this, null!);
+            tab.Redo();
         }
         
         if (args.Key is Key.Insert)
         {
-            tab.ButtonAddElement_OnClick(this, null!);
+            tab.AddElement();
         }
         
         if (args.Key is Key.D && args.KeyModifiers.HasFlag(KeyModifiers.Control))
         {
-            tab.ButtonDuplicateElement_OnClick(this, null!);
+            tab.DuplicateElement();
         }
         
         if (args.Key is Key.Delete)
         {
-            tab.ButtonDeleteElement_OnClick(this, null!);
+            tab.DeleteElement();
         }
         
         if (args.Key is Key.Up && args.KeyModifiers.HasFlag(KeyModifiers.Alt))
         {
-            tab.ButtonMoveElementUp_OnClick(this, null!);
+            tab.MoveElement(ElementMoveDirection.Up);
         }
         
         if (args.Key is Key.Down && args.KeyModifiers.HasFlag(KeyModifiers.Alt))
         {
-            tab.ButtonMoveElementDown_OnClick(this, null!);
+            tab.MoveElement(ElementMoveDirection.Down);
         }
     }
     
