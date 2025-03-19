@@ -17,6 +17,8 @@ public partial class MessageTableView : TableTab
         explorerView = Explorer;
         undoRedoManager = new();
 
+        undoRedoManager.OperationHistoryChanged += UpdateUndoRedoButtons;
+
         explorerView.TextBoxSearch.TextChanging += TextBoxSearch_OnTextChanging;
         explorerView.ToggleSearch.IsCheckedChanged += ToggleSearch_OnIsCheckedChanged;
         explorerView.ToggleCaseSensitive.IsCheckedChanged += ToggleCaseSensitive_OnIsCheckedChanged;
@@ -151,7 +153,7 @@ public partial class MessageTableView : TableTab
                     FName newName = new(asset, TextBoxName.Text);
 
                     ModifyStructPropertyName operation = new(data, oldName, newName);
-                    undoRedoManager.InvokeAndPush(operation);
+                    undoRedoManager.RedoAndPush(operation);
                     
                     UpdateTreeView(true);
                     break;
@@ -164,7 +166,7 @@ public partial class MessageTableView : TableTab
                     FString newValue = new(TextBoxJapaneseMessage.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
-                    undoRedoManager.InvokeAndPush(operation);
+                    undoRedoManager.RedoAndPush(operation);
                     break;
                 }
                 
@@ -175,7 +177,7 @@ public partial class MessageTableView : TableTab
                     FString newValue = new(TextBoxEnglishMessageUSA.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
-                    undoRedoManager.InvokeAndPush(operation);
+                    undoRedoManager.RedoAndPush(operation);
                     break; 
                 }
                 
@@ -186,7 +188,7 @@ public partial class MessageTableView : TableTab
                     FString newValue = new(TextBoxEnglishMessageSG.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
-                    undoRedoManager.InvokeAndPush(operation);
+                    undoRedoManager.RedoAndPush(operation);
                     break; 
                 }
                 
@@ -197,7 +199,7 @@ public partial class MessageTableView : TableTab
                     FString newValue = new(TextBoxTraditionalChineseMessageTW.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
-                    undoRedoManager.InvokeAndPush(operation);
+                    undoRedoManager.RedoAndPush(operation);
                     break; 
                 }
                 
@@ -208,7 +210,7 @@ public partial class MessageTableView : TableTab
                     FString newValue = new(TextBoxTraditionalChineseMessageHK.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
-                    undoRedoManager.InvokeAndPush(operation);
+                    undoRedoManager.RedoAndPush(operation);
                     break; 
                 }
                 
@@ -219,7 +221,7 @@ public partial class MessageTableView : TableTab
                     FString newValue = new(TextBoxSimplifiedChineseMessage.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
-                    undoRedoManager.InvokeAndPush(operation);
+                    undoRedoManager.RedoAndPush(operation);
                     break; 
                 }
                 
@@ -230,7 +232,7 @@ public partial class MessageTableView : TableTab
                     FString newValue = new(TextBoxKoreanMessage.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
-                    undoRedoManager.InvokeAndPush(operation);
+                    undoRedoManager.RedoAndPush(operation);
                     break; 
                 }
             }

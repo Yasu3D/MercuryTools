@@ -42,7 +42,7 @@
                     
             <StackPanel Grid.Column="2" Orientation="Horizontal">
                 
-                <Button VerticalAlignment="Center" HorizontalAlignment="Right" Width="22" Height="22" Margin="0,9,5,9" Name="ButtonUndo" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0">
+                <Button VerticalAlignment="Center" HorizontalAlignment="Right" Width="22" Height="22" Margin="0,9,5,9" Name="ButtonUndo" IsEnabled="False" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Undo"/>
@@ -52,7 +52,7 @@
                     <PathIcon Data="{DynamicResource IconUndo}" Width="14" Height="14"/>
                 </Button>
                     
-                <Button VerticalAlignment="Center" HorizontalAlignment="Right" Width="22" Height="22" Margin="0,9,5,9" Name="ButtonRedo" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0">
+                <Button VerticalAlignment="Center" HorizontalAlignment="Right" Width="22" Height="22" Margin="0,9,5,9" Name="ButtonRedo" IsEnabled="False" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0">
                     <ToolTip.Tip>
                         <StackPanel>
                             <TextBlock Text="Redo"/>

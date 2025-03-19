@@ -69,6 +69,14 @@ public abstract class TableTab : UserControl
             item.IsVisible = ContentContainsQuery(data);
         }
     }
+
+    protected void UpdateUndoRedoButtons(object? sender, EventArgs args)
+    {
+        if (explorerView == null) return;
+        
+        explorerView.ButtonUndo.IsEnabled = undoRedoManager?.CanUndo ?? false;
+        explorerView.ButtonRedo.IsEnabled = undoRedoManager?.CanRedo ?? false;
+    }
     
     public void Save()
     {
@@ -167,7 +175,7 @@ public abstract class TableTab : UserControl
             // Switch Data
             StructPropertyData dataB = table[indexB];
             SwapStructProperty operation = new(table, dataA, dataB, indexA, indexB);
-            undoRedoManager.InvokeAndPush(operation);
+            undoRedoManager.RedoAndPush(operation);
 
             UpdateTreeView(true);
         }
@@ -189,7 +197,7 @@ public abstract class TableTab : UserControl
             // Create and add new Data
             // Index is table.Count because the item is added at the very end of the list.
             AddStructProperty operation = new(table, NewData, table.Count);
-            undoRedoManager.InvokeAndPush(operation);
+            undoRedoManager.RedoAndPush(operation);
             
             UpdateTreeView(true);
         }
@@ -216,7 +224,7 @@ public abstract class TableTab : UserControl
             int index = table.IndexOf(data);
             
             AddStructProperty operation = new(table, duplicateData, index);
-            undoRedoManager.InvokeAndPush(operation);
+            undoRedoManager.RedoAndPush(operation);
             
             UpdateTreeView(true);
         }
@@ -244,7 +252,7 @@ public abstract class TableTab : UserControl
             if (index == -1) return;
             
             RemoveStructProperty operation = new(table, data, index);
-            undoRedoManager.InvokeAndPush(operation);
+            undoRedoManager.RedoAndPush(operation);
 
             UpdateTreeView(true);
         }

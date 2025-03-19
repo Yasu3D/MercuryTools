@@ -15,11 +15,6 @@ public class UndoRedoManager
     public IOperation PeekRedo => RedoStack.Peek();
 
     public event EventHandler? OperationHistoryChanged;
-
-    public void Invoke()
-    {
-        OperationHistoryChanged?.Invoke(this, EventArgs.Empty);
-    }
     
     public void Push(IOperation operation)
     {
@@ -28,12 +23,10 @@ public class UndoRedoManager
         OperationHistoryChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void InvokeAndPush(IOperation operation)
+    public void RedoAndPush(IOperation operation)
     {
         operation.Redo();
         Push(operation);
-        
-        Console.WriteLine(operation);
     }
 
     public IOperation Undo()
