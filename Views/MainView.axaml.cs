@@ -56,18 +56,19 @@ public partial class MainView : UserControl
 
         ViewContainer.Content = selected.Name switch
         {
-            "TabIconTable"          => iconTableView,
-            "TabPlateTable"         => plateTableView,
-            "TabGradeTable"         => gradeTableView,
-            "TabGradePartsTable"    => gradePartsTableView,
-            "TabBossStageTable"     => bossStageTableView,
-            "TabInfernoUnlockTable" => infernoUnlockTableView,
-            "TabMusicUnlockTable"   => musicUnlockTableView,
-            "TabItemUnlockTable"    => itemUnlockTableView,
-            "TabConditionTable"     => conditionTableView,
-            "TabGateTable"          => gateTableView,
-            "TabGateStepTable"      => gateStepTableView,
-            "TabMessageTable"       => messageTableView,
+            "TabIconTable"           => iconTableView,
+            "TabPlateTable"          => plateTableView,
+            "TabGradeTable"          => gradeTableView,
+            "TabGradePartsTable"     => gradePartsTableView,
+            "TabMusicParameterTable" => null,
+            "TabBossStageTable"      => bossStageTableView,
+            "TabInfernoUnlockTable"  => infernoUnlockTableView,
+            "TabMusicUnlockTable"    => musicUnlockTableView,
+            "TabItemUnlockTable"     => itemUnlockTableView,
+            "TabConditionTable"      => conditionTableView,
+            "TabGateTable"           => gateTableView,
+            "TabGateStepTable"       => gateStepTableView,
+            "TabMessageTable"        => messageTableView,
             _ => throw new ArgumentOutOfRangeException(),
         };
     }
@@ -88,7 +89,7 @@ public partial class MainView : UserControl
         }
         
         // Very very janky.
-        if (ViewContainer.Content is not Tab tab) return;
+        if (ViewContainer.Content is not TableTab tab) return;
         
         if (args.Key is Key.O && args.KeyModifiers.HasFlag(KeyModifiers.Control))
         {
@@ -108,6 +109,21 @@ public partial class MainView : UserControl
         if (args.Key is Key.Y && args.KeyModifiers.HasFlag(KeyModifiers.Control))
         {
             tab.ButtonRedo_OnClick(this, null!);
+        }
+        
+        if (args.Key is Key.Insert)
+        {
+            tab.ButtonAddElement_OnClick(this, null!);
+        }
+        
+        if (args.Key is Key.D && args.KeyModifiers.HasFlag(KeyModifiers.Control))
+        {
+            tab.ButtonDuplicateElement_OnClick(this, null!);
+        }
+        
+        if (args.Key is Key.Delete)
+        {
+            tab.ButtonDeleteElement_OnClick(this, null!);
         }
         
         if (args.Key is Key.Up && args.KeyModifiers.HasFlag(KeyModifiers.Alt))

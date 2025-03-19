@@ -34,22 +34,24 @@ public class UndoRedoManager
         Push(operation);
     }
 
-    public IOperation Undo()
+    public void Undo()
     {
+        if (!CanUndo) return;
+            
         IOperation operation = UndoStack.Pop();
         operation.Undo();
         RedoStack.Push(operation);
         OperationHistoryChanged?.Invoke(this, EventArgs.Empty);
-        return operation;
     }
 
-    public IOperation Redo()
+    public void Redo()
     {
+        if (!CanRedo) return;
+        
         IOperation operation = RedoStack.Pop();
         operation.Redo();
         UndoStack.Push(operation);
         OperationHistoryChanged?.Invoke(this, EventArgs.Empty);
-        return operation;
     }
 
     public void Clear()

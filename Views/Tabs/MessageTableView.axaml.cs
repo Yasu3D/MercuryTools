@@ -1,8 +1,10 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
+using MercuryTools.UndoRedo;
+using MercuryTools.UndoRedo.Operations;
 using UAssetAPI;
 using UAssetAPI.ExportTypes;
 using UAssetAPI.PropertyTypes.Objects;
@@ -11,264 +13,61 @@ using UAssetAPI.UnrealTypes;
 
 namespace MercuryTools.Views.Tabs;
 
-public partial class MessageTableView : Tab
+public partial class MessageTableView : TableTab
 {
     public MessageTableView(MainView main)
     {
         InitializeComponent();
         mainView = main;
+        explorerView = Explorer; // a bit of a hacky workaround but.. whatever.
+        undoRedoManager = new();
         
-        Explorer.ButtonSave.Click += ButtonSave_OnClick;
-        Explorer.ButtonOpen.Click += ButtonOpen_OnClick;
+        explorerView.ButtonSave.Click += ButtonSave_OnClick;
+        explorerView.ButtonOpen.Click += ButtonOpen_OnClick;
         
-        Explorer.ButtonUndo.Click += ButtonUndo_OnClick;
-        Explorer.ButtonRedo.Click += ButtonRedo_OnClick;
+        explorerView.ButtonUndo.Click += ButtonUndo_OnClick;
+        explorerView.ButtonRedo.Click += ButtonRedo_OnClick;
         
-        Explorer.ButtonMoveElementUp.Click += ButtonMoveElementUp_OnClick;
-        Explorer.ButtonMoveElementDown.Click += ButtonMoveElementDown_OnClick;
+        explorerView.ButtonMoveElementUp.Click += ButtonMoveElementUp_OnClick;
+        explorerView.ButtonMoveElementDown.Click += ButtonMoveElementDown_OnClick;
         
-        Explorer.ButtonAddElement.Click += ButtonAddElement_OnClick;
-        Explorer.ButtonDuplicateElement.Click += ButtonDuplicateElement_OnClick;
-        Explorer.ButtonDeleteElement.Click += ButtonDeleteElement_OnClick;
+        explorerView.ButtonAddElement.Click += ButtonAddElement_OnClick;
+        explorerView.ButtonDuplicateElement.Click += ButtonDuplicateElement_OnClick;
+        explorerView.ButtonDeleteElement.Click += ButtonDeleteElement_OnClick;
         
-        Explorer.TreeViewElementList.SelectionChanged += TreeView_OnSelectionChanged;
+        explorerView.TreeViewElementList.SelectionChanged += TreeView_OnSelectionChanged;
     }
 
     private readonly MainView mainView;
+    private readonly ExplorerView explorerView;
+    private readonly UndoRedoManager undoRedoManager;
+        
     private UAsset? asset;
+    private UAsset? assetBackup;
     
-    public override void ButtonSave_OnClick(object? sender, RoutedEventArgs args) => asset?.Write(asset.FilePath);
-
-    public override async void ButtonOpen_OnClick(object? sender, RoutedEventArgs args)
+    private List<StructPropertyData> table => ((DataTableExport)asset!.Exports[0]).Table.Data;
+    private StructPropertyData NewData => new()
     {
-        IStorageFile? file = await mainView.OpenUAssetFile();
-        if (file == null) return;
+        Name = new(asset, "NO_NAME"),
+        StructType = new(asset, "MessageData"),
+        Value =
+        [
+            new StrPropertyData(new(asset, "JapaneseMessage")),
+            new StrPropertyData(new(asset, "EnglishMessageUSA")),
+            new StrPropertyData(new(asset, "EnglishMessageSG")),
+            new StrPropertyData(new(asset, "TraditionalChineseMessageTW")),
+            new StrPropertyData(new(asset, "TraditionalChineseMessageHK")),
+            new StrPropertyData(new(asset, "SimplifiedChineseMessage")),
+            new StrPropertyData(new(asset, "KoreanMessage")),
+        ],
+    };
 
-        try
-        {
-            asset = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
-            RebuildTreeView();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
-        }
-    }
-
-    public override void ButtonUndo_OnClick(object? sender, RoutedEventArgs args)
-    {
-        
-    }
-    
-    public override void ButtonRedo_OnClick(object? sender, RoutedEventArgs args)
-    {
-        
-    }
-    
-    public override void ButtonMoveElementUp_OnClick(object? sender, RoutedEventArgs args)
-    {
-        if (asset == null) return;
-        if (Explorer.TreeViewElementList?.SelectedItem == null) return;
-        
-        try
-        {
-            // Get Selected Item and connected Data
-            TreeViewItem item = (TreeViewItem)Explorer.TreeViewElementList.SelectedItem;
-            if (item.Tag is not StructPropertyData data) return;
-            
-            // Get Index
-            DataTableExport export = (DataTableExport)asset.Exports[0];
-            int index = export.Table.Data.IndexOf(data);
-            int neighborIndex = index - 1;
-            
-            if (neighborIndex < 0) return; // Trying to move first element up, skip.
-            
-            // Switch Data
-            StructPropertyData neighborData = export.Table.Data[neighborIndex];
-            export.Table.Data[index] = neighborData;
-            export.Table.Data[neighborIndex] = data;
-            
-            RebuildTreeView();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
-        }
-    }
-    
-    public override void ButtonMoveElementDown_OnClick(object? sender, RoutedEventArgs args)
-    {
-        if (asset == null) return;
-        if (Explorer.TreeViewElementList?.SelectedItem == null) return;
-        
-        try
-        {
-            // Get Selected Item and connected Data
-            TreeViewItem item = (TreeViewItem)Explorer.TreeViewElementList.SelectedItem;
-            if (item.Tag is not StructPropertyData data) return;
-            
-            // Get Index
-            DataTableExport export = (DataTableExport)asset.Exports[0];
-            int index = export.Table.Data.IndexOf(data);
-            int neighborIndex = index + 1;
-            
-            if (neighborIndex >= export.Table.Data.Count) return; // Trying to move last element down, skip.
-            
-            // Switch Data
-            StructPropertyData neighborData = export.Table.Data[neighborIndex];
-            export.Table.Data[index] = neighborData;
-            export.Table.Data[neighborIndex] = data;
-            
-            RebuildTreeView();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
-        }
-    }
-    
-    public override void ButtonAddElement_OnClick(object? sender, RoutedEventArgs args)
-    {
-        if (asset == null) return;
-        if (Explorer.TreeViewElementList?.SelectedItem == null) return;
-
-        try
-        {
-            // Create new Data
-            FName name = new(asset, "NO_NAME");
-            FName type = new(asset, "MessageData");
-            StructPropertyData newData = new(name, type)
-            {
-                Value =
-                [
-                    new StrPropertyData(new(asset, "JapaneseMessage")),
-                    new StrPropertyData(new(asset, "EnglishMessageUSA")),
-                    new StrPropertyData(new(asset, "EnglishMessageSG")),
-                    new StrPropertyData(new(asset, "TraditionalChineseMessageTW")),
-                    new StrPropertyData(new(asset, "TraditionalChineseMessageHK")),
-                    new StrPropertyData(new(asset, "SimplifiedChineseMessage")),
-                    new StrPropertyData(new(asset, "KoreanMessage")),
-                ],
-            };
-
-            // Add new Data
-            DataTableExport export = (DataTableExport)asset.Exports[0];
-            export.Table.Data.Add(newData);
-            
-            RebuildTreeView();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
-        }
-    }
-    
-    public override void ButtonDuplicateElement_OnClick(object? sender, RoutedEventArgs args)
-    {
-        if (asset == null) return;
-        if (Explorer.TreeViewElementList?.SelectedItem == null) return;
-
-        try
-        {
-            TreeViewItem item = (TreeViewItem)Explorer.TreeViewElementList.SelectedItem;
-            if (item.Tag is not StructPropertyData data) return;
-
-            StructPropertyData duplicateData = (StructPropertyData)data.Clone();
-            
-            // Get Index
-            DataTableExport export = (DataTableExport)asset.Exports[0];
-            int index = export.Table.Data.IndexOf(data);
-            
-            // Add data to Table
-            export.Table.Data.Insert(index, duplicateData);
-            
-            RebuildTreeView();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
-        }
-    }
-    
-    public override void ButtonDeleteElement_OnClick(object? sender, RoutedEventArgs args)
-    {
-        if (asset == null) return;
-        if (Explorer.TreeViewElementList?.SelectedItem == null) return;
-
-        try
-        {
-            // Get Selected Item and connected Data
-            TreeViewItem item = (TreeViewItem)Explorer.TreeViewElementList.SelectedItem;
-            if (item.Tag is not StructPropertyData data) return;
-            
-            // Remove data from Table
-            DataTableExport export = (DataTableExport)asset.Exports[0];
-            export.Table.Data.Remove(data);
-
-            RebuildTreeView();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
-        }
-    }
-
-    private void RebuildTreeView()
-    {
-        if (asset == null) return;
-        if (Explorer.TreeViewElementList == null) return;
-
-        try
-        {
-            // Save selected Data
-            object? selectedData = null;
-            if (Explorer.TreeViewElementList.SelectedItem is TreeViewItem selectedItem)
-            {
-                selectedData = selectedItem.Tag;
-            }
-
-            // Clear TreeView
-            Explorer.TreeViewElementList.Items.Clear();
-
-            // Loop over Table contents and create a new TreeViewItem for each one.
-            DataTableExport export = (DataTableExport)asset.Exports[0];
-            foreach (StructPropertyData data in export.Table.Data)
-            {
-                // Crude format check. This code makes A LOT of assumptions :P
-                if (data.Value[0].Name.ToString() != "JapaneseMessage")
-                {
-                    throw new FormatException("Provided .uasset file is not a valid Message Table.");
-                }
-
-                TreeViewItem item = new()
-                {
-                    Header = data.Name,
-                    Tag = data,
-                };
-
-                Explorer.TreeViewElementList.Items.Add(item);
-            }
-            
-            // Reassign selection based on selected data.
-            Explorer.TreeViewElementList.SelectedItem = Explorer.TreeViewElementList.Items.FirstOrDefault(x => x is TreeViewItem item && item.Tag == selectedData);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
-        }
-    }
+    private bool ignoreTextChanged;
 
     private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args)
     {
         // Get Selected Item
-        if (Explorer?.TreeViewElementList?.SelectedItem is not TreeViewItem item)
+        if (explorerView.TreeViewElementList?.SelectedItem is not TreeViewItem item)
         {
             ContentGroup.IsVisible = false;
             return;
@@ -296,6 +95,8 @@ public partial class MessageTableView : Tab
             TextBoxName.Text = data.Name.Value.Value;
             
             // Set TextBoxes to StringProperty contents
+            ignoreTextChanged = true;
+            
             TextBoxJapaneseMessage.Text = japaneseMessage?.Value?.Value ?? "";
             TextBoxEnglishMessageUSA.Text = englishMessageUSA?.Value?.Value ?? "";
             TextBoxEnglishMessageSG.Text = englishMessageSG?.Value?.Value ?? "";
@@ -303,6 +104,8 @@ public partial class MessageTableView : Tab
             TextBoxTraditionalChineseMessageHK.Text = traditionalChineseMessageHK?.Value?.Value ?? "";
             TextBoxSimplifiedChineseMessage.Text = simplifiedChineseMessage?.Value?.Value ?? "";
             TextBoxKoreanMessage.Text = koreanMessage?.Value?.Value ?? "";
+
+            ignoreTextChanged = false;
         }
         catch (Exception e)
         {
@@ -314,12 +117,13 @@ public partial class MessageTableView : Tab
     private void TextBox_OnTextChanged(object? sender, TextChangedEventArgs args)
     {
         if (asset == null) return;
-        if (Explorer.TreeViewElementList?.SelectedItem == null) return;
+        if (ignoreTextChanged) return;
+        if (explorerView.TreeViewElementList?.SelectedItem == null) return;
         if (sender is not TextBox textBox) return;
         
         try
         {
-            TreeViewItem item = (TreeViewItem)Explorer.TreeViewElementList.SelectedItem;
+            TreeViewItem item = (TreeViewItem)explorerView.TreeViewElementList.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
             
             switch (textBox.Name)
@@ -380,6 +184,161 @@ public partial class MessageTableView : Tab
                     break; 
                 }
             }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
+        }
+    }
+    
+    private void MoveElement(ElementMoveDirection direction)
+    {
+        if (asset == null) return;
+        if (explorerView.TreeViewElementList?.SelectedItem == null) return;
+        
+        try
+        {
+            // Get Selected Item and connected Data
+            TreeViewItem item = (TreeViewItem)explorerView.TreeViewElementList.SelectedItem;
+            if (item.Tag is not StructPropertyData dataA) return;
+            
+            // Get Index
+            int indexA = table.IndexOf(dataA);
+            int indexB = indexA + (int)direction;
+            
+            if (indexB < 0) return; // Trying to move first element up, skip.
+            if (indexB >= table.Count) return; // Trying to move last element down, skip.
+            
+            // Switch Data
+            StructPropertyData dataB = table[indexB];
+            SwapStructProperty operation = new(table, dataA, dataB, indexA, indexB);
+            undoRedoManager.InvokeAndPush(operation);
+            
+            explorerView.RebuildTreeView(table);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
+        }
+    }
+    
+    public override void ButtonSave_OnClick(object? sender, RoutedEventArgs args)
+    {
+        asset?.Write(asset.FilePath);
+        assetBackup?.Write($"{assetBackup.FilePath}.bak");
+    }
+
+    public override async void ButtonOpen_OnClick(object? sender, RoutedEventArgs args)
+    {
+        IStorageFile? file = await mainView.OpenUAssetFile();
+        if (file == null) return;
+
+        try
+        {
+            asset = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
+            assetBackup = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
+            
+            explorerView.RebuildTreeView(table);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
+        }
+    }
+
+    public override void ButtonUndo_OnClick(object? sender, RoutedEventArgs args)
+    {
+        undoRedoManager.Undo();
+        explorerView.RebuildTreeView(table);
+    }
+
+    public override void ButtonRedo_OnClick(object? sender, RoutedEventArgs args)
+    {
+        undoRedoManager.Redo();
+        explorerView.RebuildTreeView(table);
+    }
+
+    public override void ButtonMoveElementUp_OnClick(object? sender, RoutedEventArgs args)
+    {
+        MoveElement(ElementMoveDirection.Up);
+    }
+
+    public override void ButtonMoveElementDown_OnClick(object? sender, RoutedEventArgs args)
+    {
+        MoveElement(ElementMoveDirection.Down);
+    }
+
+    public override void ButtonAddElement_OnClick(object? sender, RoutedEventArgs args)
+    {
+        if (asset == null) return;
+        if (explorerView.TreeViewElementList?.SelectedItem == null) return;
+
+        try
+        {
+            // Create and add new Data
+            // Index is table.Count because the item is added at the very end of the list.
+            AddStructProperty operation = new(table, NewData, table.Count);
+            undoRedoManager.InvokeAndPush(operation);
+            
+            explorerView.RebuildTreeView(table);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
+        }
+    }
+    
+    public override void ButtonDuplicateElement_OnClick(object? sender, RoutedEventArgs args)
+    {
+        if (asset == null) return;
+        if (explorerView.TreeViewElementList?.SelectedItem == null) return;
+
+        try
+        {
+            TreeViewItem item = (TreeViewItem)explorerView.TreeViewElementList.SelectedItem;
+            if (item.Tag is not StructPropertyData data) return;
+
+            StructPropertyData duplicateData = (StructPropertyData)data.Clone();
+            
+            // Get Index
+            DataTableExport export = (DataTableExport)asset.Exports[0];
+            int index = export.Table.Data.IndexOf(data);
+            
+            // Add data to Table
+            export.Table.Data.Insert(index, duplicateData);
+            
+            explorerView.RebuildTreeView(table);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
+        }
+    }
+    
+    public override void ButtonDeleteElement_OnClick(object? sender, RoutedEventArgs args)
+    {
+        if (asset == null) return;
+        if (explorerView.TreeViewElementList?.SelectedItem == null) return;
+
+        try
+        {
+            // Get Selected Item and connected Data
+            TreeViewItem item = (TreeViewItem)explorerView.TreeViewElementList.SelectedItem;
+            if (item.Tag is not StructPropertyData data) return;
+            
+            // Remove data from Table
+            int index = table.IndexOf(data);
+            if (index == -1) return;
+            
+            RemoveStructProperty operation = new(table, data, index);
+            undoRedoManager.InvokeAndPush(operation);
+
+            explorerView.RebuildTreeView(table);
         }
         catch (Exception e)
         {

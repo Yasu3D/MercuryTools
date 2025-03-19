@@ -74,9 +74,4 @@
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
-
-
-    <ItemGroup>
-      <Folder Include="UndoRedo\Operations\" />
-    </ItemGroup>
 </Project>

@@ -56,6 +56,18 @@
                 
                 <Rectangle Width="30" Height="1" Fill="{DynamicResource MenuBorderBrush}" Margin="5,8,5,3"/>
                 
+                <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabMusicParameterTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="Music Parameter Table"/>
+                            <TextBlock Text="MusicParameterTable.uasset" Foreground="{DynamicResource AnnotationBrush}"/>
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <PathIcon Data="{DynamicResource IconMusicNote}" Width="18" Height="18"/>
+                </RadioButton>
+                
+                <Rectangle Width="30" Height="1" Fill="{DynamicResource MenuBorderBrush}" Margin="5,8,5,3"/>
+                
                 <RadioButton Classes="ToggleRadio" GroupName="AssetTypeTabs" Name="TabBossStageTable" VerticalAlignment="Center" HorizontalAlignment="Left" Width="30" Height="30" Margin="5,5,5,0" IsCheckedChanged="AssetTypeTabs_OnIsCheckedChanged" ToolTip.ShowDelay="0" ToolTip.HorizontalOffset="5" ToolTip.VerticalOffset="0" ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>

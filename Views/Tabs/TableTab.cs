@@ -3,7 +3,7 @@ using Avalonia.Interactivity;
 
 namespace MercuryTools.Views.Tabs;
 
-public abstract class Tab : UserControl
+public abstract class TableTab : UserControl
 {
     public abstract void ButtonSave_OnClick(object? sender, RoutedEventArgs args);
     public abstract void ButtonOpen_OnClick(object? sender, RoutedEventArgs args);
