@@ -71,8 +71,14 @@ public partial class IconTableView : TableTab
         if (name != null && name.Contains(SearchQuery, comparison)) return true;
         
         // Check Data
+        string iconId = ((IntPropertyData)data.Value[0]).Value.ToString();
+        if (iconId.Contains(SearchQuery, comparison)) return true;
+        
         string? iconTextureName = ((StrPropertyData)data.Value[1]).Value?.Value;
         if (iconTextureName != null && iconTextureName.Contains(SearchQuery, comparison)) return true;
+        
+        string iconRarity = ((Int8PropertyData)data.Value[2]).Value.ToString();
+        if (iconRarity.Contains(SearchQuery, comparison)) return true;
         
         string? nameTag = ((StrPropertyData)data.Value[3]).Value?.Value;
         if (nameTag != null && nameTag.Contains(SearchQuery, comparison)) return true;
@@ -80,23 +86,17 @@ public partial class IconTableView : TableTab
         string? explanationTextTag = ((StrPropertyData)data.Value[4]).Value?.Value;
         if (explanationTextTag != null && explanationTextTag.Contains(SearchQuery, comparison)) return true;
         
-        string iconId = ((IntPropertyData)data.Value[0]).Value.ToString();
-        if (iconId.Contains(SearchQuery, comparison)) return true;
-        
-        string gainWaccaPoint = ((IntPropertyData)data.Value[8]).Value.ToString();
-        if (gainWaccaPoint.Contains(SearchQuery, comparison)) return true;
+        string itemActivateStartTime = ((Int64PropertyData)data.Value[5]).Value.ToString();
+        if (itemActivateStartTime.Contains(SearchQuery, comparison)) return true;
         
         string itemActivateEndTime = ((Int64PropertyData)data.Value[6]).Value.ToString();
         if (itemActivateEndTime.Contains(SearchQuery, comparison)) return true;
         
-        string itemActivateStartTime = ((Int64PropertyData)data.Value[5]).Value.ToString();
-        if (itemActivateStartTime.Contains(SearchQuery, comparison)) return true;
-        
-        string iconRarity = ((Int8PropertyData)data.Value[2]).Value.ToString();
-        if (iconRarity.Contains(SearchQuery, comparison)) return true;
-        
         string isInitItem = ((BoolPropertyData)data.Value[7]).Value.ToString();
-        if (isInitItem.Contains(SearchQuery, comparison)) return true;
+        if (isInitItem.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)) return true;
+        
+        string gainWaccaPoint = ((IntPropertyData)data.Value[8]).Value.ToString();
+        if (gainWaccaPoint.Contains(SearchQuery, comparison)) return true;
         
         return false;
     }
@@ -138,8 +138,8 @@ public partial class IconTableView : TableTab
             TextBoxIconId.Text = iconId.Value.ToString();
             TextBoxIconTextureName.Text = iconTextureName.Value?.Value ?? "";
             TextBoxIconRarity.Text = iconRarity.Value.ToString();
-            TextBoxIconNameTag.Text = nameTag.Value?.Value ?? "";
-            TextBoxIconExplanationTextTag.Text = explanationTextTag.Value?.Value ?? "";
+            TextBoxNameTag.Text = nameTag.Value?.Value ?? "";
+            TextBoxExplanationTextTag.Text = explanationTextTag.Value?.Value ?? "";
             TextBoxItemActivateStartTime.Text = itemActivateStartTime.Value.ToString();
             TextBoxItemActivateEndTime.Text = itemActivateEndTime.Value.ToString();
             CheckBoxIsInitItem.IsChecked = isInitItem.Value;
@@ -235,22 +235,22 @@ public partial class IconTableView : TableTab
                     break;
                 }
                 
-                case "TextBoxIconNameTag":
+                case "TextBoxNameTag":
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[3];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxIconNameTag.Text);
+                    FString newValue = new(TextBoxNameTag.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
                     break; 
                 }
                 
-                case "TextBoxIconExplanationTextTag":
+                case "TextBoxExplanationTextTag":
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[4];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxIconExplanationTextTag.Text);
+                    FString newValue = new(TextBoxExplanationTextTag.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -341,8 +341,8 @@ public partial class IconTableView : TableTab
                 // StrProperty
                 case "TextBoxName":
                 case "TextBoxIconTextureName":
-                case "TextBoxIconNameTag":
-                case "TextBoxIconExplanationTextTag":
+                case "TextBoxNameTag":
+                case "TextBoxExplanationTextTag":
                 {
                     return;
                 }
@@ -447,15 +447,6 @@ public partial class IconTableView : TableTab
         
         try
         {
-            _ = Convert.ToInt32(TextBoxGainWaccaPoint.Text);
-        }
-        catch(FormatException e)
-        {
-            TextBoxGainWaccaPoint.Text = "0";
-        }
-        
-        try
-        {
             _ = Convert.ToSByte(TextBoxIconRarity.Text);
         }
         catch(FormatException e)
@@ -479,6 +470,15 @@ public partial class IconTableView : TableTab
         catch(FormatException e)
         {
             TextBoxItemActivateEndTime.Text = "0";
+        }
+        
+        try
+        {
+            _ = Convert.ToInt32(TextBoxGainWaccaPoint.Text);
+        }
+        catch(FormatException e)
+        {
+            TextBoxGainWaccaPoint.Text = "0";
         }
         
         base.Save();

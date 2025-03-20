@@ -25,8 +25,6 @@ public class UndoRedoManager
 
     public void RedoAndPush(IOperation operation)
     {
-        Console.WriteLine(operation);
-        
         operation.Redo();
         Push(operation);
     }
