@@ -66,16 +66,28 @@ public partial class MessageTableView : TableTab
         
         // Check Name
         string? name = data.Name.Value?.Value;
-        if (name != null && name.Contains(SearchQuery, comparison)) return true;
+        Utils.Filter(name, "Name", SearchQuery, comparison);
         
-        // Check 7 Locales
-        for (int i = 0; i < 7; i++)
-        {
-            string? value = ((StrPropertyData)data.Value[i]).Value?.Value;
-            
-            if (value == null) continue;
-            if (value.Contains(SearchQuery, comparison)) return true;
-        }
+        string? japaneseMessage = ((StrPropertyData)data.Value[0]).Value?.Value;
+        Utils.Filter(japaneseMessage, "JapaneseMessage", SearchQuery, comparison);
+        
+        string? englishMessageUSA = ((StrPropertyData)data.Value[0]).Value?.Value;
+        Utils.Filter(englishMessageUSA, "EnglishMessageUSA", SearchQuery, comparison);
+        
+        string? englishMessageSG = ((StrPropertyData)data.Value[0]).Value?.Value;
+        Utils.Filter(englishMessageSG, "EnglishMessageSG", SearchQuery, comparison);
+        
+        string? traditionalChineseMessageTW = ((StrPropertyData)data.Value[0]).Value?.Value;
+        Utils.Filter(traditionalChineseMessageTW, "TraditionalChineseMessageTW", SearchQuery, comparison);
+        
+        string? traditionalChineseMessageHK = ((StrPropertyData)data.Value[0]).Value?.Value;
+        Utils.Filter(traditionalChineseMessageHK, "TraditionalChineseMessageHK", SearchQuery, comparison);
+        
+        string? simplifiedChineseMessage = ((StrPropertyData)data.Value[0]).Value?.Value;
+        Utils.Filter(simplifiedChineseMessage, "SimplifiedChineseMessage", SearchQuery, comparison);
+        
+        string? koreanMessage = ((StrPropertyData)data.Value[0]).Value?.Value;
+        Utils.Filter(koreanMessage, "KoreanMessage", SearchQuery, comparison);
         
         return false;
     }
@@ -108,7 +120,7 @@ public partial class MessageTableView : TableTab
 
             if (ignoreChange) ignoreDataChange = true;
             
-            // Set TextBoxes to StructPropertyData contents
+            // Set Content to StructPropertyData contents
             ContentGroup.IsVisible = true;
             TextBoxName.Text = data.Name.Value.Value;
             
@@ -150,7 +162,7 @@ public partial class MessageTableView : TableTab
                 case "TextBoxName":
                 {
                     FName oldName = data.Name;
-                    FName newName = new(asset, TextBoxName.Text);
+                    FName newName = new(asset, textBox.Text);
 
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.RedoAndPush(operation);
@@ -163,7 +175,7 @@ public partial class MessageTableView : TableTab
                 {
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[0];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxJapaneseMessage.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -174,7 +186,7 @@ public partial class MessageTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[1];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxEnglishMessageUSA.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -185,7 +197,7 @@ public partial class MessageTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[2];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxEnglishMessageSG.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -196,7 +208,7 @@ public partial class MessageTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[3];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxTraditionalChineseMessageTW.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -207,7 +219,7 @@ public partial class MessageTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[4];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxTraditionalChineseMessageHK.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -218,7 +230,7 @@ public partial class MessageTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[5];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxSimplifiedChineseMessage.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -229,7 +241,7 @@ public partial class MessageTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[6];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxKoreanMessage.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);

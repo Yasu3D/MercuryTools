@@ -42,7 +42,7 @@ public partial class GradeTableView : TableTab
     protected override StructPropertyData NewData => new()
     {
         Name = new(asset, "NO_NAME"),
-        StructType = new(asset, "MessageData"),
+        StructType = new(asset, "GradeTableData"),
         Value =
         [
             new IntPropertyData(new(asset, "GradeId")),
@@ -69,42 +69,42 @@ public partial class GradeTableView : TableTab
         StringComparison comparison = SearchMatchCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
         
         // Check Name
-        string name = $"Name:{data.Name.Value?.Value}";
-        if (name.Contains(SearchQuery, comparison)) return true;
+        string? name = data.Name.Value?.Value;
+        if (Utils.Filter(name, "Name", SearchQuery, comparison)) return true;
         
         // Check Data
-        string gradeId = $"GradeId:{((IntPropertyData)data.Value[0]).Value.ToString()}";
-        if (gradeId.Contains(SearchQuery, comparison)) return true;
+        string gradeId = ((IntPropertyData)data.Value[0]).Value.ToString();
+        if (Utils.Filter(gradeId, "GradeId", SearchQuery, comparison)) return true;
         
-        string gradePartsId01 = $"GradeParts01:{((IntPropertyData)data.Value[1]).Value.ToString()}";
-        if (gradePartsId01.Contains(SearchQuery, comparison)) return true;
+        string gradePartsId01 = ((IntPropertyData)data.Value[1]).Value.ToString();
+        if (Utils.Filter(gradePartsId01, "GradePartsId01", SearchQuery, comparison)) return true;
         
-        string gradePartsId02 = $"GradeParts02:{((IntPropertyData)data.Value[2]).Value.ToString()}";
-        if (gradePartsId02.Contains(SearchQuery, comparison)) return true;
+        string gradePartsId02 = ((IntPropertyData)data.Value[2]).Value.ToString();
+        if (Utils.Filter(gradePartsId02, "GradePartsId02", SearchQuery, comparison)) return true;
         
-        string gradePartsId03 = $"GradeParts03:{((IntPropertyData)data.Value[3]).Value.ToString()}";
-        if (gradePartsId03.Contains(SearchQuery, comparison)) return true;
+        string gradePartsId03 = ((IntPropertyData)data.Value[3]).Value.ToString();
+        if (Utils.Filter(gradePartsId03, "GradePartsId03", SearchQuery, comparison)) return true;
         
-        string gradeRarity = $"GradeRarity:{((Int8PropertyData)data.Value[4]).Value.ToString()}";
-        if (gradeRarity.Contains(SearchQuery, comparison)) return true;
+        string gradeRarity = ((Int8PropertyData)data.Value[4]).Value.ToString();
+        if (Utils.Filter(gradeRarity, "GradeRarity", SearchQuery, comparison)) return true;
         
-        string nameTag = $"NameTag:{((StrPropertyData)data.Value[5]).Value?.Value}";
-        if (nameTag.Contains(SearchQuery, comparison)) return true;
+        string? nameTag = ((StrPropertyData)data.Value[5]).Value?.Value;
+        if (Utils.Filter(nameTag, "NameTag", SearchQuery, comparison)) return true;
         
-        string explanationTextTag = $"ExplanationTextTag:{((StrPropertyData)data.Value[6]).Value?.Value}";
-        if (explanationTextTag.Contains(SearchQuery, comparison)) return true;
+        string? explanationTextTag = ((StrPropertyData)data.Value[6]).Value?.Value;
+        if (Utils.Filter(explanationTextTag, "ExplanationTextTag", SearchQuery, comparison)) return true;
         
-        string itemActivateStartTime = $"ItemActivateStartTime:{((Int64PropertyData)data.Value[7]).Value.ToString()}";
-        if (itemActivateStartTime.Contains(SearchQuery, comparison)) return true;
+        string itemActivateStartTime = ((Int64PropertyData)data.Value[7]).Value.ToString();
+        if (Utils.Filter(itemActivateStartTime, "ItemActivateStartTime", SearchQuery, comparison)) return true;
         
-        string itemActivateEndTime = $"ItemActivateEndTime:{((Int64PropertyData)data.Value[8]).Value.ToString()}";
-        if (itemActivateEndTime.Contains(SearchQuery, comparison)) return true;
+        string itemActivateEndTime = ((Int64PropertyData)data.Value[8]).Value.ToString();
+        if (Utils.Filter(itemActivateEndTime, "ItemActivateEndTime", SearchQuery, comparison)) return true;
         
-        string isInitItem = $"IsInitItem:{((BoolPropertyData)data.Value[9]).Value.ToString()}";
-        if (isInitItem.Contains(SearchQuery, comparison)) return true;
+        string isInitItem = ((BoolPropertyData)data.Value[9]).Value.ToString();
+        if (Utils.Filter(isInitItem, "IsInitItem", SearchQuery, comparison)) return true;
         
-        string gainWaccaPoint = $"GainWaccaPoint:{((IntPropertyData)data.Value[10]).Value.ToString()}";
-        if (gainWaccaPoint.Contains(SearchQuery, comparison)) return true;
+        string gainWaccaPoint = ((IntPropertyData)data.Value[10]).Value.ToString();
+        if (Utils.Filter(gainWaccaPoint, "GainWaccaPoint", SearchQuery, comparison)) return true;
         
         return false;
     }
@@ -141,7 +141,7 @@ public partial class GradeTableView : TableTab
 
             if (ignoreChange) ignoreDataChange = true;
             
-            // Set TextBoxes to StructPropertyData contents
+            // Set Content to StructPropertyData contents
             ContentGroup.IsVisible = true;
             TextBoxName.Text = data.Name.Value?.Value ?? "0";
 
@@ -187,7 +187,7 @@ public partial class GradeTableView : TableTab
                 case "TextBoxName":
                 {
                     FName oldName = data.Name;
-                    FName newName = new(asset, TextBoxName.Text);
+                    FName newName = new(asset, textBox.Text);
 
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.RedoAndPush(operation);
@@ -300,7 +300,7 @@ public partial class GradeTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[5];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxNameTag.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -311,7 +311,7 @@ public partial class GradeTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[6];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxExplanationTextTag.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -503,16 +503,43 @@ public partial class GradeTableView : TableTab
         {
             _ = Convert.ToInt32(TextBoxGradeId.Text);
         }
-        catch(FormatException e)
+        catch(FormatException)
         {
             TextBoxGradeId.Text = "0";
         }
         
         try
         {
+            _ = Convert.ToInt32(TextBoxGradePartsId01.Text);
+        }
+        catch(FormatException)
+        {
+            TextBoxGradePartsId01.Text = "0";
+        }
+        
+        try
+        {
+            _ = Convert.ToInt32(TextBoxGradePartsId02.Text);
+        }
+        catch(FormatException)
+        {
+            TextBoxGradePartsId02.Text = "0";
+        }
+        
+        try
+        {
+            _ = Convert.ToInt32(TextBoxGradePartsId03.Text);
+        }
+        catch(FormatException)
+        {
+            TextBoxGradePartsId03.Text = "0";
+        }
+        
+        try
+        {
             _ = Convert.ToSByte(TextBoxGradeRarity.Text);
         }
-        catch(FormatException e)
+        catch(FormatException)
         {
             TextBoxGradeRarity.Text = "0";
         }
@@ -521,7 +548,7 @@ public partial class GradeTableView : TableTab
         {
             _ = Convert.ToInt64(TextBoxItemActivateStartTime.Text);
         }
-        catch(FormatException e)
+        catch(FormatException)
         {
             TextBoxItemActivateStartTime.Text = "0";
         }
@@ -530,7 +557,7 @@ public partial class GradeTableView : TableTab
         {
             _ = Convert.ToInt64(TextBoxItemActivateEndTime.Text);
         }
-        catch(FormatException e)
+        catch(FormatException)
         {
             TextBoxItemActivateEndTime.Text = "0";
         }
@@ -539,7 +566,7 @@ public partial class GradeTableView : TableTab
         {
             _ = Convert.ToInt32(TextBoxGainWaccaPoint.Text);
         }
-        catch(FormatException e)
+        catch(FormatException)
         {
             TextBoxGainWaccaPoint.Text = "0";
         }

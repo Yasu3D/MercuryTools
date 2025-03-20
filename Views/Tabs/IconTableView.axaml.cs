@@ -68,35 +68,35 @@ public partial class IconTableView : TableTab
         
         // Check Name
         string? name = data.Name.Value?.Value;
-        if (name != null && name.Contains(SearchQuery, comparison)) return true;
+        if (Utils.Filter(name, "Name", SearchQuery, comparison)) return true;
         
         // Check Data
-        string iconId = $"IconId:{((IntPropertyData)data.Value[0]).Value.ToString()}";
-        if (iconId.Contains(SearchQuery, comparison)) return true;
+        string iconId = ((IntPropertyData)data.Value[0]).Value.ToString();
+        if (Utils.Filter(iconId, "IconId", SearchQuery, comparison)) return true;
         
-        string iconTextureName = $"IconTextureName:{((StrPropertyData)data.Value[1]).Value?.Value}";
-        if (iconTextureName.Contains(SearchQuery, comparison)) return true;
+        string? iconTextureName = ((StrPropertyData)data.Value[1]).Value?.Value;
+        if (Utils.Filter(iconTextureName, "IconTextureName", SearchQuery, comparison)) return true;
         
-        string iconRarity = $"IconRarity:{((Int8PropertyData)data.Value[2]).Value.ToString()}";
-        if (iconRarity.Contains(SearchQuery, comparison)) return true;
+        string iconRarity = ((Int8PropertyData)data.Value[2]).Value.ToString();
+        if (Utils.Filter(iconRarity, "IconRarity", SearchQuery, comparison)) return true;
         
-        string nameTag = $"NameTag:{((StrPropertyData)data.Value[3]).Value?.Value}";
-        if (nameTag.Contains(SearchQuery, comparison)) return true;
+        string? nameTag = ((StrPropertyData)data.Value[3]).Value?.Value;
+        if (Utils.Filter(nameTag, "NameTag", SearchQuery, comparison)) return true;
         
-        string explanationTextTag = $"ExplanationTextTag:{((StrPropertyData)data.Value[4]).Value?.Value}";
-        if (explanationTextTag.Contains(SearchQuery, comparison)) return true;
+        string? explanationTextTag = ((StrPropertyData)data.Value[4]).Value?.Value;
+        if (Utils.Filter(explanationTextTag, "ExplanationTextTag", SearchQuery, comparison)) return true;
         
-        string itemActivateStartTime = $"ItemActivateStartTime:{((Int64PropertyData)data.Value[5]).Value.ToString()}";
-        if (itemActivateStartTime.Contains(SearchQuery, comparison)) return true;
+        string itemActivateStartTime = ((Int64PropertyData)data.Value[5]).Value.ToString();
+        if (Utils.Filter(itemActivateStartTime, "ItemActivateStartTime", SearchQuery, comparison)) return true;
         
-        string itemActivateEndTime = $"ItemActivateEndTime:{((Int64PropertyData)data.Value[6]).Value.ToString()}";
-        if (itemActivateEndTime.Contains(SearchQuery, comparison)) return true;
+        string itemActivateEndTime = ((Int64PropertyData)data.Value[6]).Value.ToString();
+        if (Utils.Filter(itemActivateEndTime, "ItemActivateEndTime", SearchQuery, comparison)) return true;
         
-        string isInitItem = $"IsInitItem:{((BoolPropertyData)data.Value[7]).Value.ToString()}";
-        if (isInitItem.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)) return true;
+        string isInitItem = ((BoolPropertyData)data.Value[7]).Value.ToString();
+        if (Utils.Filter(isInitItem, "IsInitItem", SearchQuery, comparison)) return true;
         
-        string gainWaccaPoint = $"GainWaccaPoint:{((IntPropertyData)data.Value[8]).Value.ToString()}";
-        if (gainWaccaPoint.Contains(SearchQuery, comparison)) return true;
+        string gainWaccaPoint = ((IntPropertyData)data.Value[8]).Value.ToString();
+        if (Utils.Filter(gainWaccaPoint, "GainWaccaPoint", SearchQuery, comparison)) return true;
         
         return false;
     }
@@ -131,7 +131,7 @@ public partial class IconTableView : TableTab
 
             if (ignoreChange) ignoreDataChange = true;
             
-            // Set TextBoxes to StructPropertyData contents
+            // Set Content to StructPropertyData contents
             ContentGroup.IsVisible = true;
             TextBoxName.Text = data.Name.Value?.Value ?? "0";
 
@@ -175,7 +175,7 @@ public partial class IconTableView : TableTab
                 case "TextBoxName":
                 {
                     FName oldName = data.Name;
-                    FName newName = new(asset, TextBoxName.Text);
+                    FName newName = new(asset, textBox.Text);
 
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.RedoAndPush(operation);
@@ -208,7 +208,7 @@ public partial class IconTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[1];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxIconTextureName.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -239,7 +239,7 @@ public partial class IconTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[3];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxNameTag.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -250,7 +250,7 @@ public partial class IconTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[4];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxExplanationTextTag.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -440,7 +440,7 @@ public partial class IconTableView : TableTab
         {
             _ = Convert.ToInt32(TextBoxIconId.Text);
         }
-        catch(FormatException e)
+        catch(FormatException)
         {
             TextBoxIconId.Text = "0";
         }
@@ -449,7 +449,7 @@ public partial class IconTableView : TableTab
         {
             _ = Convert.ToSByte(TextBoxIconRarity.Text);
         }
-        catch(FormatException e)
+        catch(FormatException)
         {
             TextBoxIconRarity.Text = "0";
         }
@@ -458,7 +458,7 @@ public partial class IconTableView : TableTab
         {
             _ = Convert.ToInt64(TextBoxItemActivateStartTime.Text);
         }
-        catch(FormatException e)
+        catch(FormatException)
         {
             TextBoxItemActivateStartTime.Text = "0";
         }
@@ -467,7 +467,7 @@ public partial class IconTableView : TableTab
         {
             _ = Convert.ToInt64(TextBoxItemActivateEndTime.Text);
         }
-        catch(FormatException e)
+        catch(FormatException)
         {
             TextBoxItemActivateEndTime.Text = "0";
         }
@@ -476,7 +476,7 @@ public partial class IconTableView : TableTab
         {
             _ = Convert.ToInt32(TextBoxGainWaccaPoint.Text);
         }
-        catch(FormatException e)
+        catch(FormatException)
         {
             TextBoxGainWaccaPoint.Text = "0";
         }

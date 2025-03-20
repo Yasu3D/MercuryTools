@@ -69,7 +69,7 @@ public abstract class TableTab : UserControl
             item.IsVisible = ContentContainsQuery(data);
         }
     }
-
+        
     protected void UpdateUndoRedoButtons(object? sender, EventArgs args)
     {
         if (explorerView == null) return;
