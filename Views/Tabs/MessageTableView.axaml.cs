@@ -21,7 +21,7 @@ public partial class MessageTableView : TableTab
 
         explorerView.TextBoxSearch.TextChanging += TextBoxSearch_OnTextChanging;
         explorerView.ToggleSearch.IsCheckedChanged += ToggleSearch_OnIsCheckedChanged;
-        explorerView.ToggleCaseSensitive.IsCheckedChanged += ToggleCaseSensitive_OnIsCheckedChanged;
+        explorerView.ToggleMatchCase.IsCheckedChanged += ToggleMatchCaseOnIsCheckedChanged;
         
         explorerView.ButtonSave.Click += ButtonSave_OnClick;
         explorerView.ButtonOpen.Click += ButtonOpen_OnClick;
@@ -62,7 +62,7 @@ public partial class MessageTableView : TableTab
     
     protected override bool ContentContainsQuery(StructPropertyData data)
     {
-        StringComparison comparison = SearchCaseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+        StringComparison comparison = SearchMatchCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
         
         // Check Name
         string? name = data.Name.Value?.Value;
@@ -248,7 +248,7 @@ public partial class MessageTableView : TableTab
 
     private void TextBoxSearch_OnTextChanging(object? sender, TextChangingEventArgs args) => SearchContent();
     private void ToggleSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
-    private void ToggleCaseSensitive_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
+    private void ToggleMatchCaseOnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
     
     private void ButtonSave_OnClick(object? sender, RoutedEventArgs args) => Save();
     private void ButtonOpen_OnClick(object? sender, RoutedEventArgs args) => Open();

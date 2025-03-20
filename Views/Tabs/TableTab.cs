@@ -25,7 +25,7 @@ public abstract class TableTab : UserControl
     protected abstract StructPropertyData NewData { get; }
 
     protected string SearchQuery => explorerView?.TextBoxSearch.Text ?? "";
-    protected bool SearchCaseSensitive => explorerView?.ToggleCaseSensitive.IsChecked ?? false;
+    protected bool SearchMatchCase => explorerView?.ToggleMatchCase.IsChecked ?? false;
     
     protected bool ignoreDataChange;
 
