@@ -69,41 +69,41 @@ public partial class GradeTableView : TableTab
         StringComparison comparison = SearchMatchCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
         
         // Check Name
-        string? name = data.Name.Value?.Value;
-        if (name != null && name.Contains(SearchQuery, comparison)) return true;
+        string name = $"Name:{data.Name.Value?.Value}";
+        if (name.Contains(SearchQuery, comparison)) return true;
         
         // Check Data
-        string gradeId = ((IntPropertyData)data.Value[0]).Value.ToString();
+        string gradeId = $"GradeId:{((IntPropertyData)data.Value[0]).Value.ToString()}";
         if (gradeId.Contains(SearchQuery, comparison)) return true;
         
-        string gradePartsId01 = ((IntPropertyData)data.Value[1]).Value.ToString();
+        string gradePartsId01 = $"GradeParts01:{((IntPropertyData)data.Value[1]).Value.ToString()}";
         if (gradePartsId01.Contains(SearchQuery, comparison)) return true;
         
-        string gradePartsId02 = ((IntPropertyData)data.Value[2]).Value.ToString();
+        string gradePartsId02 = $"GradeParts02:{((IntPropertyData)data.Value[2]).Value.ToString()}";
         if (gradePartsId02.Contains(SearchQuery, comparison)) return true;
         
-        string gradePartsId03 = ((IntPropertyData)data.Value[3]).Value.ToString();
+        string gradePartsId03 = $"GradeParts03:{((IntPropertyData)data.Value[3]).Value.ToString()}";
         if (gradePartsId03.Contains(SearchQuery, comparison)) return true;
         
-        string gradeRarity = ((Int8PropertyData)data.Value[4]).Value.ToString();
+        string gradeRarity = $"GradeRarity:{((Int8PropertyData)data.Value[4]).Value.ToString()}";
         if (gradeRarity.Contains(SearchQuery, comparison)) return true;
         
-        string? nameTag = ((StrPropertyData)data.Value[5]).Value?.Value;
-        if (nameTag != null && nameTag.Contains(SearchQuery, comparison)) return true;
+        string nameTag = $"NameTag:{((StrPropertyData)data.Value[5]).Value?.Value}";
+        if (nameTag.Contains(SearchQuery, comparison)) return true;
         
-        string? explanationTextTag = ((StrPropertyData)data.Value[6]).Value?.Value;
-        if (explanationTextTag != null && explanationTextTag.Contains(SearchQuery, comparison)) return true;
+        string explanationTextTag = $"ExplanationTextTag:{((StrPropertyData)data.Value[6]).Value?.Value}";
+        if (explanationTextTag.Contains(SearchQuery, comparison)) return true;
         
-        string itemActivateStartTime = ((Int64PropertyData)data.Value[7]).Value.ToString();
+        string itemActivateStartTime = $"ItemActivateStartTime:{((Int64PropertyData)data.Value[7]).Value.ToString()}";
         if (itemActivateStartTime.Contains(SearchQuery, comparison)) return true;
         
-        string itemActivateEndTime = ((Int64PropertyData)data.Value[8]).Value.ToString();
+        string itemActivateEndTime = $"ItemActivateEndTime:{((Int64PropertyData)data.Value[8]).Value.ToString()}";
         if (itemActivateEndTime.Contains(SearchQuery, comparison)) return true;
         
-        string isInitItem = ((BoolPropertyData)data.Value[9]).Value.ToString();
+        string isInitItem = $"IsInitItem:{((BoolPropertyData)data.Value[9]).Value.ToString()}";
         if (isInitItem.Contains(SearchQuery, comparison)) return true;
         
-        string gainWaccaPoint = ((IntPropertyData)data.Value[10]).Value.ToString();
+        string gainWaccaPoint = $"GainWaccaPoint:{((IntPropertyData)data.Value[10]).Value.ToString()}";
         if (gainWaccaPoint.Contains(SearchQuery, comparison)) return true;
         
         return false;

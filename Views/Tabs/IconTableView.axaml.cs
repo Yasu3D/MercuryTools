@@ -71,31 +71,31 @@ public partial class IconTableView : TableTab
         if (name != null && name.Contains(SearchQuery, comparison)) return true;
         
         // Check Data
-        string iconId = ((IntPropertyData)data.Value[0]).Value.ToString();
+        string iconId = $"IconId:{((IntPropertyData)data.Value[0]).Value.ToString()}";
         if (iconId.Contains(SearchQuery, comparison)) return true;
         
-        string? iconTextureName = ((StrPropertyData)data.Value[1]).Value?.Value;
-        if (iconTextureName != null && iconTextureName.Contains(SearchQuery, comparison)) return true;
+        string iconTextureName = $"IconTextureName:{((StrPropertyData)data.Value[1]).Value?.Value}";
+        if (iconTextureName.Contains(SearchQuery, comparison)) return true;
         
-        string iconRarity = ((Int8PropertyData)data.Value[2]).Value.ToString();
+        string iconRarity = $"IconRarity:{((Int8PropertyData)data.Value[2]).Value.ToString()}";
         if (iconRarity.Contains(SearchQuery, comparison)) return true;
         
-        string? nameTag = ((StrPropertyData)data.Value[3]).Value?.Value;
-        if (nameTag != null && nameTag.Contains(SearchQuery, comparison)) return true;
+        string nameTag = $"NameTag:{((StrPropertyData)data.Value[3]).Value?.Value}";
+        if (nameTag.Contains(SearchQuery, comparison)) return true;
         
-        string? explanationTextTag = ((StrPropertyData)data.Value[4]).Value?.Value;
-        if (explanationTextTag != null && explanationTextTag.Contains(SearchQuery, comparison)) return true;
+        string explanationTextTag = $"ExplanationTextTag:{((StrPropertyData)data.Value[4]).Value?.Value}";
+        if (explanationTextTag.Contains(SearchQuery, comparison)) return true;
         
-        string itemActivateStartTime = ((Int64PropertyData)data.Value[5]).Value.ToString();
+        string itemActivateStartTime = $"ItemActivateStartTime:{((Int64PropertyData)data.Value[5]).Value.ToString()}";
         if (itemActivateStartTime.Contains(SearchQuery, comparison)) return true;
         
-        string itemActivateEndTime = ((Int64PropertyData)data.Value[6]).Value.ToString();
+        string itemActivateEndTime = $"ItemActivateEndTime:{((Int64PropertyData)data.Value[6]).Value.ToString()}";
         if (itemActivateEndTime.Contains(SearchQuery, comparison)) return true;
         
-        string isInitItem = ((BoolPropertyData)data.Value[7]).Value.ToString();
+        string isInitItem = $"IsInitItem:{((BoolPropertyData)data.Value[7]).Value.ToString()}";
         if (isInitItem.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)) return true;
         
-        string gainWaccaPoint = ((IntPropertyData)data.Value[8]).Value.ToString();
+        string gainWaccaPoint = $"GainWaccaPoint:{((IntPropertyData)data.Value[8]).Value.ToString()}";
         if (gainWaccaPoint.Contains(SearchQuery, comparison)) return true;
         
         return false;

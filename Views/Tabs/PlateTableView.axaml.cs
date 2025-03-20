@@ -67,35 +67,35 @@ public partial class PlateTableView : TableTab
         StringComparison comparison = SearchMatchCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
         
         // Check Name
-        string? name = data.Name.Value?.Value;
-        if (name != null && name.Contains(SearchQuery, comparison)) return true;
+        string name = $"Name:{data.Name.Value?.Value}";
+        if (name.Contains(SearchQuery, comparison)) return true;
         
         // Check Data
-        string plateId = ((IntPropertyData)data.Value[0]).Value.ToString();
+        string plateId = $"PlateId:{((IntPropertyData)data.Value[0]).Value.ToString()}";
         if (plateId.Contains(SearchQuery, comparison)) return true;
         
-        string? plateTextureName = ((StrPropertyData)data.Value[1]).Value?.Value;
-        if (plateTextureName != null && plateTextureName.Contains(SearchQuery, comparison)) return true;
+        string plateTextureName = $"PlateTextureName:{((StrPropertyData)data.Value[1]).Value?.Value}";
+        if (plateTextureName.Contains(SearchQuery, comparison)) return true;
         
-        string plateRarity = ((Int8PropertyData)data.Value[2]).Value.ToString();
+        string plateRarity = $"PlateRarity:{((Int8PropertyData)data.Value[2]).Value.ToString()}";
         if (plateRarity.Contains(SearchQuery, comparison)) return true;
         
-        string? nameTag = ((StrPropertyData)data.Value[3]).Value?.Value;
-        if (nameTag != null && nameTag.Contains(SearchQuery, comparison)) return true;
+        string nameTag = $"NameTag:{((StrPropertyData)data.Value[3]).Value?.Value}";
+        if (nameTag.Contains(SearchQuery, comparison)) return true;
         
-        string? explanationTextTag = ((StrPropertyData)data.Value[4]).Value?.Value;
-        if (explanationTextTag != null && explanationTextTag.Contains(SearchQuery, comparison)) return true;
+        string explanationTextTag = $"ExplanationTextTag:{((StrPropertyData)data.Value[4]).Value?.Value}";
+        if (explanationTextTag.Contains(SearchQuery, comparison)) return true;
 
-        string itemActivateStartTime = ((Int64PropertyData)data.Value[5]).Value.ToString();
+        string itemActivateStartTime = $"ItemActivateStartTime:{((Int64PropertyData)data.Value[5]).Value.ToString()}";
         if (itemActivateStartTime.Contains(SearchQuery, comparison)) return true;
 
-        string itemActivateEndTime = ((Int64PropertyData)data.Value[6]).Value.ToString();
+        string itemActivateEndTime = $"ItemActivateEndTime:{((Int64PropertyData)data.Value[6]).Value.ToString()}";
         if (itemActivateEndTime.Contains(SearchQuery, comparison)) return true;
         
-        string isInitItem = ((BoolPropertyData)data.Value[7]).Value.ToString();
+        string isInitItem = $"IsInitItem:{((BoolPropertyData)data.Value[7]).Value.ToString()}";
         if (isInitItem.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)) return true;
         
-        string gainWaccaPoint = ((IntPropertyData)data.Value[8]).Value.ToString();
+        string gainWaccaPoint = $"GainWaccaPoint:{((IntPropertyData)data.Value[8]).Value.ToString()}";
         if (gainWaccaPoint.Contains(SearchQuery, comparison)) return true;
         
         return false;
