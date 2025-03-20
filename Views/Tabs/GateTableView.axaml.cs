@@ -67,7 +67,7 @@ public partial class GateTableView : TableTab
 
     protected override bool FormatCheck()
     {
-        return table.Count != 0 && table[0].Value[0].Name.ToString() == "SugorokuId";
+        return table.Count != 0 && table[0].Value[0].Name.ToString() == "SugorokuID";
     }
     
     protected override bool ContentContainsQuery(StructPropertyData data)
