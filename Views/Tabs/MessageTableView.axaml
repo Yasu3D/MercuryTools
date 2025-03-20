@@ -30,49 +30,56 @@
                 <StackPanel>
                     
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="JapaneseMessage" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="Japanese Message" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             
                     <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxJapaneseMessage" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="EnglishMessageUSA" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="EnglishUSA Message" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             
                     <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxEnglishMessageUSA" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="EnglishMessageSG" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="EnglishSG Message" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             
                     <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxEnglishMessageSG" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="TraditionalChineseMessageTW" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="TraditionalChineseTW Message" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             
                     <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxTraditionalChineseMessageTW" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="TraditionalChineseMessageHK" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="TraditionalChineseHK Message" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             
                     <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxTraditionalChineseMessageHK" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="SimplifiedChineseMessage" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="SimplifiedChinese Message" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             
                     <TextBox Classes="Inset" AcceptsReturn="True" AcceptsTab="False" Margin="10" Padding="10" MinHeight="80" Name="TextBoxSimplifiedChineseMessage" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="KoreanMessage" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="Korean Message" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
             

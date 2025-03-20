@@ -101,8 +101,9 @@ public abstract class TableTab : UserControl
             assetBackup = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
 
             UpdateTreeView(true);
+            UpdateContent(true);
 
-            if (!FormatCheck()) throw new FormatException("Provided .uasset file is not a valid Message Table.");
+            if (!FormatCheck()) throw new FormatException("Provided .uasset file does not follow the correct Table Format.");
         }
         catch (Exception e)
         {
