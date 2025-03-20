@@ -98,13 +98,13 @@ public partial class MessageTableView : TableTab
         try
         {
             // Get String Properties
-            StrPropertyData? japaneseMessage = (StrPropertyData?)data.Value[0];
-            StrPropertyData? englishMessageUSA = (StrPropertyData?)data.Value[1];
-            StrPropertyData? englishMessageSG = (StrPropertyData?)data.Value[2];
-            StrPropertyData? traditionalChineseMessageTW = (StrPropertyData?)data.Value[3];
-            StrPropertyData? traditionalChineseMessageHK = (StrPropertyData?)data.Value[4];
-            StrPropertyData? simplifiedChineseMessage = (StrPropertyData?)data.Value[5];
-            StrPropertyData? koreanMessage = (StrPropertyData?)data.Value[6];
+            StrPropertyData japaneseMessage = (StrPropertyData)data.Value[0];
+            StrPropertyData englishMessageUSA = (StrPropertyData)data.Value[1];
+            StrPropertyData englishMessageSG = (StrPropertyData)data.Value[2];
+            StrPropertyData traditionalChineseMessageTW = (StrPropertyData)data.Value[3];
+            StrPropertyData traditionalChineseMessageHK = (StrPropertyData)data.Value[4];
+            StrPropertyData simplifiedChineseMessage = (StrPropertyData)data.Value[5];
+            StrPropertyData koreanMessage = (StrPropertyData)data.Value[6];
 
             if (ignoreChange) ignoreDataChange = true;
             
@@ -112,13 +112,13 @@ public partial class MessageTableView : TableTab
             ContentGroup.IsVisible = true;
             TextBoxName.Text = data.Name.Value.Value;
             
-            TextBoxJapaneseMessage.Text = japaneseMessage?.Value?.Value ?? "";
-            TextBoxEnglishMessageUSA.Text = englishMessageUSA?.Value?.Value ?? "";
-            TextBoxEnglishMessageSG.Text = englishMessageSG?.Value?.Value ?? "";
-            TextBoxTraditionalChineseMessageTW.Text = traditionalChineseMessageTW?.Value?.Value ?? "";
-            TextBoxTraditionalChineseMessageHK.Text = traditionalChineseMessageHK?.Value?.Value ?? "";
-            TextBoxSimplifiedChineseMessage.Text = simplifiedChineseMessage?.Value?.Value ?? "";
-            TextBoxKoreanMessage.Text = koreanMessage?.Value?.Value ?? "";
+            TextBoxJapaneseMessage.Text = japaneseMessage.Value?.Value ?? "";
+            TextBoxEnglishMessageUSA.Text = englishMessageUSA.Value?.Value ?? "";
+            TextBoxEnglishMessageSG.Text = englishMessageSG.Value?.Value ?? "";
+            TextBoxTraditionalChineseMessageTW.Text = traditionalChineseMessageTW.Value?.Value ?? "";
+            TextBoxTraditionalChineseMessageHK.Text = traditionalChineseMessageHK.Value?.Value ?? "";
+            TextBoxSimplifiedChineseMessage.Text = simplifiedChineseMessage.Value?.Value ?? "";
+            TextBoxKoreanMessage.Text = koreanMessage.Value?.Value ?? "";
         }
         catch (Exception e)
         {

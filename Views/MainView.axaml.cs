@@ -100,16 +100,16 @@ public partial class MainView : UserControl
             tab.Redo();
         }
         
+        if (args.Key is Key.S && args.KeyModifiers.HasFlag(KeyModifiers.Control))
+        {
+            tab.Save();
+        }
+        
         if (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is TextBox) return;
         
         if (args.Key is Key.O && args.KeyModifiers.HasFlag(KeyModifiers.Control))
         {
             tab.Open();
-        }
-        
-        if (args.Key is Key.S && args.KeyModifiers.HasFlag(KeyModifiers.Control))
-        {
-            tab.Save();
         }
         
         if (args.Key is Key.Insert)

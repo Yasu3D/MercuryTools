@@ -78,7 +78,7 @@ public abstract class TableTab : UserControl
         explorerView.ButtonRedo.IsEnabled = undoRedoManager?.CanRedo ?? false;
     }
     
-    public void Save()
+    public virtual void Save()
     {
         asset?.Write(asset.FilePath);
         assetBackup?.Write($"{assetBackup.FilePath}.bak");
@@ -94,16 +94,22 @@ public abstract class TableTab : UserControl
         {
             IStorageFile? file = await mainView.OpenUAssetFile();
             if (file == null) return;
-            
+
             undoRedoManager.Clear();
-            
+
             asset = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
             assetBackup = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
 
             UpdateTreeView(true);
             UpdateContent(true);
 
+            if (table.Count == 0) throw new ArgumentException("Provided .uasset file is empty.");
             if (!FormatCheck()) throw new FormatException("Provided .uasset file does not follow the correct Table Format.");
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("Warning.", e.Message);
         }
         catch (Exception e)
         {

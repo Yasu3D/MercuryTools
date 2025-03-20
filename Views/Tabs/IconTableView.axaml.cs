@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using MercuryTools.UndoRedo.Operations;
 using UAssetAPI.PropertyTypes.Objects;
 using UAssetAPI.PropertyTypes.Structs;
 using UAssetAPI.UnrealTypes;
@@ -58,7 +59,7 @@ public partial class IconTableView : TableTab
 
     protected override bool FormatCheck()
     {
-        return table.Count == 0 || table[0].Value[0].Name.ToString() == "IconId";
+        return table.Count != 0 && table[0].Value[0].Name.ToString() == "IconId";
     }
     
     protected override bool ContentContainsQuery(StructPropertyData data)
@@ -70,7 +71,32 @@ public partial class IconTableView : TableTab
         if (name != null && name.Contains(SearchQuery, comparison)) return true;
         
         // Check Data
+        string? iconTextureName = ((StrPropertyData)data.Value[1]).Value?.Value;
+        if (iconTextureName != null && iconTextureName.Contains(SearchQuery, comparison)) return true;
         
+        string? nameTag = ((StrPropertyData)data.Value[3]).Value?.Value;
+        if (nameTag != null && nameTag.Contains(SearchQuery, comparison)) return true;
+        
+        string? explanationTextTag = ((StrPropertyData)data.Value[4]).Value?.Value;
+        if (explanationTextTag != null && explanationTextTag.Contains(SearchQuery, comparison)) return true;
+        
+        string iconId = ((IntPropertyData)data.Value[0]).Value.ToString();
+        if (iconId.Contains(SearchQuery, comparison)) return true;
+        
+        string gainWaccaPoint = ((IntPropertyData)data.Value[8]).Value.ToString();
+        if (gainWaccaPoint.Contains(SearchQuery, comparison)) return true;
+        
+        string itemActivateEndTime = ((Int64PropertyData)data.Value[6]).Value.ToString();
+        if (itemActivateEndTime.Contains(SearchQuery, comparison)) return true;
+        
+        string itemActivateStartTime = ((Int64PropertyData)data.Value[5]).Value.ToString();
+        if (itemActivateStartTime.Contains(SearchQuery, comparison)) return true;
+        
+        string iconRarity = ((Int8PropertyData)data.Value[2]).Value.ToString();
+        if (iconRarity.Contains(SearchQuery, comparison)) return true;
+        
+        string isInitItem = ((BoolPropertyData)data.Value[7]).Value.ToString();
+        if (isInitItem.Contains(SearchQuery, comparison)) return true;
         
         return false;
     }
@@ -92,16 +118,32 @@ public partial class IconTableView : TableTab
 
         try
         {
-            // Get String Properties
-            
+            // Get Properties
+            IntPropertyData iconId = (IntPropertyData)data.Value[0];
+            StrPropertyData iconTextureName = (StrPropertyData)data.Value[1];
+            Int8PropertyData iconRarity = (Int8PropertyData)data.Value[2];
+            StrPropertyData nameTag = (StrPropertyData)data.Value[3];
+            StrPropertyData explanationTextTag = (StrPropertyData)data.Value[4];
+            Int64PropertyData itemActivateStartTime = (Int64PropertyData)data.Value[5];
+            Int64PropertyData itemActivateEndTime = (Int64PropertyData)data.Value[6];
+            BoolPropertyData isInitItem = (BoolPropertyData)data.Value[7];
+            IntPropertyData gainWaccaPoint = (IntPropertyData)data.Value[8];
 
             if (ignoreChange) ignoreDataChange = true;
             
             // Set TextBoxes to StructPropertyData contents
             ContentGroup.IsVisible = true;
-            TextBoxName.Text = data.Name.Value.Value;
-            
-            
+            TextBoxName.Text = data.Name.Value?.Value ?? "0";
+
+            TextBoxIconId.Text = iconId.Value.ToString();
+            TextBoxIconTextureName.Text = iconTextureName.Value?.Value ?? "";
+            TextBoxIconRarity.Text = iconRarity.Value.ToString();
+            TextBoxIconNameTag.Text = nameTag.Value?.Value ?? "";
+            TextBoxIconExplanationTextTag.Text = explanationTextTag.Value?.Value ?? "";
+            TextBoxItemActivateStartTime.Text = itemActivateStartTime.Value.ToString();
+            TextBoxItemActivateEndTime.Text = itemActivateEndTime.Value.ToString();
+            CheckBoxIsInitItem.IsChecked = isInitItem.Value;
+            TextBoxGainWaccaPoint.Text = gainWaccaPoint.Value.ToString();
         }
         catch (Exception e)
         {
@@ -130,7 +172,242 @@ public partial class IconTableView : TableTab
             
             switch (textBox.Name)
             {
+                case "TextBoxName":
+                {
+                    FName oldName = data.Name;
+                    FName newName = new(asset, TextBoxName.Text);
+
+                    ModifyStructPropertyName operation = new(data, oldName, newName);
+                    undoRedoManager.RedoAndPush(operation);
+                    
+                    UpdateTreeView(true);
+                    break;
+                }
                 
+                case "TextBoxIconId":
+                { 
+                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[0];
+                    int oldValue = intPropertyData.Value;
+                    int newValue;
+                    
+                    try
+                    {
+                        newValue = Convert.ToInt32(textBox.Text);
+                    }
+                    catch (FormatException)
+                    {
+                        newValue = 0;
+                    }
+
+                    ModifyInt32PropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
+                    undoRedoManager.RedoAndPush(operation);
+                    break;
+                }
+                
+                case "TextBoxIconTextureName":
+                { 
+                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[1];
+                    FString oldValue = strPropertyData.Value;
+                    FString newValue = new(TextBoxIconTextureName.Text);
+
+                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
+                    undoRedoManager.RedoAndPush(operation);
+                    break; 
+                }
+                
+                case "TextBoxIconRarity":
+                {
+                    Int8PropertyData int8PropertyData = (Int8PropertyData)data.Value[2];
+                    sbyte oldValue = int8PropertyData.Value;
+                    sbyte newValue;
+                    
+                    try
+                    {
+                        newValue = Convert.ToSByte(textBox.Text);
+                    }
+                    catch (FormatException)
+                    {
+                        newValue = 0;
+                    }
+
+                    ModifyInt8PropertyDataValue operation = new(data, int8PropertyData, oldValue, newValue);
+                    undoRedoManager.RedoAndPush(operation);
+                    break;
+                }
+                
+                case "TextBoxIconNameTag":
+                { 
+                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[3];
+                    FString oldValue = strPropertyData.Value;
+                    FString newValue = new(TextBoxIconNameTag.Text);
+
+                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
+                    undoRedoManager.RedoAndPush(operation);
+                    break; 
+                }
+                
+                case "TextBoxIconExplanationTextTag":
+                { 
+                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[4];
+                    FString oldValue = strPropertyData.Value;
+                    FString newValue = new(TextBoxIconExplanationTextTag.Text);
+
+                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
+                    undoRedoManager.RedoAndPush(operation);
+                    break; 
+                }
+                
+                case "TextBoxItemActivateStartTime":
+                { 
+                    Int64PropertyData int64PropertyData = (Int64PropertyData)data.Value[5];
+                    long oldValue = int64PropertyData.Value;
+                    long newValue;
+                    
+                    try
+                    {
+                        newValue = Convert.ToInt64(textBox.Text);
+                    }
+                    catch (FormatException)
+                    {
+                        newValue = 0;
+                    }
+                    
+                    ModifyInt64PropertyDataValue operation = new(data, int64PropertyData, oldValue, newValue);
+                    undoRedoManager.RedoAndPush(operation);
+                    break;
+                }
+                
+                case "TextBoxItemActivateEndTime":
+                {
+                    Int64PropertyData int64PropertyData = (Int64PropertyData)data.Value[6];
+                    long oldValue = int64PropertyData.Value;
+                    long newValue;
+                    
+                    try
+                    {
+                        newValue = Convert.ToInt64(textBox.Text);
+                    }
+                    catch (FormatException)
+                    {
+                        newValue = 0;
+                    }
+                    
+                    ModifyInt64PropertyDataValue operation = new(data, int64PropertyData, oldValue, newValue);
+                    undoRedoManager.RedoAndPush(operation);
+                    break;
+                }
+                
+                // IsInitItem
+                
+                case "TextBoxGainWaccaPoint":
+                {
+                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[8];
+                    int oldValue = intPropertyData.Value;
+                    int newValue;
+                    
+                    try
+                    {
+                        newValue = Convert.ToInt32(textBox.Text);
+                    }
+                    catch (FormatException)
+                    {
+                        newValue = 0;
+                    }
+
+                    ModifyInt32PropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
+                    undoRedoManager.RedoAndPush(operation);
+                    break;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
+        }
+    }
+
+    private void TextBox_OnLostFocus(object? sender, RoutedEventArgs args)
+    {
+        if (asset == null) return;
+        if (undoRedoManager == null) return;
+        if (explorerView?.SelectedItem == null) return;
+        if (sender is not TextBox textBox) return;
+
+        try
+        {
+            switch (textBox.Name)
+            {
+                // StrProperty
+                case "TextBoxName":
+                case "TextBoxIconTextureName":
+                case "TextBoxIconNameTag":
+                case "TextBoxIconExplanationTextTag":
+                {
+                    return;
+                }
+
+                // IntProperty
+                case "TextBoxIconId":
+                case "TextBoxGainWaccaPoint":
+                {
+                    _ = Convert.ToInt32(textBox.Text);
+                    break;
+                }
+
+                // Int8Property
+                case "TextBoxIconRarity":
+                {
+                    _ = Convert.ToSByte(textBox.Text);
+                    break;
+                }
+
+                // Int64Property
+                case "TextBoxItemActivateStartTime":
+                case "TextBoxItemActivateEndTime":
+                {
+                    _ = Convert.ToInt64(textBox.Text);
+                    break;
+                }
+            }
+        }
+        catch (FormatException)
+        {
+            textBox.Text = "0";
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
+        }
+    }
+
+    private void CheckBox_OnIsCheckedChanged(object? sender, RoutedEventArgs args)
+    {
+        if (ignoreDataChange) return;
+        
+        if (asset == null) return;
+        if (undoRedoManager == null) return;
+        if (explorerView?.SelectedItem == null) return;
+        if (sender is not CheckBox checkBox) return;
+        
+        try
+        {
+            TreeViewItem item = explorerView.SelectedItem;
+            if (item.Tag is not StructPropertyData data) return;
+            
+            switch (checkBox.Name)
+            {
+                case "CheckBoxIsInitItem":
+                {
+                    BoolPropertyData boolPropertyData = (BoolPropertyData)data.Value[7];
+                    bool oldValue = boolPropertyData.Value;
+                    bool newValue = checkBox.IsChecked ?? false;
+
+                    ModifyBoolPropertyDataValue operation = new(data, boolPropertyData, oldValue, newValue);
+                    undoRedoManager.RedoAndPush(operation);
+                    break;
+                }
             }
         }
         catch (Exception e)
@@ -155,4 +432,55 @@ public partial class IconTableView : TableTab
     private void ButtonAddElement_OnClick(object? sender, RoutedEventArgs args) => AddElement();
     private void ButtonDuplicateElement_OnClick(object? sender, RoutedEventArgs args) => DuplicateElement();
     private void ButtonDeleteElement_OnClick(object? sender, RoutedEventArgs args) => DeleteElement();
+
+    public override void Save()
+    {
+        // Data validation
+        try
+        {
+            _ = Convert.ToInt32(TextBoxIconId.Text);
+        }
+        catch(FormatException e)
+        {
+            TextBoxIconId.Text = "0";
+        }
+        
+        try
+        {
+            _ = Convert.ToInt32(TextBoxGainWaccaPoint.Text);
+        }
+        catch(FormatException e)
+        {
+            TextBoxGainWaccaPoint.Text = "0";
+        }
+        
+        try
+        {
+            _ = Convert.ToSByte(TextBoxIconRarity.Text);
+        }
+        catch(FormatException e)
+        {
+            TextBoxIconRarity.Text = "0";
+        }
+        
+        try
+        {
+            _ = Convert.ToInt64(TextBoxItemActivateStartTime.Text);
+        }
+        catch(FormatException e)
+        {
+            TextBoxItemActivateStartTime.Text = "0";
+        }
+        
+        try
+        {
+            _ = Convert.ToInt64(TextBoxItemActivateEndTime.Text);
+        }
+        catch(FormatException e)
+        {
+            TextBoxItemActivateEndTime.Text = "0";
+        }
+        
+        base.Save();
+    }
 }
