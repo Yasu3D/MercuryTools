@@ -22,7 +22,8 @@ public partial class GateTableView : TableTab
 
         explorerView.TextBoxSearch.TextChanging += TextBoxSearch_OnTextChanging;
         explorerView.ToggleSearch.IsCheckedChanged += ToggleSearch_OnIsCheckedChanged;
-        explorerView.ToggleMatchCase.IsCheckedChanged += ToggleMatchCaseOnIsCheckedChanged;
+        explorerView.ToggleMatchCase.IsCheckedChanged += ToggleMatchCase_OnIsCheckedChanged;
+        explorerView.ToggleInvertQuery.IsCheckedChanged += ToggleInvertQuery_OnIsCheckedChanged;
         
         explorerView.ButtonSave.Click += ButtonSave_OnClick;
         explorerView.ButtonOpen.Click += ButtonOpen_OnClick;
@@ -67,7 +68,7 @@ public partial class GateTableView : TableTab
 
     protected override bool FormatCheck()
     {
-        return table.Count != 0 && table[0].Value[0].Name.ToString() == "SugorokuID";
+        return table.Count != 0 && table[0].Value[0].Name.ToString() == "SugorokuID" && table[0].Value[1].Name.ToString() == "SugorokuStageName";
     }
     
     protected override bool ContentContainsQuery(StructPropertyData data)
@@ -535,6 +536,10 @@ public partial class GateTableView : TableTab
                 case "TextBoxTaskMusicBonus01":
                 case "TextBoxTaskMusicBonus02":
                 case "TextBoxTaskMusicBonus03":
+                {
+                    _ = Convert.ToSingle(textBox.Text, CultureInfo.InvariantCulture);
+                    break;
+                }
                 
                 // IntProperty
                 case "TextBoxEndContentsStartUserLevel":
@@ -611,7 +616,8 @@ public partial class GateTableView : TableTab
 
     private void TextBoxSearch_OnTextChanging(object? sender, TextChangingEventArgs args) => SearchContent();
     private void ToggleSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
-    private void ToggleMatchCaseOnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
+    private void ToggleMatchCase_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
+    private void ToggleInvertQuery_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
     
     private void ButtonSave_OnClick(object? sender, RoutedEventArgs args) => Save();
     private void ButtonOpen_OnClick(object? sender, RoutedEventArgs args) => Open();

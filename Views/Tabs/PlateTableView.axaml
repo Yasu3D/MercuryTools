@@ -23,11 +23,11 @@
         <!-- Content -->
         <DockPanel Grid.Column="2" Name="ContentGroup" IsVisible="False">
             
-            <TextBox DockPanel.Dock="Top" Classes="Inset" Name="TextBoxName" MinWidth="100" HorizontalAlignment="Left" FontSize="14" Margin="5,5,5,30" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
+            <TextBox DockPanel.Dock="Top" Classes="Inset" Name="TextBoxName" MinWidth="100" HorizontalAlignment="Left" FontSize="14" Margin="5,12,5,30" TextChanging="TextBox_OnTextChanging" UndoLimit="0"/>
             
             <ScrollViewer>
                 
-                <StackPanel>
+                <StackPanel Margin="0,0,3,0">
                     
                     <DockPanel Margin="15,15,15,0">
                         <TextBlock DockPanel.Dock="Left" Text="Plate Id" Margin="0,0,5,0"/>

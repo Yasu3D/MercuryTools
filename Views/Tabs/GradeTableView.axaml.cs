@@ -21,7 +21,8 @@ public partial class GradeTableView : TableTab
 
         explorerView.TextBoxSearch.TextChanging += TextBoxSearch_OnTextChanging;
         explorerView.ToggleSearch.IsCheckedChanged += ToggleSearch_OnIsCheckedChanged;
-        explorerView.ToggleMatchCase.IsCheckedChanged += ToggleMatchCaseOnIsCheckedChanged;
+        explorerView.ToggleMatchCase.IsCheckedChanged += ToggleMatchCase_OnIsCheckedChanged;
+        explorerView.ToggleInvertQuery.IsCheckedChanged += ToggleInvertQuery_OnIsCheckedChanged;
         
         explorerView.ButtonSave.Click += ButtonSave_OnClick;
         explorerView.ButtonOpen.Click += ButtonOpen_OnClick;
@@ -484,7 +485,8 @@ public partial class GradeTableView : TableTab
 
     private void TextBoxSearch_OnTextChanging(object? sender, TextChangingEventArgs args) => SearchContent();
     private void ToggleSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
-    private void ToggleMatchCaseOnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
+    private void ToggleMatchCase_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
+    private void ToggleInvertQuery_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
     
     private void ButtonSave_OnClick(object? sender, RoutedEventArgs args) => Save();
     private void ButtonOpen_OnClick(object? sender, RoutedEventArgs args) => Open();

@@ -65,8 +65,8 @@ public abstract class TableTab : UserControl
         foreach (TreeViewItem? item in explorerView.TreeViewElementList.Items)
         {
             if (item?.Tag is not StructPropertyData data) continue;
-            
-            item.IsVisible = ContentContainsQuery(data);
+
+            item.IsVisible = ContentContainsQuery(data) ^ explorerView.ToggleInvertQuery.IsChecked ?? false;
         }
     }
         
