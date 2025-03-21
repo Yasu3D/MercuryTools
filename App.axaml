@@ -172,12 +172,12 @@
                 </Setter>
             </Style>
             
-            <Setter Property="Background" Value="{DynamicResource LightBrush}"/>
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
         
         <Style Selector="ToggleButton">
-            <Setter Property="Background" Value="{DynamicResource LightBrush}"/>
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">

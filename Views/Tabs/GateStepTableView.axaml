@@ -29,6 +29,8 @@
                 
                 <StackPanel Margin="0,0,3,0">
                     
+                    <views:ArrayEditor Margin="10"/>
+                    
                     <DockPanel Margin="15,15,15,0">
                         <TextBlock DockPanel.Dock="Left" Text="Sugoroku Id" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
