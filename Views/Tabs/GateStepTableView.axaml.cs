@@ -44,7 +44,7 @@ public partial class GateStepTableView : TableTab
         explorerView.ButtonDuplicateElement.Click += ButtonDuplicateElement_OnClick;
         explorerView.ButtonDeleteElement.Click += ButtonDeleteElement_OnClick;
         
-        explorerView.ListBoxElementList.SelectionChanged += ListBox_OnSelectionChanged;
+        explorerView.TreeViewElementList.SelectionChanged += TreeView_OnSelectionChanged;
     }
 
     protected override StructPropertyData NewData => new()
@@ -87,13 +87,56 @@ public partial class GateStepTableView : TableTab
         if (Utils.Filter(name, "Name", SearchQuery, comparison)) return true;
         
         // Check Data
-        string sugorokuId = ((IntPropertyData)data.Value[0]).Value.ToString();
+        string sugorokuId = ((Int16PropertyData)data.Value[0]).Value.ToString();
         if (Utils.Filter(sugorokuId, "SugorokuId", SearchQuery, comparison)) return true;
         
-        string? sugorokuStageName = ((StrPropertyData)data.Value[1]).Value?.Value;
-        if (Utils.Filter(sugorokuStageName, "SugorokuStageName", SearchQuery, comparison)) return true;
+        string pageNumber = ((Int16PropertyData)data.Value[1]).Value.ToString();
+        if (Utils.Filter(pageNumber, "PageNumber", SearchQuery, comparison)) return true;
         
-        // TODO: ContentContainsQuery for Arrays
+        string taskGenre01 = ((IntPropertyData)data.Value[6]).Value.ToString();
+        if (Utils.Filter(taskGenre01, "TaskGenre01", SearchQuery, comparison)) return true;
+        
+        string taskGenre02 = ((IntPropertyData)data.Value[8]).Value.ToString();
+        if (Utils.Filter(taskGenre02, "TaskGenre02", SearchQuery, comparison)) return true;
+        
+        string taskGenre03 = ((IntPropertyData)data.Value[10]).Value.ToString();
+        if (Utils.Filter(taskGenre03, "TaskGenre03", SearchQuery, comparison)) return true;
+        
+        string missionMusicID = ((IntPropertyData)data.Value[11]).Value.ToString();
+        if (Utils.Filter(missionMusicID, "MissionMusicID", SearchQuery, comparison)) return true;
+        
+        string condition = ((IntPropertyData)data.Value[12]).Value.ToString();
+        if (Utils.Filter(condition, "Condition", SearchQuery, comparison)) return true;
+        
+        string difficulty = ((IntPropertyData)data.Value[13]).Value.ToString();
+        if (Utils.Filter(difficulty, "Difficulty", SearchQuery, comparison)) return true;
+        
+        string clearRate = ((IntPropertyData)data.Value[14]).Value.ToString();
+        if (Utils.Filter(clearRate, "ClearRate", SearchQuery, comparison)) return true;
+        
+        string rewardGatePoint = ((IntPropertyData)data.Value[15]).Value.ToString();
+        if (Utils.Filter(rewardGatePoint, "RewardGatePoint", SearchQuery, comparison)) return true;
+        
+        string easingDay = ((Int64PropertyData)data.Value[16]).Value.ToString();
+        if (Utils.Filter(easingDay, "EasingDay", SearchQuery, comparison)) return true;
+
+        ArrayPropertyData targetPoint = (ArrayPropertyData)data.Value[2];
+        if (Utils.FilterArray(targetPoint, "TargetPoint", SearchQuery, comparison)) return true;
+        
+        ArrayPropertyData getItemVariety = (ArrayPropertyData)data.Value[2];
+        if (Utils.FilterArray(getItemVariety, "GetItemVariety", SearchQuery, comparison)) return true;
+        
+        ArrayPropertyData getItemValue = (ArrayPropertyData)data.Value[2];
+        if (Utils.FilterArray(getItemValue, "GetItemValue", SearchQuery, comparison)) return true;
+        
+        ArrayPropertyData taskMusic01 = (ArrayPropertyData)data.Value[2];
+        if (Utils.FilterArray(taskMusic01, "TaskMusic01", SearchQuery, comparison)) return true;
+        
+        ArrayPropertyData taskMusic02 = (ArrayPropertyData)data.Value[2];
+        if (Utils.FilterArray(taskMusic02, "TaskMusic02", SearchQuery, comparison)) return true;
+        
+        ArrayPropertyData taskMusic03 = (ArrayPropertyData)data.Value[2];
+        if (Utils.FilterArray(taskMusic03, "TaskMusic03", SearchQuery, comparison)) return true;
         
         return false;
     }
@@ -184,7 +227,7 @@ public partial class GateStepTableView : TableTab
         
         try
         {
-            ListBoxItem item = explorerView.SelectedItem;
+            TreeViewItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
             
             switch (textBox.Name)
@@ -197,7 +240,7 @@ public partial class GateStepTableView : TableTab
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.RedoAndPush(operation);
                     
-                    UpdateListBox(true);
+                    UpdateTreeView(true);
                     break;
                 }
                 
@@ -487,7 +530,7 @@ public partial class GateStepTableView : TableTab
         }
     }
     
-    private void ListBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => UpdateContent(true);
+    private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => UpdateContent(true);
 
     private void TextBoxSearch_OnTextChanging(object? sender, TextChangingEventArgs args) => SearchContent();
     private void ToggleSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();

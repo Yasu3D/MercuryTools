@@ -40,7 +40,7 @@ public partial class BossStageTableView : TableTab
         explorerView.ButtonDuplicateElement.Click += ButtonDuplicateElement_OnClick;
         explorerView.ButtonDeleteElement.Click += ButtonDeleteElement_OnClick;
         
-        explorerView.ListBoxElementList.SelectionChanged += ListBox_OnSelectionChanged;
+        explorerView.TreeViewElementList.SelectionChanged += TreeView_OnSelectionChanged;
     }
 
     protected override StructPropertyData NewData => new()
@@ -72,13 +72,23 @@ public partial class BossStageTableView : TableTab
         if (Utils.Filter(name, "Name", SearchQuery, comparison)) return true;
         
         // Check Data
-        string sugorokuId = ((IntPropertyData)data.Value[0]).Value.ToString();
-        if (Utils.Filter(sugorokuId, "SugorokuId", SearchQuery, comparison)) return true;
+        string musicId = ((IntPropertyData)data.Value[0]).Value.ToString();
+        if (Utils.Filter(musicId, "MusicId", SearchQuery, comparison)) return true;
         
-        string? sugorokuStageName = ((StrPropertyData)data.Value[1]).Value?.Value;
-        if (Utils.Filter(sugorokuStageName, "SugorokuStageName", SearchQuery, comparison)) return true;
+        string? bVipPreOpen = ((StrPropertyData)data.Value[1]).Value?.Value;
+        if (Utils.Filter(bVipPreOpen, "bVipPreOpen", SearchQuery, comparison)) return true;
         
-        // TODO: ContentContainsQuery
+        string? startDate = ((StrPropertyData)data.Value[1]).Value?.Value;
+        if (Utils.Filter(startDate, "StartDate", SearchQuery, comparison)) return true;
+        
+        string? endDate = ((StrPropertyData)data.Value[1]).Value?.Value;
+        if (Utils.Filter(endDate, "EndDate", SearchQuery, comparison)) return true;
+        
+        ArrayPropertyData appearConditionArray = (ArrayPropertyData)data.Value[2];
+        if (Utils.FilterArray(appearConditionArray, "AppearConditionArray", SearchQuery, comparison)) return true;
+        
+        ArrayPropertyData unlockConditionArray = (ArrayPropertyData)data.Value[2];
+        if (Utils.FilterArray(unlockConditionArray, "UnlockConditionArray", SearchQuery, comparison)) return true;
         
         return false;
     }
@@ -147,7 +157,7 @@ public partial class BossStageTableView : TableTab
         
         try
         {
-            ListBoxItem item = explorerView.SelectedItem;
+            TreeViewItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
             
             switch (textBox.Name)
@@ -160,7 +170,7 @@ public partial class BossStageTableView : TableTab
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.RedoAndPush(operation);
                     
-                    UpdateListBox(true);
+                    UpdateTreeView(true);
                     break;
                 }
                 
@@ -287,7 +297,7 @@ public partial class BossStageTableView : TableTab
         
         try
         {
-            ListBoxItem item = explorerView.SelectedItem;
+            TreeViewItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
             
             switch (checkBox.Name)
@@ -311,7 +321,7 @@ public partial class BossStageTableView : TableTab
         }
     }
     
-    private void ListBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => UpdateContent(true);
+    private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => UpdateContent(true);
 
     private void TextBoxSearch_OnTextChanging(object? sender, TextChangingEventArgs args) => SearchContent();
     private void ToggleSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();

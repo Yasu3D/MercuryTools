@@ -37,7 +37,7 @@ public partial class GradePartsTableView : TableTab
         explorerView.ButtonDuplicateElement.Click += ButtonDuplicateElement_OnClick;
         explorerView.ButtonDeleteElement.Click += ButtonDeleteElement_OnClick;
         
-        explorerView.ListBoxElementList.SelectionChanged += ListBox_OnSelectionChanged;
+        explorerView.TreeViewElementList.SelectionChanged += TreeView_OnSelectionChanged;
     }
 
     protected override StructPropertyData NewData => new()
@@ -71,11 +71,11 @@ public partial class GradePartsTableView : TableTab
         if (Utils.Filter(name, "Name", SearchQuery, comparison)) return true;
         
         // Check Data
-        string gradeId = ((IntPropertyData)data.Value[0]).Value.ToString();
-        if (Utils.Filter(gradeId, "GradeId", SearchQuery, comparison)) return true;
+        string gradePartsId = ((IntPropertyData)data.Value[0]).Value.ToString();
+        if (Utils.Filter(gradePartsId, "GradePartsId", SearchQuery, comparison)) return true;
         
-        string gradePartsId02 = ((IntPropertyData)data.Value[1]).Value.ToString();
-        if (Utils.Filter(gradePartsId02, "GradePartsId02", SearchQuery, comparison)) return true;
+        string gradePartsType = ((IntPropertyData)data.Value[1]).Value.ToString();
+        if (Utils.Filter(gradePartsType, "GradePartsType", SearchQuery, comparison)) return true;
         
         string? nameTag = ((StrPropertyData)data.Value[2]).Value?.Value;
         if (Utils.Filter(nameTag, "NameTag", SearchQuery, comparison)) return true;
@@ -89,8 +89,8 @@ public partial class GradePartsTableView : TableTab
         string itemActivateEndTime = ((Int64PropertyData)data.Value[5]).Value.ToString();
         if (Utils.Filter(itemActivateEndTime, "ItemActivateEndTime", SearchQuery, comparison)) return true;
         
-        string isInitItem = ((BoolPropertyData)data.Value[6]).Value.ToString();
-        if (Utils.Filter(isInitItem, "IsInitItem", SearchQuery, comparison)) return true;
+        string bIsInitItem = ((BoolPropertyData)data.Value[6]).Value.ToString();
+        if (Utils.Filter(bIsInitItem, "bIsInitItem", SearchQuery, comparison)) return true;
         
         string gainWaccaPoint = ((IntPropertyData)data.Value[7]).Value.ToString();
         if (Utils.Filter(gainWaccaPoint, "GainWaccaPoint", SearchQuery, comparison)) return true;
@@ -162,7 +162,7 @@ public partial class GradePartsTableView : TableTab
         
         try
         {
-            ListBoxItem item = explorerView.SelectedItem;
+            TreeViewItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
             
             switch (textBox.Name)
@@ -175,7 +175,7 @@ public partial class GradePartsTableView : TableTab
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.RedoAndPush(operation);
                     
-                    UpdateListBox(true);
+                    UpdateTreeView(true);
                     break;
                 }
                 
@@ -370,7 +370,7 @@ public partial class GradePartsTableView : TableTab
         
         try
         {
-            ListBoxItem item = explorerView.SelectedItem;
+            TreeViewItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
             
             switch (checkBox.Name)
@@ -394,7 +394,7 @@ public partial class GradePartsTableView : TableTab
         }
     }
     
-    private void ListBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => UpdateContent(true);
+    private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => UpdateContent(true);
 
     private void TextBoxSearch_OnTextChanging(object? sender, TextChangingEventArgs args) => SearchContent();
     private void ToggleSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();

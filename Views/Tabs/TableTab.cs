@@ -35,11 +35,11 @@ public abstract class TableTab : UserControl
     
     protected abstract void UpdateContent(bool ignoreChange);
 
-    protected void UpdateListBox(bool ignoreChange)
+    protected void UpdateTreeView(bool ignoreChange)
     {
         if (ignoreChange) ignoreDataChange = true;
         
-        explorerView?.UpdateListBox(table);
+        explorerView?.UpdateTreeView(table);
         SearchContent();
         
         if (ignoreChange) ignoreDataChange = false;
@@ -49,10 +49,10 @@ public abstract class TableTab : UserControl
     {
         if (explorerView == null) return;
         
-        // Set ListBoxItems to default state if not actively searching for anything.
+        // Set TreeViewItems to default state if not actively searching for anything.
         if (!explorerView.ToggleSearch.IsChecked ?? string.IsNullOrEmpty(SearchQuery))
         {
-            foreach (ListBoxItem? item in explorerView.ListBoxElementList.Items)
+            foreach (TreeViewItem? item in explorerView.TreeViewElementList.Items)
             {
                 if (item == null) continue;
                 item.IsVisible = true;
@@ -61,8 +61,8 @@ public abstract class TableTab : UserControl
             return;
         }
 
-        // Loop through ListBoxItems to check if they match the query.
-        foreach (ListBoxItem? item in explorerView.ListBoxElementList.Items)
+        // Loop through TreeViewItems to check if they match the query.
+        foreach (TreeViewItem? item in explorerView.TreeViewElementList.Items)
         {
             if (item?.Tag is not StructPropertyData data) continue;
 
@@ -100,7 +100,7 @@ public abstract class TableTab : UserControl
             asset = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
             assetBackup = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
 
-            UpdateListBox(true);
+            UpdateTreeView(true);
             UpdateContent(true);
 
             if (table.Count == 0) throw new ArgumentException("Provided .uasset file is empty.");
@@ -127,13 +127,13 @@ public abstract class TableTab : UserControl
         ignoreDataChange = true;
         Operation operation = undoRedoManager.Undo();
 
-        UpdateListBox(false);
+        UpdateTreeView(false);
         UpdateContent(false);
         
         // Try to highlight modified element.
         if (operation.Parent != null)
         {
-            explorerView.ListBoxElementList.SelectedItem = explorerView.ListBoxElementList.Items.FirstOrDefault(x => x is ListBoxItem item && item.Tag == operation.Parent);
+            explorerView.TreeViewElementList.SelectedItem = explorerView.TreeViewElementList.Items.FirstOrDefault(x => x is TreeViewItem item && item.Tag == operation.Parent);
         }
 
 
@@ -149,13 +149,13 @@ public abstract class TableTab : UserControl
         ignoreDataChange = true;
         Operation operation = undoRedoManager.Redo();
         
-        UpdateListBox(false);
+        UpdateTreeView(false);
         UpdateContent(false);
         
         // Try to highlight modified element.
         if (operation.Parent != null)
         {
-            explorerView.ListBoxElementList.SelectedItem = explorerView.ListBoxElementList.Items.FirstOrDefault(x => x is ListBoxItem item && item.Tag == operation.Parent);
+            explorerView.TreeViewElementList.SelectedItem = explorerView.TreeViewElementList.Items.FirstOrDefault(x => x is TreeViewItem item && item.Tag == operation.Parent);
         }
 
         
@@ -171,7 +171,7 @@ public abstract class TableTab : UserControl
         try
         {
             // Get Selected Item and connected Data
-            ListBoxItem item = explorerView.SelectedItem;
+            TreeViewItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData dataA) return;
             
             // Get Index
@@ -188,7 +188,7 @@ public abstract class TableTab : UserControl
             SwapItems<StructPropertyData> operation = new(table, dataA, dataB, indexA, indexB);
             undoRedoManager.RedoAndPush(operation);
 
-            UpdateListBox(true);
+            UpdateTreeView(true);
         }
         catch (Exception e)
         {
@@ -209,7 +209,7 @@ public abstract class TableTab : UserControl
             AddItem<StructPropertyData> operation = new(table, NewData, table.Count);
             undoRedoManager.RedoAndPush(operation);
             
-            UpdateListBox(true);
+            UpdateTreeView(true);
         }
         catch (Exception e)
         {
@@ -226,7 +226,7 @@ public abstract class TableTab : UserControl
 
         try
         {
-            ListBoxItem item = explorerView.SelectedItem;
+            TreeViewItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
 
             // Add new Data
@@ -236,7 +236,7 @@ public abstract class TableTab : UserControl
             AddItem<StructPropertyData> operation = new(table, duplicateData, index);
             undoRedoManager.RedoAndPush(operation);
             
-            UpdateListBox(true);
+            UpdateTreeView(true);
         }
         catch (Exception e)
         {
@@ -254,7 +254,7 @@ public abstract class TableTab : UserControl
         try
         {
             // Get Selected Item and connected Data
-            ListBoxItem item = explorerView.SelectedItem;
+            TreeViewItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
             
             // Remove data from Table
@@ -264,7 +264,7 @@ public abstract class TableTab : UserControl
             RemoveItem<StructPropertyData> operation = new(table, data, index);
             undoRedoManager.RedoAndPush(operation);
 
-            UpdateListBox(true);
+            UpdateTreeView(true);
         }
         catch (Exception e)
         {
