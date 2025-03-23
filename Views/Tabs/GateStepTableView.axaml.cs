@@ -93,6 +93,8 @@ public partial class GateStepTableView : TableTab
         string? sugorokuStageName = ((StrPropertyData)data.Value[1]).Value?.Value;
         if (Utils.Filter(sugorokuStageName, "SugorokuStageName", SearchQuery, comparison)) return true;
         
+        // TODO: ContentContainsQuery for Arrays
+        
         return false;
     }
     
@@ -218,7 +220,6 @@ public partial class GateStepTableView : TableTab
                     undoRedoManager.RedoAndPush(operation);
                     break;
                 }
-                
                 
                 case "TextBoxPageNumber":
                 {
