@@ -3,18 +3,18 @@ using UAssetAPI.PropertyTypes.Structs;
 
 namespace MercuryTools.UndoRedo.Operations;
 
-public class RemoveStructProperty(List<StructPropertyData> table, StructPropertyData data, int index) : IOperation
+public class RemoveItem<T>(List<T> table, T data, int index) : Operation
 {
-    public readonly List<StructPropertyData> Table = table;
-    public readonly StructPropertyData Data = data;
+    public readonly List<T> Table = table;
+    public readonly T Data = data;
     public readonly int Index = index;
     
-    public void Undo()
+    public override void Undo()
     {
         Table.Insert(Index, Data);
     }
     
-    public void Redo()
+    public override void Redo()
     {
         Table.Remove(Data);
     }

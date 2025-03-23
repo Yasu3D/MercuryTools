@@ -29,135 +29,105 @@
                 
                 <StackPanel Margin="0,0,3,0">
                     
-                    <views:ArrayEditor Margin="10"/>
-                    
                     <DockPanel Margin="15,15,15,0">
                         <TextBlock DockPanel.Dock="Left" Text="Sugoroku Id" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="Int16Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
                     
                     <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxSugorokuId" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
                     
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Sugoroku Stage Name" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="Page Number" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="Int16Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
                     
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxSugorokuStageName" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxPageNumber" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+                    
+                    <UserControl Name="ArrayTargetPoint" Margin="10"/>
+                    
+                    <UserControl Name="ArrayGetItemVariety" Margin="10"/>
+                    
+                    <UserControl Name="ArrayGetItemValue" Margin="10"/>
+                    
+                    <UserControl Name="ArrayTaskMusic01" Margin="10"/>
                     
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Sugoroku Select Center Image" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
-                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
-                    </DockPanel>
-                    
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxSugorokuSelectCenterImage" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
-
-                    <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Sugoroku Center Image" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
-                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
-                    </DockPanel>
-                    
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxSugorokuCenterImage" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
-                    
-                    <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Has Loop Page" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
-                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
-                    </DockPanel>
-
-                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxHasLoopPage" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                    
-                    <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="End Contents Start User Level" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="Task Genre 01" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
                     
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxEndContentsStartUserLevel" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
-
-                    <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="First Play Bonus" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="Int8Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
-                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
-                    </DockPanel>
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxTaskGenre01" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
                     
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxFirstPlayBonus" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
-
-                    <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Base Score Normal" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="Int16Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
-                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
-                    </DockPanel>
+                    <UserControl Name="ArrayTaskMusic02" Margin="10"/>
                     
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxBaseScoreNormal" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
-
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Base Score VIP" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="Int16Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
-                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
-                    </DockPanel>
-                    
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxBaseScoreVip" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
-
-                    <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Missless Bonus" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="Int16Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
-                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
-                    </DockPanel>
-                    
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxMisslessBonus" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
-
-                    <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Full Combo Bonus" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="Int16Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
-                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
-                    </DockPanel>
-                    
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxFullComboBonus" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
-
-                    <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Multi Bonus" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="FloatProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
-                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
-                    </DockPanel>
-                    
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxMultiBonus" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
-
-                    <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Task Music Bonus 01" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="FloatProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
-                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
-                    </DockPanel>
-                    
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxTaskMusicBonus01" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
-
-                    <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Task Music Bonus 02" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="FloatProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
-                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
-                    </DockPanel>
-                    
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxTaskMusicBonus02" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
-
-                    <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Task Music Bonus 03" Margin="0,0,5,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="FloatProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
-                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
-                    </DockPanel>
-                    
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxTaskMusicBonus03" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
-
-                    <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Priority" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="Task Genre 02" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
                     
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxPriority" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxTaskGenre02" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <UserControl Name="ArrayTaskMusic03" Margin="10"/>
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="Task Genre 03" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxTaskGenre03" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="Mission Music Id" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxMissionMusicId" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="Condition" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxCondition" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="Difficulty" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxDifficulty" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="Clear Rate" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxClearRate" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="Reward Gate Point" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxRewardGatePoint" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="Easing Day" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="Int64Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxEasingDay" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
                     
                 </StackPanel>
                 

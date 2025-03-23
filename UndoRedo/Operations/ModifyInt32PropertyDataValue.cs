@@ -2,19 +2,26 @@ using UAssetAPI.PropertyTypes.Objects;
 
 namespace MercuryTools.UndoRedo.Operations;
 
-public class ModifyInt32PropertyDataValue(object? parentStruct, IntPropertyData intPropertyData, int oldValue, int newValue) : IOperation
+public class ModifyInt32PropertyDataValue : Operation
 {
-    public readonly object? ParentStruct = parentStruct;
-    public readonly IntPropertyData IntPropertyData = intPropertyData;
-    public readonly int OldValue = oldValue;
-    public readonly int NewValue = newValue;
+    public ModifyInt32PropertyDataValue(object? parent, IntPropertyData intPropertyData, int oldValue, int newValue)
+    {
+        Parent = parent;
+        IntPropertyData = intPropertyData;
+        OldValue = oldValue;
+        NewValue = newValue;
+    }
     
-    public void Undo()
+    public readonly IntPropertyData IntPropertyData;
+    public readonly int OldValue;
+    public readonly int NewValue;
+
+    public override void Undo()
     {
         IntPropertyData.Value = OldValue;
     }
 
-    public void Redo()
+    public override void Redo()
     {
         IntPropertyData.Value = NewValue;
     }

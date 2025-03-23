@@ -3,19 +3,26 @@ using UAssetAPI.UnrealTypes;
 
 namespace MercuryTools.UndoRedo.Operations;
 
-public class ModifyStringPropertyDataValue(object? parentStruct, StrPropertyData strPropertyData, FString oldValue, FString newValue) : IOperation
+public class ModifyStringPropertyDataValue : Operation
 {
-    public readonly object? ParentStruct = parentStruct;
-    public readonly StrPropertyData StrPropertyData = strPropertyData;
-    public readonly FString OldValue = oldValue;
-    public readonly FString NewValue = newValue;
+    public ModifyStringPropertyDataValue(object? parent, StrPropertyData strPropertyData, FString oldValue, FString newValue)
+    {
+        Parent = parent;
+        StrPropertyData = strPropertyData;
+        OldValue = oldValue;
+        NewValue = newValue;
+    }
     
-    public void Undo()
+    public readonly StrPropertyData StrPropertyData;
+    public readonly FString OldValue;
+    public readonly FString NewValue;
+
+    public override void Undo()
     {
         StrPropertyData.Value = OldValue;
     }
 
-    public void Redo()
+    public override void Redo()
     {
         StrPropertyData.Value = NewValue;
     }

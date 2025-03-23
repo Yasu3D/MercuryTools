@@ -6,6 +6,7 @@
         <entry key="App.axaml" value="MercuryTools.csproj" />
         <entry key="MainWindow.axaml" value="MercuryTools.csproj" />
         <entry key="Views/ArrayEditor.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/ArrayItem.axaml" value="MercuryTools.csproj" />
         <entry key="Views/ExplorerView.axaml" value="MercuryTools.csproj" />
         <entry key="Views/MainView.axaml" value="MercuryTools.csproj" />
         <entry key="Views/Tabs/BossStageTableView.axaml" value="MercuryTools.csproj" />

@@ -22,54 +22,54 @@ public partial class ExplorerView : UserControl
         ToggleSearch.IsCheckedChanged += ToggleSearch_OnIsCheckedChanged;
     }
 
-    public TreeViewItem? SelectedItem => (TreeViewItem?)TreeViewElementList?.SelectedItem;
+    public ListBoxItem? SelectedItem => (ListBoxItem?)ListBoxElementList?.SelectedItem;
     
-    public void UpdateTreeView(List<StructPropertyData>? tableData)
+    public void UpdateListBox(List<StructPropertyData>? tableData)
     {
         if (tableData == null) return;
-        if (TreeViewElementList == null) return;
+        if (ListBoxElementList == null) return;
 
         try
         {
             // Save selected data.
             object? selectedData = null;
-            if (TreeViewElementList.SelectedItem is TreeViewItem selectedItem)
+            if (ListBoxElementList.SelectedItem is ListBoxItem selectedItem)
             {
                 selectedData = selectedItem.Tag;
             }
 
-            // Update TreeViewItems.
+            // Update ListBoxItems.
             for (int i = 0; i < tableData.Count; i++)
             {
-                if (i < TreeViewElementList.Items.Count)
+                if (i < ListBoxElementList.Items.Count)
                 {
-                    // Modify existing TreeViewItem.
-                    if (TreeViewElementList.Items[i] is not TreeViewItem item) continue;
+                    // Modify existing ListBoxItem.
+                    if (ListBoxElementList.Items[i] is not ListBoxItem item) continue;
                     
-                    item.Header = tableData[i].Name;
+                    item.Content = tableData[i].Name;
                     item.Tag = tableData[i];
                 }
                 else
                 {
-                    // Create new TreeViewItem.
-                    TreeViewItem item = new()
+                    // Create new ListBoxItem.
+                    ListBoxItem item = new()
                     {
-                        Header = tableData[i].Name,
+                        Content = tableData[i].Name,
                         Tag = tableData[i],
                     };
 
-                    TreeViewElementList.Items.Add(item);
+                    ListBoxElementList.Items.Add(item);
                 }
             }
             
-            // Delete redundant TreeViewItems.
-            for (int i = TreeViewElementList.Items.Count - 1; i >= tableData.Count ; i--)
+            // Delete redundant ListBoxItems.
+            for (int i = ListBoxElementList.Items.Count - 1; i >= tableData.Count ; i--)
             {
-                TreeViewElementList.Items.RemoveAt(i);
+                ListBoxElementList.Items.RemoveAt(i);
             }
             
             // Reassign selection based on selected data.
-            TreeViewElementList.SelectedItem = TreeViewElementList.Items.FirstOrDefault(x => x is TreeViewItem item && item.Tag == selectedData);
+            ListBoxElementList.SelectedItem = ListBoxElementList.Items.FirstOrDefault(x => x is ListBoxItem item && item.Tag == selectedData);
         }
         catch (Exception e)
         {

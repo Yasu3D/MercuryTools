@@ -7,6 +7,9 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using FluentAvalonia.UI.Controls;
 using MercuryTools.Views.Tabs;
+using UAssetAPI;
+using UAssetAPI.UnrealTypes;
+using UAssetAPI.Unversioned;
 
 namespace MercuryTools.Views;
 

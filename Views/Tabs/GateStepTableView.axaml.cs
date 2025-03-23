@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using MercuryTools.UndoRedo.Operations;
@@ -17,6 +16,13 @@ public partial class GateStepTableView : TableTab
         mainView = main;
         explorerView = Explorer;
         undoRedoManager = new();
+
+        ArrayTargetPoint.Content = new ArrayEditor(undoRedoManager, "Target Point", "IntProperty");
+        ArrayGetItemVariety.Content = new ArrayEditor(undoRedoManager, "Get Item Variety", "StrProperty");
+        ArrayGetItemValue.Content = new ArrayEditor(undoRedoManager, "Get Item Value", "IntProperty");
+        ArrayTaskMusic01.Content = new ArrayEditor(undoRedoManager, "Task Music 01", "IntProperty");
+        ArrayTaskMusic02.Content = new ArrayEditor(undoRedoManager, "Task Music 02", "IntProperty");
+        ArrayTaskMusic03.Content = new ArrayEditor(undoRedoManager, "Task Music 03", "IntProperty");
 
         undoRedoManager.OperationHistoryChanged += UpdateUndoRedoButtons;
 
@@ -38,7 +44,7 @@ public partial class GateStepTableView : TableTab
         explorerView.ButtonDuplicateElement.Click += ButtonDuplicateElement_OnClick;
         explorerView.ButtonDeleteElement.Click += ButtonDeleteElement_OnClick;
         
-        explorerView.TreeViewElementList.SelectionChanged += TreeView_OnSelectionChanged;
+        explorerView.ListBoxElementList.SelectionChanged += ListBox_OnSelectionChanged;
     }
 
     protected override StructPropertyData NewData => new()
@@ -47,7 +53,7 @@ public partial class GateStepTableView : TableTab
         StructType = new(asset, "SugorokuStageParameterTableData"),
         Value =
         [
-            new Int16PropertyData(new(asset, "SugorokuId")),
+            new Int16PropertyData(new(asset, "SugorokuID")),
             new Int16PropertyData(new(asset, "PageNumber")),
             new ArrayPropertyData(new(asset, "TargetPoint")),
             new ArrayPropertyData(new(asset, "GetItemVariety")),
@@ -92,8 +98,7 @@ public partial class GateStepTableView : TableTab
     
     protected override void UpdateContent(bool ignoreChange)
     {
-        ContentGroup.IsVisible = true;
-        return;
+        if (asset == null) return;
         
         if (explorerView?.SelectedItem == null)
         {
@@ -112,44 +117,48 @@ public partial class GateStepTableView : TableTab
         {
             // Get Properties
             Int16PropertyData sugorokuId = (Int16PropertyData)data.Value[0];
-            StrPropertyData sugorokuStageName = (StrPropertyData)data.Value[1];
-            StrPropertyData sugorokuSelectCenterImage = (StrPropertyData)data.Value[2];
-            StrPropertyData sugorokuCenterImage = (StrPropertyData)data.Value[3];
-            BoolPropertyData hasLoopPage = (BoolPropertyData)data.Value[4];
-            IntPropertyData endContentsStartUserLevel = (IntPropertyData)data.Value[5];
-            Int8PropertyData firstPlayBonus = (Int8PropertyData)data.Value[6];
-            FloatPropertyData baseScoreNormal = (FloatPropertyData)data.Value[7];
-            FloatPropertyData baseScoreVip = (FloatPropertyData)data.Value[8];
-            Int16PropertyData misslessBonus = (Int16PropertyData)data.Value[9];
-            Int16PropertyData fullComboBonus = (Int16PropertyData)data.Value[10];
-            FloatPropertyData multiBonus = (FloatPropertyData)data.Value[11];
-            FloatPropertyData taskMusicBonus01 = (FloatPropertyData)data.Value[12];
-            FloatPropertyData taskMusicBonus02 = (FloatPropertyData)data.Value[13];
-            FloatPropertyData taskMusicBonus03 = (FloatPropertyData)data.Value[14];
-            IntPropertyData priority = (IntPropertyData)data.Value[15];
-
+            Int16PropertyData pageNumber = (Int16PropertyData)data.Value[1];
+            ArrayPropertyData targetPoint = (ArrayPropertyData)data.Value[2];
+            ArrayPropertyData getItemVariety = (ArrayPropertyData)data.Value[3];
+            ArrayPropertyData getItemValue = (ArrayPropertyData)data.Value[4];
+            ArrayPropertyData taskMusic01 = (ArrayPropertyData)data.Value[5];
+            IntPropertyData taskGenre01 = (IntPropertyData)data.Value[6];
+            ArrayPropertyData taskMusic02 = (ArrayPropertyData)data.Value[7];
+            IntPropertyData taskGenre02 = (IntPropertyData)data.Value[8];
+            ArrayPropertyData taskMusic03 = (ArrayPropertyData)data.Value[9];
+            IntPropertyData taskGenre03 = (IntPropertyData)data.Value[10];
+            IntPropertyData missionMusicID = (IntPropertyData)data.Value[11];
+            IntPropertyData condition = (IntPropertyData)data.Value[12];
+            IntPropertyData difficulty = (IntPropertyData)data.Value[13];
+            IntPropertyData clearRate = (IntPropertyData)data.Value[14];
+            IntPropertyData rewardGatePoint = (IntPropertyData)data.Value[15];
+            Int64PropertyData easingDay = (Int64PropertyData)data.Value[16];
+            
             if (ignoreChange) ignoreDataChange = true;
             
             // Set Content to StructPropertyData contents
             ContentGroup.IsVisible = true;
             TextBoxName.Text = data.Name.Value?.Value ?? "0";
 
-            TextBoxSugorokuId.Text = sugorokuId.Value.ToString();
-            TextBoxSugorokuStageName.Text = sugorokuStageName.Value?.Value ?? "";
-            TextBoxSugorokuSelectCenterImage.Text = sugorokuSelectCenterImage.Value?.Value ?? "";
-            TextBoxSugorokuCenterImage.Text = sugorokuCenterImage.Value?.Value ?? "";
-            CheckBoxHasLoopPage.IsChecked = hasLoopPage.Value;
-            TextBoxEndContentsStartUserLevel.Text = endContentsStartUserLevel.Value.ToString();
-            TextBoxFirstPlayBonus.Text = firstPlayBonus.Value.ToString();
-            TextBoxBaseScoreNormal.Text = baseScoreNormal.Value.ToString(CultureInfo.InvariantCulture);
-            TextBoxBaseScoreVip.Text = baseScoreVip.Value.ToString(CultureInfo.InvariantCulture);
-            TextBoxMisslessBonus.Text = misslessBonus.Value.ToString();
-            TextBoxFullComboBonus.Text = fullComboBonus.Value.ToString();
-            TextBoxMultiBonus.Text = multiBonus.Value.ToString(CultureInfo.InvariantCulture);
-            TextBoxTaskMusicBonus01.Text = taskMusicBonus01.Value.ToString(CultureInfo.InvariantCulture);
-            TextBoxTaskMusicBonus02.Text = taskMusicBonus02.Value.ToString(CultureInfo.InvariantCulture);
-            TextBoxTaskMusicBonus03.Text = taskMusicBonus03.Value.ToString(CultureInfo.InvariantCulture);
-            TextBoxPriority.Text = priority.Value.ToString();
+            FName dummyName = FName.DefineDummy(asset, "0");
+            ((ArrayEditor)ArrayTargetPoint.Content!).SetTable(asset, data, targetPoint, new IntPropertyData(dummyName)); 
+            ((ArrayEditor)ArrayGetItemVariety.Content!).SetTable(asset, data, getItemVariety, new StrPropertyData(dummyName)); 
+            ((ArrayEditor)ArrayGetItemValue.Content!).SetTable(asset, data, getItemValue, new IntPropertyData(dummyName)); 
+            ((ArrayEditor)ArrayTaskMusic01.Content!).SetTable(asset, data, taskMusic01, new IntPropertyData(dummyName)); 
+            ((ArrayEditor)ArrayTaskMusic02.Content!).SetTable(asset, data, taskMusic02, new IntPropertyData(dummyName)); 
+            ((ArrayEditor)ArrayTaskMusic03.Content!).SetTable(asset, data, taskMusic03, new IntPropertyData(dummyName)); 
+            
+            TextBoxSugorokuId.Text = sugorokuId.Value.ToString(); 
+            TextBoxPageNumber.Text = pageNumber.Value.ToString(); 
+            TextBoxTaskGenre01.Text = taskGenre01.Value.ToString(); 
+            TextBoxTaskGenre02.Text = taskGenre02.Value.ToString(); 
+            TextBoxTaskGenre03.Text = taskGenre03.Value.ToString(); 
+            TextBoxMissionMusicId.Text = missionMusicID.Value.ToString(); 
+            TextBoxCondition.Text = condition.Value.ToString(); 
+            TextBoxDifficulty.Text = difficulty.Value.ToString(); 
+            TextBoxClearRate.Text = clearRate.Value.ToString(); 
+            TextBoxRewardGatePoint.Text = rewardGatePoint.Value.ToString(); 
+            TextBoxEasingDay.Text = easingDay.Value.ToString(); 
         }
         catch (Exception e)
         {
@@ -164,7 +173,6 @@ public partial class GateStepTableView : TableTab
     
     private void TextBox_OnTextChanging(object? sender, TextChangingEventArgs args)
     {
-        return;
         if (ignoreDataChange) return;
         
         if (asset == null) return;
@@ -174,7 +182,7 @@ public partial class GateStepTableView : TableTab
         
         try
         {
-            TreeViewItem item = explorerView.SelectedItem;
+            ListBoxItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
             
             switch (textBox.Name)
@@ -187,7 +195,7 @@ public partial class GateStepTableView : TableTab
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.RedoAndPush(operation);
                     
-                    UpdateTreeView(true);
+                    UpdateListBox(true);
                     break;
                 }
                 
@@ -211,42 +219,30 @@ public partial class GateStepTableView : TableTab
                     break;
                 }
                 
-                case "TextBoxSugorokuStageName": 
+                
+                case "TextBoxPageNumber":
                 {
-                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[1];
-                    FString oldValue = strPropertyData.Value;
-                    FString newValue = new(textBox.Text);
+                    Int16PropertyData int16PropertyData = (Int16PropertyData)data.Value[1];
+                    short oldValue = int16PropertyData.Value;
+                    short newValue;
+                    
+                    try
+                    {
+                        newValue = Convert.ToInt16(textBox.Text);
+                    }
+                    catch (FormatException)
+                    {
+                        newValue = 0;
+                    }
 
-                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
+                    ModifyInt16PropertyDataValue operation = new(data, int16PropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
-                    break; 
+                    break;
                 }
                 
-                case "TextBoxSugorokuSelectCenterImage": 
+                case "TextBoxTaskGenre01":
                 {
-                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[2];
-                    FString oldValue = strPropertyData.Value;
-                    FString newValue = new(textBox.Text);
-
-                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
-                    undoRedoManager.RedoAndPush(operation);
-                    break; 
-                }
-                
-                case "TextBoxSugorokuCenterImage": 
-                {
-                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[3];
-                    FString oldValue = strPropertyData.Value;
-                    FString newValue = new(textBox.Text);
-
-                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
-                    undoRedoManager.RedoAndPush(operation);
-                    break; 
-                }
-                
-                case "TextBoxEndContentsStartUserLevel": 
-                {
-                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[5];
+                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[6];
                     int oldValue = intPropertyData.Value;
                     int newValue;
                     
@@ -264,187 +260,127 @@ public partial class GateStepTableView : TableTab
                     break;
                 }
                 
-                case "TextBoxFirstPlayBonus": 
+                case "TextBoxTaskGenre02":
                 {
-                    Int8PropertyData int8PropertyData = (Int8PropertyData)data.Value[6];
-                    sbyte oldValue = int8PropertyData.Value;
-                    sbyte newValue;
+                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[8];
+                    int oldValue = intPropertyData.Value;
+                    int newValue;
                     
                     try
                     {
-                        newValue = Convert.ToSByte(textBox.Text);
+                        newValue = Convert.ToInt32(textBox.Text);
                     }
                     catch (FormatException)
                     {
                         newValue = 0;
                     }
 
-                    ModifyInt8PropertyDataValue operation = new(data, int8PropertyData, oldValue, newValue);
+                    ModifyInt32PropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
                     break;
                 }
                 
-                case "TextBoxBaseScoreNormal": 
+                case "TextBoxTaskGenre03":
                 {
-                    FloatPropertyData intPropertyData = (FloatPropertyData)data.Value[7];
-                    float oldValue = intPropertyData.Value;
-                    float newValue;
+                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[10];
+                    int oldValue = intPropertyData.Value;
+                    int newValue;
                     
                     try
                     {
-                        newValue = Convert.ToSingle(textBox.Text, CultureInfo.InvariantCulture);
+                        newValue = Convert.ToInt32(textBox.Text);
                     }
                     catch (FormatException)
                     {
                         newValue = 0;
                     }
 
-                    ModifyFloatPropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
+                    ModifyInt32PropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
                     break;
                 }
                 
-                case "TextBoxBaseScoreVip": 
+                case "TextBoxMissionMusicId":
                 {
-                    FloatPropertyData intPropertyData = (FloatPropertyData)data.Value[8];
-                    float oldValue = intPropertyData.Value;
-                    float newValue;
+                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[11];
+                    int oldValue = intPropertyData.Value;
+                    int newValue;
                     
                     try
                     {
-                        newValue = Convert.ToSingle(textBox.Text, CultureInfo.InvariantCulture);
+                        newValue = Convert.ToInt32(textBox.Text);
                     }
                     catch (FormatException)
                     {
                         newValue = 0;
                     }
 
-                    ModifyFloatPropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
+                    ModifyInt32PropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
                     break;
                 }
                 
-                case "TextBoxMisslessBonus": 
+                case "TextBoxCondition":
                 {
-                    Int16PropertyData int16PropertyData = (Int16PropertyData)data.Value[9];
-                    short oldValue = int16PropertyData.Value;
-                    short newValue;
+                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[12];
+                    int oldValue = intPropertyData.Value;
+                    int newValue;
                     
                     try
                     {
-                        newValue = Convert.ToInt16(textBox.Text);
+                        newValue = Convert.ToInt32(textBox.Text);
                     }
                     catch (FormatException)
                     {
                         newValue = 0;
                     }
 
-                    ModifyInt16PropertyDataValue operation = new(data, int16PropertyData, oldValue, newValue);
+                    ModifyInt32PropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
                     break;
                 }
                 
-                case "TextBoxFullComboBonus": 
+                case "TextBoxDifficulty":
                 {
-                    Int16PropertyData int16PropertyData = (Int16PropertyData)data.Value[10];
-                    short oldValue = int16PropertyData.Value;
-                    short newValue;
+                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[13];
+                    int oldValue = intPropertyData.Value;
+                    int newValue;
                     
                     try
                     {
-                        newValue = Convert.ToInt16(textBox.Text);
+                        newValue = Convert.ToInt32(textBox.Text);
                     }
                     catch (FormatException)
                     {
                         newValue = 0;
                     }
 
-                    ModifyInt16PropertyDataValue operation = new(data, int16PropertyData, oldValue, newValue);
+                    ModifyInt32PropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
                     break;
                 }
                 
-                case "TextBoxMultiBonus": 
+                case "TextBoxClearRate":
                 {
-                    FloatPropertyData intPropertyData = (FloatPropertyData)data.Value[11];
-                    float oldValue = intPropertyData.Value;
-                    float newValue;
+                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[14];
+                    int oldValue = intPropertyData.Value;
+                    int newValue;
                     
                     try
                     {
-                        newValue = Convert.ToSingle(textBox.Text, CultureInfo.InvariantCulture);
+                        newValue = Convert.ToInt32(textBox.Text);
                     }
                     catch (FormatException)
                     {
                         newValue = 0;
                     }
 
-                    ModifyFloatPropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
+                    ModifyInt32PropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
                     break;
                 }
                 
-                case "TextBoxTaskMusicBonus01": 
-                {
-                    FloatPropertyData intPropertyData = (FloatPropertyData)data.Value[12];
-                    float oldValue = intPropertyData.Value;
-                    float newValue;
-                    
-                    try
-                    {
-                        newValue = Convert.ToSingle(textBox.Text, CultureInfo.InvariantCulture);
-                    }
-                    catch (FormatException)
-                    {
-                        newValue = 0;
-                    }
-
-                    ModifyFloatPropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
-                    undoRedoManager.RedoAndPush(operation);
-                    break;
-                }
-                
-                case "TextBoxTaskMusicBonus02": 
-                {
-                    FloatPropertyData intPropertyData = (FloatPropertyData)data.Value[13];
-                    float oldValue = intPropertyData.Value;
-                    float newValue;
-                    
-                    try
-                    {
-                        newValue = Convert.ToSingle(textBox.Text, CultureInfo.InvariantCulture);
-                    }
-                    catch (FormatException)
-                    {
-                        newValue = 0;
-                    }
-
-                    ModifyFloatPropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
-                    undoRedoManager.RedoAndPush(operation);
-                    break;
-                }
-                
-                case "TextBoxTaskMusicBonus03": 
-                {
-                    FloatPropertyData intPropertyData = (FloatPropertyData)data.Value[14];
-                    float oldValue = intPropertyData.Value;
-                    float newValue;
-                    
-                    try
-                    {
-                        newValue = Convert.ToSingle(textBox.Text, CultureInfo.InvariantCulture);
-                    }
-                    catch (FormatException)
-                    {
-                        newValue = 0;
-                    }
-
-                    ModifyFloatPropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
-                    undoRedoManager.RedoAndPush(operation);
-                    break;
-                }
-                
-                case "TextBoxPriority": 
+                case "TextBoxRewardGatePoint":
                 {
                     IntPropertyData intPropertyData = (IntPropertyData)data.Value[15];
                     int oldValue = intPropertyData.Value;
@@ -463,6 +399,26 @@ public partial class GateStepTableView : TableTab
                     undoRedoManager.RedoAndPush(operation);
                     break;
                 }
+                
+                case "TextBoxEasingDay":
+                {
+                    Int64PropertyData int64PropertyData = (Int64PropertyData)data.Value[16];
+                    long oldValue = int64PropertyData.Value;
+                    long newValue;
+                    
+                    try
+                    {
+                        newValue = Convert.ToInt64(textBox.Text);
+                    }
+                    catch (FormatException)
+                    {
+                        newValue = 0;
+                    }
+
+                    ModifyInt64PropertyDataValue operation = new(data, int64PropertyData, oldValue, newValue);
+                    undoRedoManager.RedoAndPush(operation);
+                    break;
+                }
             }
         }
         catch (Exception e)
@@ -474,7 +430,6 @@ public partial class GateStepTableView : TableTab
 
     private void TextBox_OnLostFocus(object? sender, RoutedEventArgs args)
     {
-        return;
         if (asset == null) return;
         if (undoRedoManager == null) return;
         if (explorerView?.SelectedItem == null) return;
@@ -486,46 +441,36 @@ public partial class GateStepTableView : TableTab
             {
                 // StrProperty
                 case "TextBoxName":
-                case "TextBoxSugorokuStageName":
-                case "TextBoxSugorokuSelectCenterImage":
-                case "TextBoxSugorokuCenterImage":
                 {
                     return;
                 }
-
-                // FloatProperty
-                case "TextBoxBaseScoreNormal":
-                case "TextBoxBaseScoreVip":
-                case "TextBoxMultiBonus":
-                case "TextBoxTaskMusicBonus01":
-                case "TextBoxTaskMusicBonus02":
-                case "TextBoxTaskMusicBonus03":
+                
+                // Int16Property
+                case "TextBoxSugorokuId":
+                case "TextBoxPageNumber":
                 {
-                    _ = Convert.ToSingle(textBox.Text, CultureInfo.InvariantCulture);
+                    _ = Convert.ToInt16(textBox.Text);
                     break;
                 }
                 
                 // IntProperty
-                case "TextBoxEndContentsStartUserLevel":
-                case "TextBoxPriority":
+                case "TextBoxTaskGenre01":
+                case "TextBoxTaskGenre02":
+                case "TextBoxTaskGenre03":
+                case "TextBoxMissionMusicId":
+                case "TextBoxCondition":
+                case "TextBoxDifficulty":
+                case "TextBoxClearRate":
+                case "TextBoxRewardGatePoint":
                 {
                     _ = Convert.ToInt32(textBox.Text);
                     break;
                 }
                     
-                // Int8Property
-                case "TextBoxFirstPlayBonus":
+                // Int64Property
+                case "TextBoxEasingDay":
                 {
-                    _ = Convert.ToSByte(textBox.Text);
-                    break;
-                }
-
-                // Int16Property
-                case "TextBoxSugorokuId":
-                case "TextBoxMisslessBonus":
-                case "TextBoxFullComboBonus":
-                {
-                    _ = Convert.ToInt16(textBox.Text);
+                    _ = Convert.ToInt64(textBox.Text);
                     break;
                 }
             }
@@ -540,44 +485,8 @@ public partial class GateStepTableView : TableTab
             MainView.ShowWarningMessage("An Error has occurred.", e.Message);
         }
     }
-
-    private void CheckBox_OnIsCheckedChanged(object? sender, RoutedEventArgs args)
-    {
-        return;
-        if (ignoreDataChange) return;
-        
-        if (asset == null) return;
-        if (undoRedoManager == null) return;
-        if (explorerView?.SelectedItem == null) return;
-        if (sender is not CheckBox checkBox) return;
-        
-        try
-        {
-            TreeViewItem item = explorerView.SelectedItem;
-            if (item.Tag is not StructPropertyData data) return;
-            
-            switch (checkBox.Name)
-            {
-                case "CheckBoxHasLoopPage":
-                {
-                    BoolPropertyData boolPropertyData = (BoolPropertyData)data.Value[4];
-                    bool oldValue = boolPropertyData.Value;
-                    bool newValue = checkBox.IsChecked ?? false;
-
-                    ModifyBoolPropertyDataValue operation = new(data, boolPropertyData, oldValue, newValue);
-                    undoRedoManager.RedoAndPush(operation);
-                    break;
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
-        }
-    }
     
-    private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => UpdateContent(true);
+    private void ListBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => UpdateContent(true);
 
     private void TextBoxSearch_OnTextChanging(object? sender, TextChangingEventArgs args) => SearchContent();
     private void ToggleSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
@@ -593,118 +502,4 @@ public partial class GateStepTableView : TableTab
     private void ButtonAddElement_OnClick(object? sender, RoutedEventArgs args) => AddElement();
     private void ButtonDuplicateElement_OnClick(object? sender, RoutedEventArgs args) => DuplicateElement();
     private void ButtonDeleteElement_OnClick(object? sender, RoutedEventArgs args) => DeleteElement();
-
-    public override void Save()
-    {
-        // Data validation
-        try
-        {
-            _ = Convert.ToInt16(TextBoxSugorokuId.Text);
-        }
-        catch(FormatException)
-        {
-            TextBoxSugorokuId.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToInt32(TextBoxEndContentsStartUserLevel.Text);
-        }
-        catch(FormatException)
-        {
-            TextBoxEndContentsStartUserLevel.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSByte(TextBoxFirstPlayBonus.Text);
-        }
-        catch(FormatException)
-        {
-            TextBoxFirstPlayBonus.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSingle(TextBoxBaseScoreNormal.Text, CultureInfo.InvariantCulture);
-        }
-        catch(FormatException)
-        {
-            TextBoxBaseScoreNormal.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSingle(TextBoxBaseScoreVip.Text, CultureInfo.InvariantCulture);
-        }
-        catch(FormatException)
-        {
-            TextBoxBaseScoreVip.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToInt16(TextBoxMisslessBonus.Text);
-        }
-        catch(FormatException)
-        {
-            TextBoxMisslessBonus.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToInt16(TextBoxFullComboBonus.Text);
-        }
-        catch(FormatException)
-        {
-            TextBoxFullComboBonus.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSingle(TextBoxMultiBonus.Text, CultureInfo.InvariantCulture);
-        }
-        catch(FormatException)
-        {
-            TextBoxMultiBonus.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSingle(TextBoxTaskMusicBonus01.Text, CultureInfo.InvariantCulture);
-        }
-        catch(FormatException)
-        {
-            TextBoxTaskMusicBonus01.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSingle(TextBoxTaskMusicBonus02.Text, CultureInfo.InvariantCulture);
-        }
-        catch(FormatException)
-        {
-            TextBoxTaskMusicBonus02.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSingle(TextBoxTaskMusicBonus03.Text, CultureInfo.InvariantCulture);
-        }
-        catch(FormatException)
-        {
-            TextBoxTaskMusicBonus03.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToInt32(TextBoxPriority.Text);
-        }
-        catch(FormatException)
-        {
-            TextBoxPriority.Text = "0";
-        }
-        
-        base.Save();
-    }
 }

@@ -5,33 +5,33 @@ namespace MercuryTools.UndoRedo;
 
 public class UndoRedoManager
 {
-    private Stack<IOperation> UndoStack { get; } = new();
-    private Stack<IOperation> RedoStack { get; } = new();
+    private Stack<Operation> UndoStack { get; } = new();
+    private Stack<Operation> RedoStack { get; } = new();
 
     public bool CanUndo => UndoStack.Count > 0;
     public bool CanRedo => RedoStack.Count > 0;
 
-    public IOperation PeekUndo => UndoStack.Peek();
-    public IOperation PeekRedo => RedoStack.Peek();
+    public Operation PeekUndo => UndoStack.Peek();
+    public Operation PeekRedo => RedoStack.Peek();
 
     public event EventHandler? OperationHistoryChanged;
     
-    public void Push(IOperation operation)
+    public void Push(Operation operation)
     {
         UndoStack.Push(operation);
         RedoStack.Clear();
         OperationHistoryChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void RedoAndPush(IOperation operation)
+    public void RedoAndPush(Operation operation)
     {
         operation.Redo();
         Push(operation);
     }
 
-    public IOperation Undo()
+    public Operation Undo()
     {
-        IOperation operation = UndoStack.Pop();
+        Operation operation = UndoStack.Pop();
         operation.Undo();
         RedoStack.Push(operation);
         OperationHistoryChanged?.Invoke(this, EventArgs.Empty);
@@ -39,9 +39,9 @@ public class UndoRedoManager
         return operation;
     }
 
-    public IOperation Redo()
+    public Operation Redo()
     {
-        IOperation operation = RedoStack.Pop();
+        Operation operation = RedoStack.Pop();
         operation.Redo();
         UndoStack.Push(operation);
         OperationHistoryChanged?.Invoke(this, EventArgs.Empty);

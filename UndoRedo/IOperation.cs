@@ -1,7 +1,8 @@
 namespace MercuryTools.UndoRedo;
 
-public interface IOperation
+public abstract class Operation
 {
-    void Undo();
-    void Redo();
+    public object? Parent;
+    public abstract void Undo();
+    public abstract void Redo();
 }

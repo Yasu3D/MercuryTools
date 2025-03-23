@@ -1,23 +1,22 @@
 using System.Collections.Generic;
-using UAssetAPI.PropertyTypes.Structs;
 
 namespace MercuryTools.UndoRedo.Operations;
 
-public class SwapStructProperty(List<StructPropertyData> table, StructPropertyData dataA, StructPropertyData dataB, int indexA, int indexB) : IOperation
+public class SwapItems<T>(List<T> table, T dataA, T dataB, int indexA, int indexB) : Operation
 {
-    public readonly List<StructPropertyData> Table = table;
-    public readonly StructPropertyData DataA = dataA;
-    public readonly StructPropertyData DataB = dataB;
+    public readonly List<T> Table = table;
+    public readonly T DataA = dataA;
+    public readonly T DataB = dataB;
     public readonly int IndexA = indexA;
     public readonly int IndexB = indexB;
     
-    public void Undo()
+    public override void Undo()
     {
         Table[IndexA] = DataA;
         Table[IndexB] = DataB;
     }
 
-    public void Redo()
+    public override void Redo()
     {
         Table[IndexA] = DataB;
         Table[IndexB] = DataA;

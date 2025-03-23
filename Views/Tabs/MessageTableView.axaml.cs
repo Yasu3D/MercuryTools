@@ -37,7 +37,7 @@ public partial class MessageTableView : TableTab
         explorerView.ButtonDuplicateElement.Click += ButtonDuplicateElement_OnClick;
         explorerView.ButtonDeleteElement.Click += ButtonDeleteElement_OnClick;
         
-        explorerView.TreeViewElementList.SelectionChanged += TreeView_OnSelectionChanged;
+        explorerView.ListBoxElementList.SelectionChanged += ListBox_OnSelectionChanged;
     }
 
     protected override StructPropertyData NewData => new()
@@ -155,7 +155,7 @@ public partial class MessageTableView : TableTab
         
         try
         {
-            TreeViewItem item = explorerView.SelectedItem;
+            ListBoxItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
             
             switch (textBox.Name)
@@ -168,7 +168,7 @@ public partial class MessageTableView : TableTab
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.RedoAndPush(operation);
                     
-                    UpdateTreeView(true);
+                    UpdateListBox(true);
                     break;
                 }
                 
@@ -257,7 +257,7 @@ public partial class MessageTableView : TableTab
         }
     }
     
-    private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => UpdateContent(true);
+    private void ListBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => UpdateContent(true);
 
     private void TextBoxSearch_OnTextChanging(object? sender, TextChangingEventArgs args) => SearchContent();
     private void ToggleSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();

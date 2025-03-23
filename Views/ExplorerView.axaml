@@ -145,7 +145,7 @@
             
             <!-- Element List -->
             <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-                <TreeView Name="TreeViewElementList" Margin="5" AutoScrollToSelectedItem="False"/>
+                <ListBox Name="ListBoxElementList" Margin="5" AutoScrollToSelectedItem="False"/>
             </ScrollViewer>
             
         </DockPanel>

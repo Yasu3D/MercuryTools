@@ -2,19 +2,26 @@ using UAssetAPI.PropertyTypes.Objects;
 
 namespace MercuryTools.UndoRedo.Operations;
 
-public class ModifyBoolPropertyDataValue(object? parentStruct, BoolPropertyData boolPropertyData, bool oldValue, bool newValue) : IOperation
+public class ModifyBoolPropertyDataValue : Operation
 {
-    public readonly object? ParentStruct = parentStruct;
-    public readonly BoolPropertyData BoolPropertyData = boolPropertyData;
-    public readonly bool OldValue = oldValue;
-    public readonly bool NewValue = newValue;
+    public ModifyBoolPropertyDataValue(object? parent, BoolPropertyData boolPropertyData, bool oldValue, bool newValue)
+    {
+        Parent = parent;
+        BoolPropertyData = boolPropertyData;
+        OldValue = oldValue;
+        NewValue = newValue;
+    }
     
-    public void Undo()
+    public readonly BoolPropertyData BoolPropertyData;
+    public readonly bool OldValue;
+    public readonly bool NewValue;
+
+    public override void Undo()
     {
         BoolPropertyData.Value = OldValue;
     }
 
-    public void Redo()
+    public override void Redo()
     {
         BoolPropertyData.Value = NewValue;
     }

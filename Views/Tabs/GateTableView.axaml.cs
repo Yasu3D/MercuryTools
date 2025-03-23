@@ -38,7 +38,7 @@ public partial class GateTableView : TableTab
         explorerView.ButtonDuplicateElement.Click += ButtonDuplicateElement_OnClick;
         explorerView.ButtonDeleteElement.Click += ButtonDeleteElement_OnClick;
         
-        explorerView.TreeViewElementList.SelectionChanged += TreeView_OnSelectionChanged;
+        explorerView.ListBoxElementList.SelectionChanged += ListBox_OnSelectionChanged;
     }
 
     protected override StructPropertyData NewData => new()
@@ -211,7 +211,7 @@ public partial class GateTableView : TableTab
         
         try
         {
-            TreeViewItem item = explorerView.SelectedItem;
+            ListBoxItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
             
             switch (textBox.Name)
@@ -224,7 +224,7 @@ public partial class GateTableView : TableTab
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.RedoAndPush(operation);
                     
-                    UpdateTreeView(true);
+                    UpdateListBox(true);
                     break;
                 }
                 
@@ -588,7 +588,7 @@ public partial class GateTableView : TableTab
         
         try
         {
-            TreeViewItem item = explorerView.SelectedItem;
+            ListBoxItem item = explorerView.SelectedItem;
             if (item.Tag is not StructPropertyData data) return;
             
             switch (checkBox.Name)
@@ -612,7 +612,7 @@ public partial class GateTableView : TableTab
         }
     }
     
-    private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => UpdateContent(true);
+    private void ListBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs args) => UpdateContent(true);
 
     private void TextBoxSearch_OnTextChanging(object? sender, TextChangingEventArgs args) => SearchContent();
     private void ToggleSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
@@ -628,118 +628,4 @@ public partial class GateTableView : TableTab
     private void ButtonAddElement_OnClick(object? sender, RoutedEventArgs args) => AddElement();
     private void ButtonDuplicateElement_OnClick(object? sender, RoutedEventArgs args) => DuplicateElement();
     private void ButtonDeleteElement_OnClick(object? sender, RoutedEventArgs args) => DeleteElement();
-
-    public override void Save()
-    {
-        // Data validation
-        try
-        {
-            _ = Convert.ToInt16(TextBoxSugorokuId.Text);
-        }
-        catch(FormatException)
-        {
-            TextBoxSugorokuId.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToInt32(TextBoxEndContentsStartUserLevel.Text);
-        }
-        catch(FormatException)
-        {
-            TextBoxEndContentsStartUserLevel.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSByte(TextBoxFirstPlayBonus.Text);
-        }
-        catch(FormatException)
-        {
-            TextBoxFirstPlayBonus.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSingle(TextBoxBaseScoreNormal.Text, CultureInfo.InvariantCulture);
-        }
-        catch(FormatException)
-        {
-            TextBoxBaseScoreNormal.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSingle(TextBoxBaseScoreVip.Text, CultureInfo.InvariantCulture);
-        }
-        catch(FormatException)
-        {
-            TextBoxBaseScoreVip.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToInt16(TextBoxMisslessBonus.Text);
-        }
-        catch(FormatException)
-        {
-            TextBoxMisslessBonus.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToInt16(TextBoxFullComboBonus.Text);
-        }
-        catch(FormatException)
-        {
-            TextBoxFullComboBonus.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSingle(TextBoxMultiBonus.Text, CultureInfo.InvariantCulture);
-        }
-        catch(FormatException)
-        {
-            TextBoxMultiBonus.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSingle(TextBoxTaskMusicBonus01.Text, CultureInfo.InvariantCulture);
-        }
-        catch(FormatException)
-        {
-            TextBoxTaskMusicBonus01.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSingle(TextBoxTaskMusicBonus02.Text, CultureInfo.InvariantCulture);
-        }
-        catch(FormatException)
-        {
-            TextBoxTaskMusicBonus02.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToSingle(TextBoxTaskMusicBonus03.Text, CultureInfo.InvariantCulture);
-        }
-        catch(FormatException)
-        {
-            TextBoxTaskMusicBonus03.Text = "0";
-        }
-        
-        try
-        {
-            _ = Convert.ToInt32(TextBoxPriority.Text);
-        }
-        catch(FormatException)
-        {
-            TextBoxPriority.Text = "0";
-        }
-        
-        base.Save();
-    }
 }

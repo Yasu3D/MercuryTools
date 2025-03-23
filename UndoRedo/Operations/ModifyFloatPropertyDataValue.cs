@@ -2,19 +2,26 @@ using UAssetAPI.PropertyTypes.Objects;
 
 namespace MercuryTools.UndoRedo.Operations;
 
-public class ModifyFloatPropertyDataValue(object? parentStruct, FloatPropertyData floatPropertyData, float oldValue, float newValue) : IOperation
+public class ModifyFloatPropertyDataValue : Operation
 {
-    public readonly object? ParentStruct = parentStruct;
-    public readonly FloatPropertyData FloatPropertyData = floatPropertyData;
-    public readonly float OldValue = oldValue;
-    public readonly float NewValue = newValue;
+    public ModifyFloatPropertyDataValue(object? parent, FloatPropertyData floatPropertyData, float oldValue, float newValue)
+    {
+        Parent = parent;
+        FloatPropertyData = floatPropertyData;
+        OldValue = oldValue;
+        NewValue = newValue;
+    }
     
-    public void Undo()
+    public readonly FloatPropertyData FloatPropertyData;
+    public readonly float OldValue;
+    public readonly float NewValue;
+
+    public override void Undo()
     {
         FloatPropertyData.Value = OldValue;
     }
 
-    public void Redo()
+    public override void Redo()
     {
         FloatPropertyData.Value = NewValue;
     }

@@ -163,7 +163,7 @@
             <Setter Property="CornerRadius" Value="10" />
         </Style>
         
-        <Style Selector="Button">
+        <Style Selector="Button.Transparent">
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Transitions">
                     <Transitions>
@@ -176,7 +176,7 @@
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
         
-        <Style Selector="ToggleButton">
+        <Style Selector="ToggleButton.Transparent">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             
