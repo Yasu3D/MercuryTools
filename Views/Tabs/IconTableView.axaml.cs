@@ -43,7 +43,7 @@ public partial class IconTableView : TableTab
     protected override StructPropertyData NewData => new()
     {
         Name = new(asset, "NO_NAME"),
-        StructType = new(asset, "MessageData"),
+        StructType = new(asset, "IconTableData"),
         Value =
         [
             new IntPropertyData(new(asset, "IconId")),
@@ -93,8 +93,8 @@ public partial class IconTableView : TableTab
         string itemActivateEndTime = ((Int64PropertyData)data.Value[6]).Value.ToString();
         if (Utils.Filter(itemActivateEndTime, "ItemActivateEndTime", SearchQuery, comparison)) return true;
         
-        string isInitItem = ((BoolPropertyData)data.Value[7]).Value.ToString();
-        if (Utils.Filter(isInitItem, "IsInitItem", SearchQuery, comparison)) return true;
+        string bIsInitItem = ((BoolPropertyData)data.Value[7]).Value.ToString();
+        if (Utils.Filter(bIsInitItem, "bIsInitItem", SearchQuery, comparison)) return true;
         
         string gainWaccaPoint = ((IntPropertyData)data.Value[8]).Value.ToString();
         if (Utils.Filter(gainWaccaPoint, "GainWaccaPoint", SearchQuery, comparison)) return true;

@@ -30,7 +30,7 @@
                 <StackPanel Margin="0,0,3,0">
                     
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Plate Id" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="PlateId" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
@@ -38,7 +38,7 @@
                     <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxPlateId" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Plate Texture Name" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="PlateTextureName" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
@@ -46,7 +46,7 @@
                     <TextBox Classes="Inset" AcceptsReturn="false" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxPlateTextureName" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Plate Rarity" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="PlateRarity" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="Int8Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
@@ -54,7 +54,7 @@
                     <TextBox Classes="Inset" AcceptsReturn="false" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxPlateRarity" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
             
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Name Tag" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="NameTag" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
@@ -62,7 +62,7 @@
                     <TextBox Classes="Inset" AcceptsReturn="false" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxNameTag" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
 
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Explanation Text Tag" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="ExplanationTextTag" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>

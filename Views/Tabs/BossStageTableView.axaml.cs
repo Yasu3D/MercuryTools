@@ -46,7 +46,7 @@ public partial class BossStageTableView : TableTab
     protected override StructPropertyData NewData => new()
     {
         Name = new(asset, "NO_NAME"),
-        StructType = new(asset, "SugorokuStageParameterTableData"),
+        StructType = new(asset, "BossStageTableData"),
         Value =
         [
             new Int16PropertyData(new(asset, "MusicId")),

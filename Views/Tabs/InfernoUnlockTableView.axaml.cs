@@ -43,7 +43,7 @@ public partial class InfernoUnlockTableView : TableTab
     protected override StructPropertyData NewData => new()
     {
         Name = new(asset, "NO_NAME"),
-        StructType = new(asset, "MessageData"),
+        StructType = new(asset, "UnlockInfernoTableData"),
         Value =
         [
             new IntPropertyData(new(asset, "MusicId")),

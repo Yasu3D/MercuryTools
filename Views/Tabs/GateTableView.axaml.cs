@@ -92,8 +92,8 @@ public partial class GateTableView : TableTab
         string? sugorokuCenterImage = ((StrPropertyData)data.Value[3]).Value?.Value;
         if (Utils.Filter(sugorokuCenterImage, "SugorokuCenterImage", SearchQuery, comparison)) return true;
         
-        string hasLoopPage = ((BoolPropertyData)data.Value[4]).Value.ToString();
-        if (Utils.Filter(hasLoopPage, "HasLoopPage", SearchQuery, comparison)) return true;
+        string bHasLoopPage = ((BoolPropertyData)data.Value[4]).Value.ToString();
+        if (Utils.Filter(bHasLoopPage, "bHasLoopPage", SearchQuery, comparison)) return true;
         
         string endContentsStartUserLevel = ((IntPropertyData)data.Value[5]).Value.ToString();
         if (Utils.Filter(endContentsStartUserLevel, "EndContentsStartUserLevel", SearchQuery, comparison)) return true;

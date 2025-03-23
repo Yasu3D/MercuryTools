@@ -43,7 +43,7 @@ public partial class PlateTableView : TableTab
     protected override StructPropertyData NewData => new()
     {
         Name = new(asset, "NO_NAME"),
-        StructType = new(asset, "MessageData"),
+        StructType = new(asset, "UserPlateBackgroundTableData"),
         Value =
         [
             new IntPropertyData(new(asset, "UserPlateBackgroundId")),
@@ -93,8 +93,8 @@ public partial class PlateTableView : TableTab
         string itemActivateEndTime = ((Int64PropertyData)data.Value[6]).Value.ToString();
         if (Utils.Filter(itemActivateEndTime, "ItemActivateEndTime", SearchQuery, comparison)) return true;
         
-        string isInitItem = ((BoolPropertyData)data.Value[7]).Value.ToString();
-        if (Utils.Filter(isInitItem, "IsInitItem", SearchQuery, comparison)) return true;
+        string bIsInitItem = ((BoolPropertyData)data.Value[7]).Value.ToString();
+        if (Utils.Filter(bIsInitItem, "bIsInitItem", SearchQuery, comparison)) return true;
         
         string gainWaccaPoint = ((IntPropertyData)data.Value[8]).Value.ToString();
         if (Utils.Filter(gainWaccaPoint, "GainWaccaPoint", SearchQuery, comparison)) return true;
@@ -127,7 +127,7 @@ public partial class PlateTableView : TableTab
             StrPropertyData explanationTextTag = (StrPropertyData)data.Value[4];
             Int64PropertyData itemActivateStartTime = (Int64PropertyData)data.Value[5];
             Int64PropertyData itemActivateEndTime = (Int64PropertyData)data.Value[6];
-            BoolPropertyData isInitItem = (BoolPropertyData)data.Value[7];
+            BoolPropertyData bIsInitItem = (BoolPropertyData)data.Value[7];
             IntPropertyData gainWaccaPoint = (IntPropertyData)data.Value[8];
 
             if (ignoreChange) ignoreDataChange = true;
@@ -143,7 +143,7 @@ public partial class PlateTableView : TableTab
             TextBoxExplanationTextTag.Text = explanationTextTag.Value?.Value ?? "";
             TextBoxItemActivateStartTime.Text = itemActivateStartTime.Value.ToString();
             TextBoxItemActivateEndTime.Text = itemActivateEndTime.Value.ToString();
-            CheckBoxIsInitItem.IsChecked = isInitItem.Value;
+            CheckBoxIsInitItem.IsChecked = bIsInitItem.Value;
             TextBoxGainWaccaPoint.Text = gainWaccaPoint.Value.ToString();
         }
         catch (Exception e)

@@ -30,7 +30,7 @@
                 <StackPanel Margin="0,0,3,0">
                     
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Sugoroku Id" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="SugorokuId" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="Int16Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
@@ -38,7 +38,7 @@
                     <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxSugorokuId" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
                     
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Page Number" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="PageNumber" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="Int16Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
@@ -54,7 +54,7 @@
                     <UserControl Name="ArrayTaskMusic01" Margin="10"/>
                     
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Task Genre 01" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="TaskGenre01" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
@@ -64,7 +64,7 @@
                     <UserControl Name="ArrayTaskMusic02" Margin="10"/>
                     
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Task Genre 02" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="TaskGenre02" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
@@ -74,7 +74,7 @@
                     <UserControl Name="ArrayTaskMusic03" Margin="10"/>
                     
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Task Genre 03" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="TaskGenre03" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
@@ -82,7 +82,7 @@
                     <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxTaskGenre03" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
                     
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Mission Music Id" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="MissionMusicId" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
@@ -106,7 +106,7 @@
                     <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxDifficulty" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
 
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Clear Rate" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="ClearRate" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
@@ -114,7 +114,7 @@
                     <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxClearRate" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
 
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Reward Gate Point" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="RewardGatePoint" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
@@ -122,7 +122,7 @@
                     <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxRewardGatePoint" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
 
                     <DockPanel Margin="15,15,15,0">
-                        <TextBlock DockPanel.Dock="Left" Text="Easing Day" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="EasingDay" Margin="0,0,5,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="Int64Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>

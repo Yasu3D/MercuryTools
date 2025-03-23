@@ -101,8 +101,8 @@ public partial class GradeTableView : TableTab
         string itemActivateEndTime = ((Int64PropertyData)data.Value[8]).Value.ToString();
         if (Utils.Filter(itemActivateEndTime, "ItemActivateEndTime", SearchQuery, comparison)) return true;
         
-        string isInitItem = ((BoolPropertyData)data.Value[9]).Value.ToString();
-        if (Utils.Filter(isInitItem, "IsInitItem", SearchQuery, comparison)) return true;
+        string bIsInitItem = ((BoolPropertyData)data.Value[9]).Value.ToString();
+        if (Utils.Filter(bIsInitItem, "bIsInitItem", SearchQuery, comparison)) return true;
         
         string gainWaccaPoint = ((IntPropertyData)data.Value[10]).Value.ToString();
         if (Utils.Filter(gainWaccaPoint, "GainWaccaPoint", SearchQuery, comparison)) return true;
