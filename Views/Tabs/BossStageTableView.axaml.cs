@@ -17,8 +17,8 @@ public partial class BossStageTableView : TableTab
         explorerView = Explorer;
         undoRedoManager = new();
 
-        ArrayAppearConditionArray.Content = new ArrayEditor(undoRedoManager, "Appear Condition Array", "StrProperty");
-        ArrayUnlockConditionArray.Content = new ArrayEditor(undoRedoManager, "Unlock Condition Array", "StrProperty");
+        ArrayAppearConditionArray.Content = new ArrayEditor(undoRedoManager, "AppearConditionArray", "StrProperty");
+        ArrayUnlockConditionArray.Content = new ArrayEditor(undoRedoManager, "UnlockConditionArray", "StrProperty");
 
         undoRedoManager.OperationHistoryChanged += UpdateUndoRedoButtons;
 

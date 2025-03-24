@@ -17,12 +17,12 @@ public partial class GateStepTableView : TableTab
         explorerView = Explorer;
         undoRedoManager = new();
 
-        ArrayTargetPoint.Content = new ArrayEditor(undoRedoManager, "Target Point", "IntProperty");
-        ArrayGetItemVariety.Content = new ArrayEditor(undoRedoManager, "Get Item Variety", "StrProperty");
-        ArrayGetItemValue.Content = new ArrayEditor(undoRedoManager, "Get Item Value", "IntProperty");
-        ArrayTaskMusic01.Content = new ArrayEditor(undoRedoManager, "Task Music 01", "IntProperty");
-        ArrayTaskMusic02.Content = new ArrayEditor(undoRedoManager, "Task Music 02", "IntProperty");
-        ArrayTaskMusic03.Content = new ArrayEditor(undoRedoManager, "Task Music 03", "IntProperty");
+        ArrayTargetPoint.Content = new ArrayEditor(undoRedoManager, "TargetPoint", "IntProperty");
+        ArrayGetItemVariety.Content = new ArrayEditor(undoRedoManager, "GetItemVariety", "StrProperty");
+        ArrayGetItemValue.Content = new ArrayEditor(undoRedoManager, "GetItemValue", "IntProperty");
+        ArrayTaskMusic01.Content = new ArrayEditor(undoRedoManager, "TaskMusic01", "IntProperty");
+        ArrayTaskMusic02.Content = new ArrayEditor(undoRedoManager, "TaskMusic02", "IntProperty");
+        ArrayTaskMusic03.Content = new ArrayEditor(undoRedoManager, "TaskMusic03", "IntProperty");
 
         undoRedoManager.OperationHistoryChanged += UpdateUndoRedoButtons;
 
