@@ -43,7 +43,12 @@
                         <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
                     </DockPanel>
                     
-                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxGradePartsType" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+                    <ComboBox Margin="10" Height="30" Name="ComboBoxGradePartsType" SelectedIndex="1" SelectionChanged="ComboBox_OnSelectionChanged">
+                        <ComboBoxItem Content="NORMAL"/>
+                        <ComboBoxItem Content="CONJUNCTION"/>
+                        <ComboBoxItem Content="SPECIAL"/>
+                        <ComboBoxItem Content="NUM"/>
+                    </ComboBox>
                     
                     <DockPanel Margin="15,15,15,0">
                         <TextBlock DockPanel.Dock="Left" Text="NameTag" Margin="0,0,5,0"/>

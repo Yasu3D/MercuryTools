@@ -132,7 +132,7 @@ public partial class GradePartsTableView : TableTab
             TextBoxName.Text = data.Name.Value?.Value ?? "0";
 
             TextBoxGradePartsId.Text = gradePartsId.Value.ToString();
-            TextBoxGradePartsType.Text = gradePartsType.Value.ToString();
+            ComboBoxGradePartsType.SelectedIndex = gradePartsType.Value;
             TextBoxNameTag.Text = nameTag.Value?.Value ?? "";
             TextBoxExplanationTextTag.Text = explanationTextTag.Value?.Value ?? "";
             TextBoxItemActivateStartTime.Text = itemActivateStartTime.Value.ToString();
@@ -182,26 +182,6 @@ public partial class GradePartsTableView : TableTab
                 case "TextBoxGradePartsId":
                 { 
                     IntPropertyData intPropertyData = (IntPropertyData)data.Value[0];
-                    int oldValue = intPropertyData.Value;
-                    int newValue;
-                    
-                    try
-                    {
-                        newValue = Convert.ToInt32(textBox.Text);
-                    }
-                    catch (FormatException)
-                    {
-                        newValue = 0;
-                    }
-
-                    ModifyInt32PropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
-                    undoRedoManager.RedoAndPush(operation);
-                    break;
-                }
-                
-                case "TextBoxGradePartsType":
-                { 
-                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[1];
                     int oldValue = intPropertyData.Value;
                     int newValue;
                     
@@ -382,6 +362,41 @@ public partial class GradePartsTableView : TableTab
                     bool newValue = checkBox.IsChecked ?? false;
 
                     ModifyBoolPropertyDataValue operation = new(data, boolPropertyData, oldValue, newValue);
+                    undoRedoManager.RedoAndPush(operation);
+                    break;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
+        }
+    }
+
+    private void ComboBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs args)
+    {
+        if (ignoreDataChange) return;
+        
+        if (asset == null) return;
+        if (undoRedoManager == null) return;
+        if (explorerView?.SelectedItem == null) return;
+        if (sender is not ComboBox comboBox) return;
+        
+        try
+        {
+            TreeViewItem item = explorerView.SelectedItem;
+            if (item.Tag is not StructPropertyData data) return;
+            
+            switch (comboBox.Name)
+            {
+                case "ComboBoxGradePartsType":
+                {
+                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[1];
+                    int oldValue = intPropertyData.Value;
+                    int newValue = comboBox.SelectedIndex;
+
+                    ModifyInt32PropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
                     break;
                 }
