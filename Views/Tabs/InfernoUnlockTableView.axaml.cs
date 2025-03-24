@@ -61,7 +61,7 @@ public partial class InfernoUnlockTableView : TableTab
 
     protected override bool FormatCheck()
     {
-        return table.Count != 0 && table[0].Value[0].Name.ToString() == "UserPlateBackgroundId";
+        return table.Count != 0 && table[0].Value[0].Name.ToString() == "MusicId" && table[0].Value[2].Name.ToString() == "RequiredInfernoOpenWaccaPoint";
     }
     
     protected override bool ContentContainsQuery(StructPropertyData data)
@@ -73,17 +73,17 @@ public partial class InfernoUnlockTableView : TableTab
         if (Utils.Filter(name, "Name", SearchQuery, comparison)) return true;
         
         // Check Data
-        string plateId = ((IntPropertyData)data.Value[0]).Value.ToString();
-        if (Utils.Filter(plateId, "MusicId", SearchQuery, comparison)) return true;
+        string musicId = ((IntPropertyData)data.Value[0]).Value.ToString();
+        if (Utils.Filter(musicId, "MusicId", SearchQuery, comparison)) return true;
         
-        string requirePurchase = ((BoolPropertyData)data.Value[1]).Value.ToString();
-        if (Utils.Filter(requirePurchase, "RequirePurchase", SearchQuery, comparison)) return true;
+        string bRequirePurchase = ((BoolPropertyData)data.Value[1]).Value.ToString();
+        if (Utils.Filter(bRequirePurchase, "bRequirePurchase", SearchQuery, comparison)) return true;
         
         string requiredInfernoOpenWaccaPoint = ((IntPropertyData)data.Value[2]).Value.ToString();
         if (Utils.Filter(requiredInfernoOpenWaccaPoint, "RequiredInfernoOpenWaccaPoint", SearchQuery, comparison)) return true;
 
         string bVipPreOpen = ((BoolPropertyData)data.Value[3]).Value.ToString();
-        if (Utils.Filter(bVipPreOpen, "VipPreOpen", SearchQuery, comparison)) return true;
+        if (Utils.Filter(bVipPreOpen, "bVipPreOpen", SearchQuery, comparison)) return true;
         
         string? nameTag = ((StrPropertyData)data.Value[4]).Value?.Value;
         if (Utils.Filter(nameTag, "NameTag", SearchQuery, comparison)) return true;
@@ -97,8 +97,8 @@ public partial class InfernoUnlockTableView : TableTab
         string itemActivateEndTime = ((Int64PropertyData)data.Value[7]).Value.ToString();
         if (Utils.Filter(itemActivateEndTime, "ItemActivateEndTime", SearchQuery, comparison)) return true;
         
-        string isInitItem = ((BoolPropertyData)data.Value[8]).Value.ToString();
-        if (Utils.Filter(isInitItem, "IsInitItem", SearchQuery, comparison)) return true;
+        string bIsInitItem = ((BoolPropertyData)data.Value[8]).Value.ToString();
+        if (Utils.Filter(bIsInitItem, "bIsInitItem", SearchQuery, comparison)) return true;
         
         string gainWaccaPoint = ((IntPropertyData)data.Value[9]).Value.ToString();
         if (Utils.Filter(gainWaccaPoint, "GainWaccaPoint", SearchQuery, comparison)) return true;
@@ -124,15 +124,16 @@ public partial class InfernoUnlockTableView : TableTab
         try
         {
             // Get Properties
-            IntPropertyData plateId = (IntPropertyData)data.Value[0];
-            StrPropertyData plateTextureName = (StrPropertyData)data.Value[1];
-            Int8PropertyData plateRarity = (Int8PropertyData)data.Value[2];
-            StrPropertyData nameTag = (StrPropertyData)data.Value[3];
-            StrPropertyData explanationTextTag = (StrPropertyData)data.Value[4];
-            Int64PropertyData itemActivateStartTime = (Int64PropertyData)data.Value[5];
-            Int64PropertyData itemActivateEndTime = (Int64PropertyData)data.Value[6];
-            BoolPropertyData isInitItem = (BoolPropertyData)data.Value[7];
-            IntPropertyData gainWaccaPoint = (IntPropertyData)data.Value[8];
+            IntPropertyData musicId = (IntPropertyData)data.Value[0];
+            BoolPropertyData bRequirePurchase = (BoolPropertyData)data.Value[1];
+            IntPropertyData requiredInfernoOpenWaccaPoint = (IntPropertyData)data.Value[2];
+            BoolPropertyData bVipPreOpen = (BoolPropertyData)data.Value[3];
+            StrPropertyData nameTag = (StrPropertyData)data.Value[4];
+            StrPropertyData explanationTextTag = (StrPropertyData)data.Value[5];
+            Int64PropertyData itemActivateStartTime = (Int64PropertyData)data.Value[6];
+            Int64PropertyData itemActivateEndTime = (Int64PropertyData)data.Value[7];
+            BoolPropertyData bIsInitItem = (BoolPropertyData)data.Value[8];
+            IntPropertyData gainWaccaPoint = (IntPropertyData)data.Value[9];
 
             if (ignoreChange) ignoreDataChange = true;
             
@@ -140,14 +141,15 @@ public partial class InfernoUnlockTableView : TableTab
             ContentGroup.IsVisible = true;
             TextBoxName.Text = data.Name.Value?.Value ?? "0";
 
-            TextBoxPlateId.Text = plateId.Value.ToString();
-            TextBoxPlateTextureName.Text = plateTextureName.Value?.Value ?? "";
-            TextBoxPlateRarity.Text = plateRarity.Value.ToString();
+            TextBoxMusicId.Text = musicId.Value.ToString();
+            CheckBoxRequirePurchase.IsChecked = bRequirePurchase.Value;
+            TextBoxRequiredInfernoOpenWaccaPoint.Text = requiredInfernoOpenWaccaPoint.Value.ToString();
+            CheckBoxVipPreOpen.IsChecked = bVipPreOpen.Value;
             TextBoxNameTag.Text = nameTag.Value?.Value ?? "";
             TextBoxExplanationTextTag.Text = explanationTextTag.Value?.Value ?? "";
             TextBoxItemActivateStartTime.Text = itemActivateStartTime.Value.ToString();
             TextBoxItemActivateEndTime.Text = itemActivateEndTime.Value.ToString();
-            CheckBoxIsInitItem.IsChecked = isInitItem.Value;
+            CheckBoxIsInitItem.IsChecked = bIsInitItem.Value;
             TextBoxGainWaccaPoint.Text = gainWaccaPoint.Value.ToString();
         }
         catch (Exception e)
@@ -189,7 +191,7 @@ public partial class InfernoUnlockTableView : TableTab
                     break;
                 }
                 
-                case "TextBoxPlateId":
+                case "MusicId":
                 { 
                     IntPropertyData intPropertyData = (IntPropertyData)data.Value[0];
                     int oldValue = intPropertyData.Value;
@@ -209,40 +211,29 @@ public partial class InfernoUnlockTableView : TableTab
                     break;
                 }
                 
-                case "TextBoxPlateTextureName":
+                case "RequiredInfernoOpenWaccaPoint":
                 { 
-                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[1];
-                    FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxPlateTextureName.Text);
-
-                    ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
-                    undoRedoManager.RedoAndPush(operation);
-                    break; 
-                }
-                
-                case "TextBoxPlateRarity":
-                {
-                    Int8PropertyData int8PropertyData = (Int8PropertyData)data.Value[2];
-                    sbyte oldValue = int8PropertyData.Value;
-                    sbyte newValue;
+                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[2];
+                    int oldValue = intPropertyData.Value;
+                    int newValue;
                     
                     try
                     {
-                        newValue = Convert.ToSByte(textBox.Text);
+                        newValue = Convert.ToInt32(textBox.Text);
                     }
                     catch (FormatException)
                     {
                         newValue = 0;
                     }
 
-                    ModifyInt8PropertyDataValue operation = new(data, int8PropertyData, oldValue, newValue);
+                    ModifyInt32PropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
                     break;
                 }
                 
                 case "TextBoxNameTag":
                 { 
-                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[3];
+                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[4];
                     FString oldValue = strPropertyData.Value;
                     FString newValue = new(TextBoxNameTag.Text);
 
@@ -253,7 +244,7 @@ public partial class InfernoUnlockTableView : TableTab
                 
                 case "TextBoxExplanationTextTag":
                 { 
-                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[4];
+                    StrPropertyData strPropertyData = (StrPropertyData)data.Value[5];
                     FString oldValue = strPropertyData.Value;
                     FString newValue = new(TextBoxExplanationTextTag.Text);
 
@@ -264,7 +255,7 @@ public partial class InfernoUnlockTableView : TableTab
                 
                 case "TextBoxItemActivateStartTime":
                 { 
-                    Int64PropertyData int64PropertyData = (Int64PropertyData)data.Value[5];
+                    Int64PropertyData int64PropertyData = (Int64PropertyData)data.Value[6];
                     long oldValue = int64PropertyData.Value;
                     long newValue;
                     
@@ -284,7 +275,7 @@ public partial class InfernoUnlockTableView : TableTab
                 
                 case "TextBoxItemActivateEndTime":
                 {
-                    Int64PropertyData int64PropertyData = (Int64PropertyData)data.Value[6];
+                    Int64PropertyData int64PropertyData = (Int64PropertyData)data.Value[7];
                     long oldValue = int64PropertyData.Value;
                     long newValue;
                     
@@ -301,8 +292,6 @@ public partial class InfernoUnlockTableView : TableTab
                     undoRedoManager.RedoAndPush(operation);
                     break;
                 }
-                
-                // IsInitItem
                 
                 case "TextBoxGainWaccaPoint":
                 {
@@ -345,28 +334,21 @@ public partial class InfernoUnlockTableView : TableTab
             {
                 // StrProperty
                 case "TextBoxName":
-                case "TextBoxPlateTextureName":
                 case "TextBoxNameTag":
                 case "TextBoxExplanationTextTag":
                 {
                     return;
                 }
-
+                
                 // IntProperty
-                case "TextBoxPlateId":
+                case "TextBoxMusicId":
+                case "TextBoxRequiredInfernoOpenWaccaPoint":
                 case "TextBoxGainWaccaPoint":
                 {
                     _ = Convert.ToInt32(textBox.Text);
                     break;
                 }
-
-                // Int8Property
-                case "TextBoxPlateRarity":
-                {
-                    _ = Convert.ToSByte(textBox.Text);
-                    break;
-                }
-
+                
                 // Int64Property
                 case "TextBoxItemActivateStartTime":
                 case "TextBoxItemActivateEndTime":
@@ -403,9 +385,31 @@ public partial class InfernoUnlockTableView : TableTab
             
             switch (checkBox.Name)
             {
+                case "CheckBoxRequirePurchase":
+                {
+                    BoolPropertyData boolPropertyData = (BoolPropertyData)data.Value[1];
+                    bool oldValue = boolPropertyData.Value;
+                    bool newValue = checkBox.IsChecked ?? false;
+
+                    ModifyBoolPropertyDataValue operation = new(data, boolPropertyData, oldValue, newValue);
+                    undoRedoManager.RedoAndPush(operation);
+                    break;
+                }
+                
+                case "CheckBoxVipPreOpen":
+                {
+                    BoolPropertyData boolPropertyData = (BoolPropertyData)data.Value[3];
+                    bool oldValue = boolPropertyData.Value;
+                    bool newValue = checkBox.IsChecked ?? false;
+
+                    ModifyBoolPropertyDataValue operation = new(data, boolPropertyData, oldValue, newValue);
+                    undoRedoManager.RedoAndPush(operation);
+                    break;
+                }
+                
                 case "CheckBoxIsInitItem":
                 {
-                    BoolPropertyData boolPropertyData = (BoolPropertyData)data.Value[7];
+                    BoolPropertyData boolPropertyData = (BoolPropertyData)data.Value[8];
                     bool oldValue = boolPropertyData.Value;
                     bool newValue = checkBox.IsChecked ?? false;
 

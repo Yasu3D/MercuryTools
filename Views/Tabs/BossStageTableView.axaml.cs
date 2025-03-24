@@ -49,7 +49,7 @@ public partial class BossStageTableView : TableTab
         StructType = new(asset, "BossStageTableData"),
         Value =
         [
-            new Int16PropertyData(new(asset, "MusicId")),
+            new IntPropertyData(new(asset, "MusicId")),
             new BoolPropertyData(new(asset, "bVipPreOpen")),
             new UInt64PropertyData(new(asset, "StartDate")),
             new UInt64PropertyData(new(asset, "EndDate")),
@@ -75,19 +75,19 @@ public partial class BossStageTableView : TableTab
         string musicId = ((IntPropertyData)data.Value[0]).Value.ToString();
         if (Utils.Filter(musicId, "MusicId", SearchQuery, comparison)) return true;
         
-        string? bVipPreOpen = ((StrPropertyData)data.Value[1]).Value?.Value;
+        string? bVipPreOpen = ((BoolPropertyData)data.Value[1]).Value.ToString();
         if (Utils.Filter(bVipPreOpen, "bVipPreOpen", SearchQuery, comparison)) return true;
         
-        string? startDate = ((StrPropertyData)data.Value[1]).Value?.Value;
+        string? startDate = ((UInt64PropertyData)data.Value[2]).Value.ToString();
         if (Utils.Filter(startDate, "StartDate", SearchQuery, comparison)) return true;
         
-        string? endDate = ((StrPropertyData)data.Value[1]).Value?.Value;
+        string? endDate = ((UInt64PropertyData)data.Value[3]).Value.ToString();
         if (Utils.Filter(endDate, "EndDate", SearchQuery, comparison)) return true;
         
-        ArrayPropertyData appearConditionArray = (ArrayPropertyData)data.Value[2];
+        ArrayPropertyData appearConditionArray = (ArrayPropertyData)data.Value[4];
         if (Utils.FilterArray(appearConditionArray, "AppearConditionArray", SearchQuery, comparison)) return true;
         
-        ArrayPropertyData unlockConditionArray = (ArrayPropertyData)data.Value[2];
+        ArrayPropertyData unlockConditionArray = (ArrayPropertyData)data.Value[5];
         if (Utils.FilterArray(unlockConditionArray, "UnlockConditionArray", SearchQuery, comparison)) return true;
         
         return false;
