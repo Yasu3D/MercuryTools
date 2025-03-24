@@ -134,7 +134,7 @@ public partial class IconTableView : TableTab
             
             // Set Content to StructPropertyData contents
             ContentGroup.IsVisible = true;
-            TextBoxName.Text = data.Name.Value?.Value ?? "0";
+            TextBoxName.Text = data.Name.Value?.Value ?? "NO_NAME";
 
             TextBoxIconId.Text = iconId.Value.ToString();
             TextBoxIconTextureName.Text = iconTextureName.Value?.Value ?? "";
@@ -175,8 +175,10 @@ public partial class IconTableView : TableTab
             {
                 case "TextBoxName":
                 {
+                    string name = string.IsNullOrEmpty(TextBoxName.Text) ? "NO_NAME" : TextBoxName.Text;
+                    
                     FName oldName = data.Name;
-                    FName newName = new(asset, textBox.Text);
+                    FName newName = new(asset, name);
 
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.RedoAndPush(operation);
@@ -339,8 +341,18 @@ public partial class IconTableView : TableTab
         {
             switch (textBox.Name)
             {
-                // StrProperty
+                // Name
                 case "TextBoxName":
+                {
+                    if (string.IsNullOrEmpty(textBox.Text))
+                    {
+                        textBox.Text = "NO_NAME";
+                    }
+
+                    break;
+                }
+                    
+                // StrProperty
                 case "TextBoxIconTextureName":
                 case "TextBoxNameTag":
                 case "TextBoxExplanationTextTag":

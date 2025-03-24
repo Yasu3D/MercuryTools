@@ -129,7 +129,7 @@ public partial class GradePartsTableView : TableTab
             
             // Set Content to StructPropertyData contents
             ContentGroup.IsVisible = true;
-            TextBoxName.Text = data.Name.Value?.Value ?? "0";
+            TextBoxName.Text = data.Name.Value?.Value ?? "NO_NAME";
 
             TextBoxGradePartsId.Text = gradePartsId.Value.ToString();
             ComboBoxGradePartsType.SelectedIndex = gradePartsType.Value;
@@ -169,8 +169,10 @@ public partial class GradePartsTableView : TableTab
             {
                 case "TextBoxName":
                 {
+                    string name = string.IsNullOrEmpty(TextBoxName.Text) ? "NO_NAME" : TextBoxName.Text;
+                    
                     FName oldName = data.Name;
-                    FName newName = new(asset, TextBoxName.Text);
+                    FName newName = new(asset, name);
 
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.RedoAndPush(operation);
@@ -302,8 +304,18 @@ public partial class GradePartsTableView : TableTab
         {
             switch (textBox.Name)
             {
-                // StrProperty
+                // Name
                 case "TextBoxName":
+                {
+                    if (string.IsNullOrEmpty(textBox.Text))
+                    {
+                        textBox.Text = "NO_NAME";
+                    }
+
+                    break;
+                }
+                    
+                // StrProperty
                 case "TextBoxNameTag":
                 case "TextBoxExplanationTextTag":
                 {

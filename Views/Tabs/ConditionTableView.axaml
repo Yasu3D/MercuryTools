@@ -21,7 +21,152 @@
         <GridSplitter Grid.Column="1" Background="Transparent" ResizeDirection="Columns"/>
         
         <!-- Content -->
-        <TextBlock Grid.Column="2" Text="Content"/>
-        
+        <DockPanel Grid.Column="2" Name="ContentGroup" IsVisible="False">
+            
+            <TextBox DockPanel.Dock="Top" Classes="Inset" Name="TextBoxName" MinWidth="100" HorizontalAlignment="Left" FontSize="14" Margin="5,12,5,30" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+            
+            <ScrollViewer>
+                
+                <StackPanel Margin="0,0,3,0">
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="ConditionId" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxConditionId" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bConditionLimitNowSeason" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+
+                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxConditionLimitNowSeason" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="ConditionType" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <ComboBox Margin="10" Height="30" Name="ComboBoxConditionType" SelectedIndex="1" Width="410" SelectionChanged="ComboBox_OnSelectionChanged">
+                        <ComboBoxItem Content="00 CONDITION_TYPE_INIT"/>
+                        <ComboBoxItem Content="01 CONDITION_TYPE_LEVEL_UP_COUNT"/>
+                        <ComboBoxItem Content="02 CONDITION_TYPE_TOTAL_WACCA_POINT"/>
+                        <ComboBoxItem Content="03 CONDITION_TYPE_TOTAL_SCORE"/>
+                        <ComboBoxItem Content="04 CONDITION_TYPE_GRADE_COUNT"/>
+                        <ComboBoxItem Content="05 CONDITION_TYPE_ICON_COUNT"/>
+                        <ComboBoxItem Content="06 CONDITION_TYPE_SYMBOL_COLOR_COUNT"/>
+                        <ComboBoxItem Content="07 CONDITION_TYPE_INPUT_SE_COUNT"/>
+                        <ComboBoxItem Content="08 CONDITION_TYPE_UNLOCK_MUSIC_COUNT"/>
+                        <ComboBoxItem Content="09 CONDITION_TYPE_PLAY_COUNT"/>
+                        <ComboBoxItem Content="10 CONDITION_TYPE_PLAY_COUNT_RATE"/> 
+                        <ComboBoxItem Content="11 CONDITION_TYPE_PLAY_MUSIC_COUNT"/> 
+                        <ComboBoxItem Content="12 CONDITION_TYPE_PLAY_MUSIC_COUNT_RATE"/> 
+                        <ComboBoxItem Content="13 CONDITION_TYPE_PLAY_MUSIC_SCORE_COUNT"/> 
+                        <ComboBoxItem Content="14 CONDITION_TYPE_PLAY_MUSIC_SCORE_COUNT_RATE"/> 
+                        <ComboBoxItem Content="15 CONDITION_TYPE_STAGE_UP"/> 
+                        <ComboBoxItem Content="16 CONDITION_TYPE_GAME_PLAY_COUNT"/> 
+                        <ComboBoxItem Content="17 CONDITION_TYPE_MULTI_PLAY_COUNT"/> 
+                        <ComboBoxItem Content="18 CONDITION_TYPE_GAME_PLAY_COUNT_MODE"/> 
+                        <ComboBoxItem Content="19 CONDITION_TYPE_PLAY_MUSIC_TAG_ALL_DIFFICULTY"/> 
+                        <ComboBoxItem Content="20 CONDITION_TYPE_PLAY_MUSIC_TAG_ALL_DIFFICULTY_RATE"/> 
+                        <ComboBoxItem Content="21 CONDITION_TYPE_1PLAY_MUSIC"/> 
+                        <ComboBoxItem Content="22 CONDITION_TYPE_1PLAY_MUSIC_RATE"/> 
+                        <ComboBoxItem Content="23 CONDITION_TYPE_PLAY_MUSIC_TAG"/> 
+                        <ComboBoxItem Content="24 CONDITION_TYPE_RATE_COUNT_LOW"/> 
+                        <ComboBoxItem Content="25 CONDITION_TYPE_TROPHY_COMPLETE"/> 
+                        <ComboBoxItem Content="26 CONDITION_TYPE_OPEN_MUSIC_TAG"/> 
+                        <ComboBoxItem Content="27 CONDITION_TYPE_PLAY_MUSIC_ID"/> 
+                        <ComboBoxItem Content="28 CONDITION_TYPE_USE_ICON_NUM"/> 
+                        <ComboBoxItem Content="29 CONDITION_TYPE_MUSIC_CONTINUE_PLAY"/> 
+                        <ComboBoxItem Content="30 CONDITION_TYPE_MUSIC_SELECT_CANCEL"/> 
+                        <ComboBoxItem Content="31 CONDITION_TYPE_DATE"/> 
+                        <ComboBoxItem Content="32 CONDITION_TYPE_PREFECTURES"/> 
+                        <ComboBoxItem Content="33 CONDITION_TYPE_PLAY_AREA"/> 
+                        <ComboBoxItem Content="34 CONDITION_TYPE_PLAY_AREA_COMPLETE"/> 
+                        <ComboBoxItem Content="35 CONDITION_TYPE_GRADE_CUSTOMIZE_PLAY"/> 
+                        <ComboBoxItem Content="36 CONDITION_TYPE_MUSIC_ID_DIFFICULTY_FILL"/> 
+                        <ComboBoxItem Content="37 CONDITION_TYPE_PLAY_MUSIC_ID_RATE"/> 
+                        <ComboBoxItem Content="38 CONDITION_TYPE_LOGIN"/> 
+                        <ComboBoxItem Content="39 CONDITION_TYPE_PLAY_MUSIC_TAG_DIFFICULTY_RATE"/> 
+                        <ComboBoxItem Content="40 CONDITION_TYPE_CONTINUOUS_LOGIN"/> 
+                        <ComboBoxItem Content="41 CONDITION_TYPE_TOTAL_LOGIN"/> 
+                        <ComboBoxItem Content="42 CONDITION_TYPE_COMBO"/> 
+                        <ComboBoxItem Content="43 CONDITION_TYPE_1MISS_ALL_MARVELOUS"/> 
+                        <ComboBoxItem Content="44 CONDITION_TYPE_GRADE_GET"/> 
+                        <ComboBoxItem Content="45 CONDITION_TYPE_HIGH_SPEED"/> 
+                        <ComboBoxItem Content="46 CONDITION_TYPE_RATING"/> 
+                        <ComboBoxItem Content="47 CONDITION_TYPE_USER_PLATE_COUNT"/> 
+                        <ComboBoxItem Content="48 CONDITION_TYPE_GACHA_COUNT"/> 
+                        <ComboBoxItem Content="49 CONDITION_TYPE_GET_ITEM"/> 
+                        <ComboBoxItem Content="50 CONDITION_TYPE_SCORE_MULTIPLE"/> 
+                        <ComboBoxItem Content="51 CONDITION_TYPE_SCORE_LAST_DIGITS"/> 
+                        <ComboBoxItem Content="52 CONDITION_TYPE_1PLAY_MUSIC_TAG_STATUS"/> 
+                        <ComboBoxItem Content="53 CONDITION_TYPE_TOTAL_GATE_POINT"/> 
+                        <ComboBoxItem Content="54 CONDITION_TYPE_TOTAL_USER_LEVEL"/> 
+                        <ComboBoxItem Content="55 CONDITION_TYPE_FRIEND_COUNT"/> 
+                        <ComboBoxItem Content="56 CONDITION_TYPE_BINGO_LINE_NUM"/> 
+                        <ComboBoxItem Content="57 CONDITION_TYPE_BINGO_SHEET_NUM"/> 
+                        <ComboBoxItem Content="58 CONDITION_TYPE_GALLERY_MODE_PLAY"/> 
+                        <ComboBoxItem Content="59 CONDITION_TYPE_MUSIC_ID_DIFFICULTY_RATE"/> 
+                        <ComboBoxItem Content="60 CONDITION_TYPE_MUSIC_ID_DIFFICULTY_STATUS"/> 
+                        <ComboBoxItem Content="61 CONDITION_TYPE_MUSIC_TAG_1PLAY"/> 
+                        <ComboBoxItem Content="62 CONDITION_TYPE_LEVEL_TOTAL_1PLAY"/> 
+                        <ComboBoxItem Content="63 CONDITION_TYPE_MUSIC_ID_RATE_1PLAY"/> 
+                        <ComboBoxItem Content="64 CONDITION_TYPE_MUSIC_ID_STATUS_1PLAY"/> 
+                    </ComboBox>
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="Value1" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxValue1" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="Value2" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxValue2" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="Value3" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxValue3" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="Value4" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxValue4" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="Value5" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxValue5" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    
+                </StackPanel>
+                
+            </ScrollViewer>
+
+        </DockPanel>
     </Grid>
 </UserControl>

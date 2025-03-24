@@ -162,8 +162,10 @@ public partial class MessageTableView : TableTab
             {
                 case "TextBoxName":
                 {
+                    string name = string.IsNullOrEmpty(TextBoxName.Text) ? "NO_NAME" : TextBoxName.Text;
+                    
                     FName oldName = data.Name;
-                    FName newName = new(asset, textBox.Text);
+                    FName newName = new(asset, name);
 
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.RedoAndPush(operation);
@@ -248,6 +250,28 @@ public partial class MessageTableView : TableTab
                     undoRedoManager.RedoAndPush(operation);
                     break; 
                 }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
+        }
+    }
+    
+    private void TextBox_OnLostFocus(object? sender, RoutedEventArgs args)
+    {
+        if (asset == null) return;
+        if (undoRedoManager == null) return;
+        if (explorerView?.SelectedItem == null) return;
+        if (sender is not TextBox textBox) return;
+        if (textBox.Name != "TextBoxName") return;
+        
+        try
+        {
+            if (string.IsNullOrEmpty(textBox.Text))
+            {
+                textBox.Text = "NO_NAME";
             }
         }
         catch (Exception e)

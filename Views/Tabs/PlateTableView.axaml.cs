@@ -134,7 +134,7 @@ public partial class PlateTableView : TableTab
             
             // Set Content to StructPropertyData contents
             ContentGroup.IsVisible = true;
-            TextBoxName.Text = data.Name.Value?.Value ?? "0";
+            TextBoxName.Text = data.Name.Value?.Value ?? "NO_NAME";
 
             TextBoxPlateId.Text = plateId.Value.ToString();
             TextBoxPlateTextureName.Text = plateTextureName.Value?.Value ?? "";
@@ -175,8 +175,10 @@ public partial class PlateTableView : TableTab
             {
                 case "TextBoxName":
                 {
+                    string name = string.IsNullOrEmpty(TextBoxName.Text) ? "NO_NAME" : TextBoxName.Text;
+                    
                     FName oldName = data.Name;
-                    FName newName = new(asset, TextBoxName.Text);
+                    FName newName = new(asset, name);
 
                     ModifyStructPropertyName operation = new(data, oldName, newName);
                     undoRedoManager.RedoAndPush(operation);
@@ -209,7 +211,7 @@ public partial class PlateTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[1];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxPlateTextureName.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -240,7 +242,7 @@ public partial class PlateTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[3];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxNameTag.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -251,7 +253,7 @@ public partial class PlateTableView : TableTab
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[4];
                     FString oldValue = strPropertyData.Value;
-                    FString newValue = new(TextBoxExplanationTextTag.Text);
+                    FString newValue = new(textBox.Text);
 
                     ModifyStringPropertyDataValue operation = new(data, strPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
@@ -339,8 +341,19 @@ public partial class PlateTableView : TableTab
         {
             switch (textBox.Name)
             {
-                // StrProperty
+                // Name
                 case "TextBoxName":
+                {
+                    if (string.IsNullOrEmpty(textBox.Text))
+                    {
+                        Console.WriteLine("Hi");
+                        textBox.Text = "NO_NAME";
+                    }
+
+                    break;
+                }
+                    
+                // StrProperty
                 case "TextBoxPlateTextureName":
                 case "TextBoxNameTag":
                 case "TextBoxExplanationTextTag":
