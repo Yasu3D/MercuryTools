@@ -1,0 +1,255 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:MercuryTools.Views"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MercuryTools.Views.Tabs.MusicParameterTableView">
+    
+    <!-- Separate Explorer from Content -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400" MinWidth="400"/>
+            <ColumnDefinition Width="4"/>
+            <ColumnDefinition Width="*" MinWidth="100"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Explorer -->
+        <views:ExplorerView Grid.Column="0" Name="Explorer"/>
+        
+        <!-- Splitter -->
+        <GridSplitter Grid.Column="1" Background="Transparent" ResizeDirection="Columns"/>
+        
+        <!-- Content -->
+        <DockPanel Grid.Column="2" Name="ContentGroup" IsVisible="False">
+            
+            <TextBox DockPanel.Dock="Top" Classes="Inset" Name="TextBoxName" MinWidth="100" HorizontalAlignment="Left" FontSize="14" Margin="5,12,5,30" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+            
+            <ScrollViewer>
+                
+                <StackPanel Margin="0,0,3,0">
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="UniqueId" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="UInt32Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxUniqueId" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="MusicMessage" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxMusicMessage" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="ArtistMessage" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxArtistMessage" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="CopyrightMessage" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxCopyrightMessage" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="VersionNo" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="UInt32Property" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxVersionNo" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="AssetDirectory" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxAssetDirectory" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="MovieAssetName" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxMovieAssetName" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="MovieAssetNameHard" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxMovieAssetNameHard" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="MovieAssetNameExpert" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxMovieAssetNameExpert" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="MovieAssetNameInferno" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxMovieAssetNameInferno" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="JacketAssetName" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxJacketAssetName" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="Rubi" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="StrProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxRubi" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bValidCulture_ja_JP" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+
+                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxValidCulture_ja_JP" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bValidCulture_en_US" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+
+                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxValidCulture_en_US" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bValidCulture_zh_Hant_TW" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+
+                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxValidCulture_zh_Hant_TW" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bValidCulture_en_HK" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+
+                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxValidCulture_en_HK" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bValidCulture_en_SG" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+
+                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxValidCulture_en_SG" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bValidCulture_ko_KR" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+
+                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxValidCulture_ko_KR" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bValidCulture_h_Hans_CN_Guest" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+
+                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxValidCulture_h_Hans_CN_Guest" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bValidCulture_h_Hans_CN_GeneralMember" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+
+                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxValidCulture_h_Hans_CN_GeneralMember" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bValidCulture_h_Hans_CN_VipMember" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+
+                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxValidCulture_h_Hans_CN_VipMember" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bValidCulture_Offline" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+
+                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxValidCulture_Offline" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bValidCulture_NoneActive" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+
+                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxValidCulture_NoneActive" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bRecommend" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="BoolProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+
+                    <CheckBox Margin="13,10,10,10" Height="30" Width="30" Name="CheckBoxRecommend" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="WaccaPointCost" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="IntProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxWaccaPointCost" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+                    
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bCollaboration" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="ByteProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxCollaboration" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+
+                    <DockPanel Margin="15,15,15,0">
+                        <TextBlock DockPanel.Dock="Left" Text="bWaccaOriginal" Margin="0,0,5,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="ByteProperty" Foreground="{DynamicResource AnnotationBrush}" Margin="5,0,5,0"/>
+                        <Rectangle Fill="{DynamicResource VeryLightBrush}" Height="1"/>
+                    </DockPanel>
+                    
+                    <TextBox Classes="Inset" AcceptsReturn="False" AcceptsTab="False" Margin="10" Padding="10" MinHeight="30" Name="TextBoxWaccaOriginal" TextChanging="TextBox_OnTextChanging" LostFocus="TextBox_OnLostFocus" UndoLimit="0"/>
+                    
+                </StackPanel>
+                
+            </ScrollViewer>
+
+        </DockPanel>
+        
+    </Grid>
+</UserControl>

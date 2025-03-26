@@ -73,5 +73,9 @@
         <DependentUpon>MessageTableView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Views\Tabs\MusicParameterTable.axaml.cs">
+        <DependentUpon>MusicParameterTable.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>
