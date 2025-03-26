@@ -346,7 +346,6 @@ public partial class PlateTableView : TableTab
                 {
                     if (string.IsNullOrEmpty(textBox.Text))
                     {
-                        Console.WriteLine("Hi");
                         textBox.Text = "NO_NAME";
                     }
 

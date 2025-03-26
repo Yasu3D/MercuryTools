@@ -168,41 +168,9 @@ public partial class MusicParameterTableView : TableTab
                 {
                     if (string.IsNullOrEmpty(textBox.Text))
                     {
-                        Console.WriteLine("Hi");
                         textBox.Text = "NO_NAME";
                     }
 
-                    break;
-                }
-                    
-                // StrProperty
-                case "TextBoxPlateTextureName":
-                case "TextBoxNameTag":
-                case "TextBoxExplanationTextTag":
-                {
-                    return;
-                }
-
-                // IntProperty
-                case "TextBoxPlateId":
-                case "TextBoxGainWaccaPoint":
-                {
-                    _ = Convert.ToInt32(textBox.Text);
-                    break;
-                }
-
-                // Int8Property
-                case "TextBoxPlateRarity":
-                {
-                    _ = Convert.ToSByte(textBox.Text);
-                    break;
-                }
-
-                // Int64Property
-                case "TextBoxItemActivateStartTime":
-                case "TextBoxItemActivateEndTime":
-                {
-                    _ = Convert.ToInt64(textBox.Text);
                     break;
                 }
             }
