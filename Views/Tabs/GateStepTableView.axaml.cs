@@ -24,7 +24,7 @@ public partial class GateStepTableView : TableTab
         ArrayTaskMusic02.Content = new ArrayEditor(undoRedoManager, "TaskMusic02", "IntProperty");
         ArrayTaskMusic03.Content = new ArrayEditor(undoRedoManager, "TaskMusic03", "IntProperty");
 
-        undoRedoManager.OperationHistoryChanged += UpdateUndoRedoButtons;
+        undoRedoManager.OperationHistoryChanged += OnOperationHistoryChanged;
 
         explorerView.TextBoxSearch.TextChanging += TextBoxSearch_OnTextChanging;
         explorerView.ToggleSearch.IsCheckedChanged += ToggleSearch_OnIsCheckedChanged;

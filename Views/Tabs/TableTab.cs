@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Controls;
+using Avalonia.Media;
 using Avalonia.Platform.Storage;
 using MercuryTools.UndoRedo;
 using MercuryTools.UndoRedo.Operations;
@@ -28,6 +29,14 @@ public abstract class TableTab : UserControl
     protected bool SearchMatchCase => explorerView?.ToggleMatchCase.IsChecked ?? false;
     
     protected bool ignoreDataChange;
+
+    public FileSaveState fileSaveState { get; private set; } = FileSaveState.NoFile;
+    public enum FileSaveState
+    {
+        NoFile = 0,
+        Saved = 1,
+        Unsaved = 2,
+    }
 
     protected abstract bool FormatCheck();
     
@@ -70,18 +79,51 @@ public abstract class TableTab : UserControl
         }
     }
         
-    protected void UpdateUndoRedoButtons(object? sender, EventArgs args)
+    protected void OnOperationHistoryChanged(object? sender, EventArgs args)
     {
+        SetSaved(FileSaveState.Unsaved);
+        
         if (explorerView == null) return;
         
         explorerView.ButtonUndo.IsEnabled = undoRedoManager?.CanUndo ?? false;
         explorerView.ButtonRedo.IsEnabled = undoRedoManager?.CanRedo ?? false;
     }
+
+    protected void SetSaved(FileSaveState state)
+    {
+        if (explorerView == null) return;
+        
+        fileSaveState = state;
+        explorerView.TextBlockSaveStatus.Text = state switch
+        {
+            FileSaveState.NoFile => "No File",
+            FileSaveState.Saved => "File Saved",
+            FileSaveState.Unsaved => "File Not Saved",
+            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
+        };
+
+        explorerView.TextBlockSaveStatus.Foreground = state switch
+        {
+            FileSaveState.NoFile => Brushes.Gray,
+            FileSaveState.Saved => Brushes.MediumSeaGreen,
+            FileSaveState.Unsaved => Brushes.DarkRed,
+            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
+        };
+    }
     
     public void Save()
     {
-        asset?.Write(asset.FilePath);
-        assetBackup?.Write($"{assetBackup.FilePath}.bak");
+        try
+        {
+            asset?.Write(asset.FilePath);
+            assetBackup?.Write($"{assetBackup.FilePath}.bak");
+            SetSaved(FileSaveState.Saved);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
+        }
     }
     
     public async void Open()
@@ -92,10 +134,17 @@ public abstract class TableTab : UserControl
 
         try
         {
+            if (fileSaveState == FileSaveState.Unsaved)
+            {
+                bool open = await MainView.ShowChoiceMessage("Warning.", "The currently open file has not been saved yet.\nDo you really want to open a new file?", "Open New File", "Cancel");
+                if (!open) return;
+            }
+            
             IStorageFile? file = await mainView.OpenUAssetFile();
             if (file == null) return;
 
             undoRedoManager.Clear();
+            SetSaved(FileSaveState.Saved);
             
             asset = new(file.Path.LocalPath, EngineVersion.VER_UE4_19);
             assetBackup = new(file.Path.LocalPath, EngineVersion.VER_UE4_19);
@@ -126,7 +175,7 @@ public abstract class TableTab : UserControl
 
         ignoreDataChange = true;
         Operation operation = undoRedoManager.Undo();
-
+        
         UpdateTreeView(false);
         UpdateContent(false);
         

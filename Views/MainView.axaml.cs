@@ -145,16 +145,30 @@ public partial class MainView : UserControl
     
     private static void OnKeyUp(object sender, KeyEventArgs e) => e.Handled = true;
 
-    public static void ShowWarningMessage(string title, string? text = null)
+    public static void ShowWarningMessage(string title, string? content = null)
     {
         ContentDialog dialog = new()
         {
             Title = title,
-            Content = text,
+            Content = content,
             PrimaryButtonText = "Ok",
         };
 
         dialog.ShowAsync();
+    }
+
+    public static async Task<bool> ShowChoiceMessage(string title, string content, string primary, string secondary)
+    {
+        ContentDialog dialog = new()
+        {
+            Title = title,
+            Content = content,
+            PrimaryButtonText = primary,
+            SecondaryButtonText = secondary,
+        };
+
+        ContentDialogResult result = await dialog.ShowAsync();
+        return result == ContentDialogResult.Primary;
     }
     
     public async Task<IStorageFile?> OpenUAssetFile()
@@ -173,5 +187,24 @@ public partial class MainView : UserControl
         });
 
         return result.Count != 1 ? null : result[0];
+    }
+
+    public bool IsEverythingSaved()
+    {
+        if (iconTableView.fileSaveState == TableTab.FileSaveState.Unsaved) return false;
+        if (plateTableView.fileSaveState == TableTab.FileSaveState.Unsaved) return false;
+        if (gradeTableView.fileSaveState == TableTab.FileSaveState.Unsaved) return false;
+        if (gradePartsTableView.fileSaveState == TableTab.FileSaveState.Unsaved) return false;
+        if (musicParameterTableView.fileSaveState == TableTab.FileSaveState.Unsaved) return false;
+        if (bossStageTableView.fileSaveState == TableTab.FileSaveState.Unsaved) return false;
+        if (infernoUnlockTableView.fileSaveState == TableTab.FileSaveState.Unsaved) return false;
+        if (musicUnlockTableView.fileSaveState == TableTab.FileSaveState.Unsaved) return false;
+        if (itemUnlockTableView.fileSaveState == TableTab.FileSaveState.Unsaved) return false;
+        if (conditionTableView.fileSaveState == TableTab.FileSaveState.Unsaved) return false;
+        if (gateTableView.fileSaveState == TableTab.FileSaveState.Unsaved) return false;
+        if (gateStepTableView.fileSaveState == TableTab.FileSaveState.Unsaved) return false;
+        if (messageTableView.fileSaveState == TableTab.FileSaveState.Unsaved) return false;
+
+        return true;
     }
 }

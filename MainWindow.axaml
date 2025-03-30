@@ -10,6 +10,7 @@
         Focusable="True"
         Background="{DynamicResource DarkBrush}"
         Title="MercuryTools"
+        Closing="Window_OnClosing"
         x:Class="MercuryTools.MainWindow">
     <view:MainView Name="MainView"/>
 </Window>

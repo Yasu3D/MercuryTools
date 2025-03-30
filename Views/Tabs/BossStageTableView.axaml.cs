@@ -20,7 +20,7 @@ public partial class BossStageTableView : TableTab
         ArrayAppearConditionArray.Content = new ArrayEditor(undoRedoManager, "AppearConditionArray", "StrProperty");
         ArrayUnlockConditionArray.Content = new ArrayEditor(undoRedoManager, "UnlockConditionArray", "StrProperty");
 
-        undoRedoManager.OperationHistoryChanged += UpdateUndoRedoButtons;
+        undoRedoManager.OperationHistoryChanged += OnOperationHistoryChanged;
 
         explorerView.TextBoxSearch.TextChanging += TextBoxSearch_OnTextChanging;
         explorerView.ToggleSearch.IsCheckedChanged += ToggleSearch_OnIsCheckedChanged;

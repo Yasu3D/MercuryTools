@@ -17,7 +17,7 @@ public partial class MessageTableView : TableTab
         explorerView = Explorer;
         undoRedoManager = new();
 
-        undoRedoManager.OperationHistoryChanged += UpdateUndoRedoButtons;
+        undoRedoManager.OperationHistoryChanged += OnOperationHistoryChanged;
 
         explorerView.TextBoxSearch.TextChanging += TextBoxSearch_OnTextChanging;
         explorerView.ToggleSearch.IsCheckedChanged += ToggleSearch_OnIsCheckedChanged;

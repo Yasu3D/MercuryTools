@@ -149,7 +149,8 @@
             </ScrollViewer>
             
         </DockPanel>
-            
+        
+        <TextBlock Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Text="No File" Foreground="Gray" Name="TextBlockSaveStatus"/>
     </Grid>
     
 </UserControl>

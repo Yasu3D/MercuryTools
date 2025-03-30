@@ -19,7 +19,7 @@ public partial class ItemUnlockTableView : TableTab
 
         ArrayConditionKeys.Content = new ArrayEditor(undoRedoManager, "ConditionKeys", "StrProperty");
 
-        undoRedoManager.OperationHistoryChanged += UpdateUndoRedoButtons;
+        undoRedoManager.OperationHistoryChanged += OnOperationHistoryChanged;
 
         explorerView.TextBoxSearch.TextChanging += TextBoxSearch_OnTextChanging;
         explorerView.ToggleSearch.IsCheckedChanged += ToggleSearch_OnIsCheckedChanged;
