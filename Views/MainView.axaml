@@ -160,7 +160,7 @@
         </Grid>
         
         <!-- Separator -->
-        <TextBlock Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5" Text="MercuryTools v0.0.0 by yasu3d" Foreground="{DynamicResource MenuBorderBrush}"/>
+        <TextBlock Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5" Text="MercuryTools v0.0.1 by yasu3d" Foreground="{DynamicResource MenuBorderBrush}"/>
         
         <!-- Content -->
         <UserControl Grid.Column="1" Name="ViewContainer"/>
