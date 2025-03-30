@@ -207,4 +207,10 @@ public partial class MainView : UserControl
 
         return true;
     }
+
+    public void DragDrop(string path)
+    {
+        if (ViewContainer.Content is not TableTab tab) return;
+        tab.OpenFromPath(path);
+    }
 }

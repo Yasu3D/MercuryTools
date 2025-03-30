@@ -166,6 +166,44 @@ public abstract class TableTab : UserControl
             MainView.ShowWarningMessage("An Error has occurred.", e.Message);
         }
     }
+
+    public async void OpenFromPath(string path)
+    {
+        if (mainView == null) return;
+        if (explorerView == null) return;
+        if (undoRedoManager == null) return;
+
+        try
+        {
+            if (fileSaveState == FileSaveState.Unsaved)
+            {
+                bool open = await MainView.ShowChoiceMessage("Warning.", "The currently open file has not been saved yet.\nDo you really want to open a new file?", "Open New File", "Cancel");
+                if (!open) return;
+            }
+
+            undoRedoManager.Clear();
+            SetSaved(FileSaveState.Saved);
+            
+            asset = new(path, EngineVersion.VER_UE4_19);
+            assetBackup = new(path, EngineVersion.VER_UE4_19);
+
+            UpdateTreeView(true);
+            UpdateContent(true);
+
+            if (table.Count == 0) throw new ArgumentException("Provided .uasset file is empty.");
+            if (!FormatCheck()) throw new FormatException("Provided .uasset file does not follow the correct Table Format.");
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("Warning.", e.Message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            MainView.ShowWarningMessage("An Error has occurred.", e.Message);
+        }
+    }
     
     public void Undo()
     {

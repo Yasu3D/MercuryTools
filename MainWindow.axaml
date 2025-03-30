@@ -11,6 +11,7 @@
         Background="{DynamicResource DarkBrush}"
         Title="MercuryTools"
         Closing="Window_OnClosing"
+        DragDrop.AllowDrop="True"
         x:Class="MercuryTools.MainWindow">
     <view:MainView Name="MainView"/>
 </Window>
