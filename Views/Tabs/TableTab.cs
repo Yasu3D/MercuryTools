@@ -96,9 +96,9 @@ public abstract class TableTab : UserControl
             if (file == null) return;
 
             undoRedoManager.Clear();
-
-            asset = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
-            assetBackup = new(file.Path.AbsolutePath, EngineVersion.VER_UE4_19);
+            
+            asset = new(file.Path.LocalPath, EngineVersion.VER_UE4_19);
+            assetBackup = new(file.Path.LocalPath, EngineVersion.VER_UE4_19);
 
             UpdateTreeView(true);
             UpdateContent(true);
