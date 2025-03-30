@@ -20,6 +20,7 @@
         <entry key="Views/Tabs/InfernoUnlockTableView.axaml" value="MercuryTools.csproj" />
         <entry key="Views/Tabs/ItemUnlockTableView.axaml" value="MercuryTools.csproj" />
         <entry key="Views/Tabs/MessageTableView.axaml" value="MercuryTools.csproj" />
+        <entry key="Views/Tabs/MusicParameterTable.axaml" value="MercuryTools.csproj" />
         <entry key="Views/Tabs/MusicUnlockTableView.axaml" value="MercuryTools.csproj" />
         <entry key="Views/Tabs/PlateTableView.axaml" value="MercuryTools.csproj" />
       </map>

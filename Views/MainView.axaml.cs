@@ -23,6 +23,7 @@ public partial class MainView : UserControl
         plateTableView = new(this);
         gradeTableView = new(this);
         gradePartsTableView = new(this);
+        musicParameterTableView = new(this);
         bossStageTableView = new(this);
         infernoUnlockTableView = new(this);
         musicUnlockTableView = new(this);
@@ -42,6 +43,7 @@ public partial class MainView : UserControl
     private readonly PlateTableView plateTableView;
     private readonly GradeTableView gradeTableView;
     private readonly GradePartsTableView gradePartsTableView;
+    private readonly MusicParameterTableView musicParameterTableView;
     private readonly BossStageTableView bossStageTableView;
     private readonly InfernoUnlockTableView infernoUnlockTableView;
     private readonly MusicUnlockTableView musicUnlockTableView;
@@ -63,7 +65,7 @@ public partial class MainView : UserControl
             "TabPlateTable"          => plateTableView,
             "TabGradeTable"          => gradeTableView,
             "TabGradePartsTable"     => gradePartsTableView,
-            "TabMusicParameterTable" => null,
+            "TabMusicParameterTable" => musicParameterTableView,
             "TabBossStageTable"      => bossStageTableView,
             "TabInfernoUnlockTable"  => infernoUnlockTableView,
             "TabMusicUnlockTable"    => musicUnlockTableView,
