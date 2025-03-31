@@ -7,9 +7,6 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using FluentAvalonia.UI.Controls;
 using MercuryTools.Views.Tabs;
-using UAssetAPI;
-using UAssetAPI.UnrealTypes;
-using UAssetAPI.Unversioned;
 
 namespace MercuryTools.Views;
 
@@ -34,10 +31,13 @@ public partial class MainView : UserControl
         messageTableView = new(this);
 
         ViewContainer.Content = iconTableView;
+        TextBlockVersion.Text = VersionMessage;
         
         KeyDownEvent.AddClassHandler<TopLevel>(OnKeyDown, RoutingStrategies.Tunnel, handledEventsToo: true);
         KeyUpEvent.AddClassHandler<TopLevel>(OnKeyUp, RoutingStrategies.Tunnel, handledEventsToo: true);
     }
+
+    private const string VersionMessage = "MercuryTools v0.0.2 by yasu3d";
 
     private readonly IconTableView iconTableView;
     private readonly PlateTableView plateTableView;
