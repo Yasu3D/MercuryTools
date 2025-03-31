@@ -10,6 +10,7 @@ using MercuryTools.UndoRedo;
 using MercuryTools.UndoRedo.Operations;
 using UAssetAPI;
 using UAssetAPI.ExportTypes;
+using UAssetAPI.PropertyTypes.Objects;
 using UAssetAPI.PropertyTypes.Structs;
 using UAssetAPI.UnrealTypes;
 
@@ -357,10 +358,25 @@ public abstract class TableTab : UserControl
             if (item.Tag is not StructPropertyData data) return;
 
             // Add new Data
-            StructPropertyData duplicateData = (StructPropertyData)data.Clone();
+            StructPropertyData duplicateStruct = (StructPropertyData)data.Clone();
             int index = table.IndexOf(data);
+
+            // Duplicate any child arrays as well.
+            for (int i = 0; i < duplicateStruct.Value.Count; i++)
+            {
+                if (duplicateStruct.Value[i] is not ArrayPropertyData array) continue;
+                ArrayPropertyData duplicateArray = (ArrayPropertyData)array.Clone();
+
+                duplicateStruct.Value[i] = duplicateArray;
+
+                for (int j = 0; j < duplicateArray.Value.Length; j++)
+                {
+                    PropertyData duplicateProperty = (PropertyData)array.Value[j].Clone();
+                    duplicateArray.Value[j] = duplicateProperty;
+                }
+            }
             
-            AddItem<StructPropertyData> operation = new(table, duplicateData, index);
+            AddItem<StructPropertyData> operation = new(table, duplicateStruct, index);
             undoRedoManager.RedoAndPush(operation);
             
             UpdateTreeView(true);
