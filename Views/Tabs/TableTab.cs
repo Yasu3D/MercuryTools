@@ -204,7 +204,7 @@ public abstract class TableTab : UserControl
 
         if (!FormatCheck())
         {
-            bool open = await MainView.ShowChoiceMessage("Warning.", "The provided .uasset file does not match the expected table format.", "Open Anyways", "Cancel");
+            bool open = await MainView.ShowChoiceMessage("Warning.", "The provided .uasset file does not match the expected table format.\nOpening it may cause errors.", "Open Anyways", "Cancel");
 
             if (!open)
             {
@@ -218,6 +218,7 @@ public abstract class TableTab : UserControl
         
         UpdateTreeView(true);
         UpdateContent(true);
+        explorerView?.ScrollViewerElementList.ScrollToHome();
         
         if (table?.Count == 0) throw new ArgumentException("Provided .uasset file is empty.");
     }

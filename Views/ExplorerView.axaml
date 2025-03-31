@@ -154,7 +154,7 @@
             </Grid>
             
             <!-- Element List -->
-            <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" Name="ScrollViewerElementList">
                 <TreeView Name="TreeViewElementList" Margin="5" AutoScrollToSelectedItem="False"/>
             </ScrollViewer>
             
