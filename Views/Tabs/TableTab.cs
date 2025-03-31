@@ -23,7 +23,7 @@ public abstract class TableTab : UserControl
         
     protected UAsset? asset;
     
-    protected List<StructPropertyData> table => ((DataTableExport)asset!.Exports[0]).Table.Data;
+    protected List<StructPropertyData>? table => ((DataTableExport?)asset?.Exports[0])?.Table?.Data;
     protected abstract StructPropertyData NewData { get; }
 
     protected string SearchQuery => explorerView?.TextBoxSearch.Text ?? "";
@@ -155,8 +155,6 @@ public abstract class TableTab : UserControl
             if (file == null) return;
             
             await Open(file.Path.LocalPath);
-
-            if (table.Count == 0) throw new ArgumentException("Provided .uasset file is empty.");
         }
         catch (ArgumentException e)
         {
@@ -185,8 +183,6 @@ public abstract class TableTab : UserControl
             }
             
             await Open(path);
-
-            if (table.Count == 0) throw new ArgumentException("Provided .uasset file is empty.");
         }
         catch (ArgumentException e)
         {
@@ -222,6 +218,8 @@ public abstract class TableTab : UserControl
         
         UpdateTreeView(true);
         UpdateContent(true);
+        
+        if (table?.Count == 0) throw new ArgumentException("Provided .uasset file is empty.");
     }
     
     public async void Close()
@@ -290,6 +288,7 @@ public abstract class TableTab : UserControl
     public void MoveElement(ElementMoveDirection direction)
     {
         if (asset == null) return;
+        if (table == null) return;
         if (undoRedoManager == null) return;
         if (explorerView?.SelectedItem == null) return;
         
@@ -325,6 +324,7 @@ public abstract class TableTab : UserControl
     public void AddElement()
     {
         if (asset == null) return;
+        if (table == null) return;
         if (undoRedoManager == null) return;
 
         try
@@ -346,6 +346,7 @@ public abstract class TableTab : UserControl
     public void DuplicateElement()
     {
         if (asset == null) return;
+        if (table == null) return;
         if (undoRedoManager == null) return;
         if (explorerView?.SelectedItem == null) return;
 
@@ -373,6 +374,7 @@ public abstract class TableTab : UserControl
     public void DeleteElement()
     {
         if (asset == null) return;
+        if (table == null) return;
         if (undoRedoManager == null) return;
         if (explorerView?.SelectedItem == null) return;
 

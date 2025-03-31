@@ -26,8 +26,12 @@ public partial class ExplorerView : UserControl
     
     public void UpdateTreeView(List<StructPropertyData>? tableData)
     {
-        if (tableData == null) return;
         if (TreeViewElementList == null) return;
+        if (tableData == null)
+        {
+            TreeViewElementList.Items.Clear();
+            return;
+        }
 
         try
         {
