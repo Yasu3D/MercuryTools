@@ -166,9 +166,9 @@ public partial class ItemUnlockTableView : TableTab
                 
                 case "TextBoxItemId": 
                 {
-                    Int16PropertyData int16PropertyData = (Int16PropertyData)data.Value[0];
-                    short oldValue = int16PropertyData.Value;
-                    short newValue;
+                    IntPropertyData intPropertyData = (IntPropertyData)data.Value[0];
+                    int oldValue = intPropertyData.Value;
+                    int newValue;
                     
                     try
                     {
@@ -179,7 +179,7 @@ public partial class ItemUnlockTableView : TableTab
                         newValue = 0;
                     }
 
-                    ModifyInt16PropertyDataValue operation = new(data, int16PropertyData, oldValue, newValue);
+                    ModifyInt32PropertyDataValue operation = new(data, intPropertyData, oldValue, newValue);
                     undoRedoManager.RedoAndPush(operation);
                     break;
                 }
