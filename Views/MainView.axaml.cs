@@ -111,10 +111,15 @@ public partial class MainView : UserControl
         }
         
         if (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is TextBox) return;
+
+        if (args.Key is Key.F4 && args.KeyModifiers.HasFlag(KeyModifiers.Control))
+        {
+            tab.Close();
+        }
         
         if (args.Key is Key.O && args.KeyModifiers.HasFlag(KeyModifiers.Control))
         {
-            tab.Open();
+            tab.OpenFilePicker();
         }
         
         if (args.Key is Key.Insert)
@@ -211,6 +216,6 @@ public partial class MainView : UserControl
     public void DragDrop(string path)
     {
         if (ViewContainer.Content is not TableTab tab) return;
-        tab.OpenFromPath(path);
+        tab.OpenDragDrop(path);
     }
 }

@@ -28,6 +28,7 @@ public partial class ItemUnlockTableView : TableTab
         
         explorerView.ButtonSave.Click += ButtonSave_OnClick;
         explorerView.ButtonOpen.Click += ButtonOpen_OnClick;
+        explorerView.ButtonClose.Click += ButtonClose_OnClick;
         
         explorerView.ButtonUndo.Click += ButtonUndo_OnClick;
         explorerView.ButtonRedo.Click += ButtonRedo_OnClick;
@@ -293,7 +294,8 @@ public partial class ItemUnlockTableView : TableTab
     private void ToggleInvertQuery_OnIsCheckedChanged(object? sender, RoutedEventArgs args) => SearchContent();
     
     private void ButtonSave_OnClick(object? sender, RoutedEventArgs args) => Save();
-    private void ButtonOpen_OnClick(object? sender, RoutedEventArgs args) => Open();
+    private void ButtonOpen_OnClick(object? sender, RoutedEventArgs args) => OpenFilePicker();
+    private void ButtonClose_OnClick(object? sender, RoutedEventArgs args) => Close();
     private void ButtonUndo_OnClick(object? sender, RoutedEventArgs args) => Undo();
     private void ButtonRedo_OnClick(object? sender, RoutedEventArgs args) => Redo();
     private void ButtonMoveElementUp_OnClick(object? sender, RoutedEventArgs args) => MoveElement(ElementMoveDirection.Up);

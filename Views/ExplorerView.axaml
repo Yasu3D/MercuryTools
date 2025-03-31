@@ -31,6 +31,16 @@
                     </ToolTip.Tip>
                     <PathIcon Data="{DynamicResource IconFloppyDisk}" Width="14" Height="14"/>
                 </Button>
+                
+                <Button Classes="Transparent" VerticalAlignment="Center" HorizontalAlignment="Left" Width="22" Height="22" Margin="5,9,0,9" Name="ButtonClose" ToolTip.Placement="Bottom" ToolTip.ShowDelay="0">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="Close File"/>
+                            <TextBlock Text="Ctrl + F4" Foreground="{DynamicResource AnnotationBrush}"/>
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <PathIcon Data="{DynamicResource IconClose}" Width="12" Height="14"/>
+                </Button>
                     
                 <Rectangle Width="1" Height="30" Fill="{DynamicResource MenuBorderBrush}" Margin="8,5,3,5"/>
                         

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Platform.Storage;
@@ -20,7 +22,6 @@ public abstract class TableTab : UserControl
     protected UndoRedoManager? undoRedoManager;
         
     protected UAsset? asset;
-    protected UAsset? assetBackup;
     
     protected List<StructPropertyData> table => ((DataTableExport)asset!.Exports[0]).Table.Data;
     protected abstract StructPropertyData NewData { get; }
@@ -113,10 +114,20 @@ public abstract class TableTab : UserControl
     
     public void Save()
     {
+        if (asset == null) return;
+        
         try
         {
-            asset?.Write(asset.FilePath);
-            assetBackup?.Write($"{assetBackup.FilePath}.bak");
+            string uassetPath = asset.FilePath;
+            string uassetPathBak = uassetPath + ".bak";
+
+            string uexpPath = Path.ChangeExtension(asset.FilePath, ".uexp");
+            string uexpPathBak = uexpPath + ".bak";
+            
+            if (File.Exists(uassetPath)) File.Copy(uassetPath, uassetPathBak, true);
+            if (File.Exists(uexpPath)) File.Copy(uexpPath, uexpPathBak, true);
+            
+            asset?.Write(uassetPath);
             SetSaved(FileSaveState.Saved);
         }
         catch (Exception e)
@@ -126,7 +137,7 @@ public abstract class TableTab : UserControl
         }
     }
     
-    public async void Open()
+    public async void OpenFilePicker()
     {
         if (mainView == null) return;
         if (explorerView == null) return;
@@ -142,18 +153,10 @@ public abstract class TableTab : UserControl
             
             IStorageFile? file = await mainView.OpenUAssetFile();
             if (file == null) return;
-
-            undoRedoManager.Clear();
-            SetSaved(FileSaveState.Saved);
             
-            asset = new(file.Path.LocalPath, EngineVersion.VER_UE4_19);
-            assetBackup = new(file.Path.LocalPath, EngineVersion.VER_UE4_19);
-
-            UpdateTreeView(true);
-            UpdateContent(true);
+            await Open(file.Path.LocalPath);
 
             if (table.Count == 0) throw new ArgumentException("Provided .uasset file is empty.");
-            if (!FormatCheck()) throw new FormatException("Provided .uasset file does not follow the correct Table Format.");
         }
         catch (ArgumentException e)
         {
@@ -167,7 +170,7 @@ public abstract class TableTab : UserControl
         }
     }
 
-    public async void OpenFromPath(string path)
+    public async void OpenDragDrop(string path)
     {
         if (mainView == null) return;
         if (explorerView == null) return;
@@ -180,18 +183,10 @@ public abstract class TableTab : UserControl
                 bool open = await MainView.ShowChoiceMessage("Warning.", "The currently open file has not been saved yet.\nDo you really want to open a new file?", "Open New File", "Cancel");
                 if (!open) return;
             }
-
-            undoRedoManager.Clear();
-            SetSaved(FileSaveState.Saved);
             
-            asset = new(path, EngineVersion.VER_UE4_19);
-            assetBackup = new(path, EngineVersion.VER_UE4_19);
-
-            UpdateTreeView(true);
-            UpdateContent(true);
+            await Open(path);
 
             if (table.Count == 0) throw new ArgumentException("Provided .uasset file is empty.");
-            if (!FormatCheck()) throw new FormatException("Provided .uasset file does not follow the correct Table Format.");
         }
         catch (ArgumentException e)
         {
@@ -203,6 +198,49 @@ public abstract class TableTab : UserControl
             Console.WriteLine(e);
             MainView.ShowWarningMessage("An Error has occurred.", e.Message);
         }
+    }
+
+    public async Task Open(string path)
+    {
+        if (undoRedoManager == null) return;
+        
+        asset = new(path, EngineVersion.VER_UE4_19);
+
+        if (!FormatCheck())
+        {
+            bool open = await MainView.ShowChoiceMessage("Warning.", "The provided .uasset file does not match the expected table format.", "Open Anyways", "Cancel");
+
+            if (!open)
+            {
+                Close();
+                return;
+            }
+        }
+
+        undoRedoManager.Clear();
+        SetSaved(FileSaveState.Saved);
+        
+        UpdateTreeView(true);
+        UpdateContent(true);
+    }
+    
+    public async void Close()
+    {
+        if (undoRedoManager == null) return;
+        
+        if (fileSaveState == FileSaveState.Unsaved)
+        {
+            bool open = await MainView.ShowChoiceMessage("Warning.", "The currently open file has not been saved yet.\nDo you really want to open a new file?", "Open New File", "Cancel");
+            if (!open) return;
+        }
+
+        asset = null;
+        
+        undoRedoManager.Clear();
+        SetSaved(FileSaveState.NoFile);
+        
+        UpdateTreeView(true);
+        UpdateContent(true);
     }
     
     public void Undo()
