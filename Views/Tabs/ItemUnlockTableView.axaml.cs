@@ -172,7 +172,7 @@ public partial class ItemUnlockTableView : TableTab
                     
                     try
                     {
-                        newValue = Convert.ToInt16(textBox.Text);
+                        newValue = Convert.ToInt32(textBox.Text);
                     }
                     catch (FormatException)
                     {
