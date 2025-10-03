@@ -109,6 +109,8 @@ public partial class InfernoUnlockTableView : TableTab
     
     protected override void UpdateContent(bool ignoreChange)
     {
+        if (asset == null) return;
+       
         if (explorerView?.SelectedItem == null)
         {
             ContentGroup.IsVisible = false;
@@ -194,7 +196,7 @@ public partial class InfernoUnlockTableView : TableTab
                     break;
                 }
                 
-                case "MusicId":
+                case "TextBoxMusicId":
                 { 
                     IntPropertyData intPropertyData = (IntPropertyData)data.Value[0];
                     int oldValue = intPropertyData.Value;
@@ -214,7 +216,7 @@ public partial class InfernoUnlockTableView : TableTab
                     break;
                 }
                 
-                case "RequiredInfernoOpenWaccaPoint":
+                case "TextBoxRequiredInfernoOpenWaccaPoint":
                 { 
                     IntPropertyData intPropertyData = (IntPropertyData)data.Value[2];
                     int oldValue = intPropertyData.Value;
