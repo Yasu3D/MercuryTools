@@ -239,7 +239,7 @@ public partial class ArrayEditor : UserControl
 
             try
             {
-                newValue = Convert.ToInt16(textBox.Text);
+                newValue = Convert.ToInt32(textBox.Text);
             }
             catch (FormatException)
             {
