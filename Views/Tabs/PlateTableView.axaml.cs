@@ -48,8 +48,8 @@ public partial class PlateTableView : TableTab
         Value =
         [
             new IntPropertyData(new(asset, "UserPlateBackgroundId")),
-            new StrPropertyData(new(asset, "UserPlateBackgroundTextureName")),
-            new Int8PropertyData(new(asset, "UserPlateBackgroundRarity")),
+            new StrPropertyData(new(asset, "UserPlateBacgroundTextureName")),
+            new Int8PropertyData(new(asset, "UserPlateBacgroundRarity")),
             new StrPropertyData(new(asset, "NameTag")),
             new StrPropertyData(new(asset, "ExplanationTextTag")),
             new Int64PropertyData(new(asset, "ItemActivateStartTime")),
