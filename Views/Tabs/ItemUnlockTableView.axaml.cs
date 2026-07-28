@@ -117,7 +117,7 @@ public partial class ItemUnlockTableView : TableTab
             TextBoxName.Text = data.Name.Value?.Value ?? "NO_NAME";
 
             FName dummyName = FName.DefineDummy(asset, "0");
-            ((ArrayEditor)ArrayConditionKeys.Content!).SetTable(asset, data, conditionKeys, new IntPropertyData(dummyName)); 
+            ((ArrayEditor)ArrayConditionKeys.Content!).SetTable(asset, data, conditionKeys, new StrPropertyData(dummyName)); 
             
             TextBoxItemId.Text = itemId.Value.ToString(); 
             TextBoxConditionGetableStartTime.Text = conditionGetableStartTime.Value.ToString(); 
