@@ -88,8 +88,8 @@ public partial class MusicUnlockTableView : TableTab
         string bRequirePurchase = ((BoolPropertyData)data.Value[3]).Value.ToString();
         if (Utils.Filter(bRequirePurchase, "bRequirePurchase", SearchQuery, comparison)) return true;
         
-        string requiredInfernoOpenWaccaPoint = ((IntPropertyData)data.Value[4]).Value.ToString();
-        if (Utils.Filter(requiredInfernoOpenWaccaPoint, "RequiredMusicOpenWaccaPoint", SearchQuery, comparison)) return true;
+        string requiredMusicOpenWaccaPoint = ((IntPropertyData)data.Value[4]).Value.ToString();
+        if (Utils.Filter(requiredMusicOpenWaccaPoint, "RequiredMusicOpenWaccaPoint", SearchQuery, comparison)) return true;
 
         string bVipPreOpen = ((BoolPropertyData)data.Value[5]).Value.ToString();
         if (Utils.Filter(bVipPreOpen, "bVipPreOpen", SearchQuery, comparison)) return true;
@@ -137,7 +137,7 @@ public partial class MusicUnlockTableView : TableTab
             Int64PropertyData adaptStartTime = (Int64PropertyData)data.Value[1];
             Int64PropertyData adaptEndTime = (Int64PropertyData)data.Value[2];
             BoolPropertyData bRequirePurchase = (BoolPropertyData)data.Value[3];
-            IntPropertyData requiredInfernoOpenWaccaPoint = (IntPropertyData)data.Value[4];
+            IntPropertyData requiredMusicOpenWaccaPoint = (IntPropertyData)data.Value[4];
             BoolPropertyData bVipPreOpen = (BoolPropertyData)data.Value[5];
             StrPropertyData nameTag = (StrPropertyData)data.Value[6];
             StrPropertyData explanationTextTag = (StrPropertyData)data.Value[7];
@@ -156,7 +156,7 @@ public partial class MusicUnlockTableView : TableTab
             TextBoxAdaptStartTime.Text = adaptStartTime.Value.ToString();
             TextBoxAdaptEndTime.Text = adaptEndTime.Value.ToString();
             CheckBoxRequirePurchase.IsChecked = bRequirePurchase.Value;
-            TextBoxRequiredInfernoOpenWaccaPoint.Text = requiredInfernoOpenWaccaPoint.Value.ToString();
+            TextBoxRequiredMusicOpenWaccaPoint.Text = requiredMusicOpenWaccaPoint.Value.ToString();
             CheckBoxVipPreOpen.IsChecked = bVipPreOpen.Value;
             TextBoxNameTag.Text = nameTag.Value?.Value ?? "";
             TextBoxExplanationTextTag.Text = explanationTextTag.Value?.Value ?? "";
@@ -206,7 +206,7 @@ public partial class MusicUnlockTableView : TableTab
                     break;
                 }
                 
-                case "MusicId":
+                case "TextBoxMusicId":
                 { 
                     IntPropertyData intPropertyData = (IntPropertyData)data.Value[0];
                     int oldValue = intPropertyData.Value;
@@ -266,12 +266,12 @@ public partial class MusicUnlockTableView : TableTab
                     break;
                 }
                 
-                case "RequiredInfernoOpenWaccaPoint":
-                { 
+                case "TextBoxRequiredMusicOpenWaccaPoint":
+                {
                     IntPropertyData intPropertyData = (IntPropertyData)data.Value[4];
                     int oldValue = intPropertyData.Value;
                     int newValue;
-                    
+
                     try
                     {
                         newValue = Convert.ToInt32(textBox.Text);
@@ -285,7 +285,7 @@ public partial class MusicUnlockTableView : TableTab
                     undoRedoManager.RedoAndPush(operation);
                     break;
                 }
-                
+
                 case "TextBoxNameTag":
                 { 
                     StrPropertyData strPropertyData = (StrPropertyData)data.Value[6];
@@ -397,14 +397,14 @@ public partial class MusicUnlockTableView : TableTab
 
                     break;
                 }
-                    
+
                 // StrProperty
                 case "TextBoxNameTag":
                 case "TextBoxExplanationTextTag":
                 {
                     return;
                 }
-                
+
                 // IntProperty
                 case "TextBoxMusicId":
                 case "TextBoxRequiredInfernoOpenWaccaPoint":
@@ -413,7 +413,7 @@ public partial class MusicUnlockTableView : TableTab
                     _ = Convert.ToInt32(textBox.Text);
                     break;
                 }
-                
+
                 // Int64Property
                 case "TextBoxAdaptStartTime":
                 case "TextBoxAdaptEndTime":

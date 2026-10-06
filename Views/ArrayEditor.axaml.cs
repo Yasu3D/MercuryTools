@@ -78,9 +78,10 @@ public partial class ArrayEditor : UserControl
                     // Modify existing ArrayItem.
                     if (ListBoxElementList.Items[i] is not ArrayItem item) continue;
 
-                    item.TextBlockName.Text = arrayPropertyData.Value[i].Name.ToString();
-                    item.TextBoxValue.Text = arrayPropertyData.Value[i].RawValue.ToString();
-                    item.Tag = arrayPropertyData.Value[i];
+                    // Checks if array exists and is null, so that user can hop between windows without causing an exception
+                    item.TextBlockName.Text = arrayPropertyData.Value[i].Name != null ? arrayPropertyData.Value[i].Name.ToString() : null;
+                    item.TextBoxValue.Text = arrayPropertyData.Value[i].RawValue != null ? arrayPropertyData.Value[i].RawValue.ToString() : null;
+                    item.Tag = arrayPropertyData.Value[i] != null ? arrayPropertyData.Value[i] : null;
                 }
                 else
                 {
